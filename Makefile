@@ -6,12 +6,12 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/06/07 16:19:06 by saaltone         ###   ########.fr        #
+#    Updated: 2022/06/08 17:33:45 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=wolf3d
-COMP_FLAGS=-Wall -Wextra -Werror -O3
+COMP_FLAGS=-Wall -Wextra -Werror -O3 -g
 LIBFT=./libft
 LIBFT_INCLUDES=./libft/includes
 LIBMLX=./libmlx

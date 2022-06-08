@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/08 16:18:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:41:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,15 @@
 # define MOUSE_SCROLL_DOWN 5
 # define THREADS_DEFAULT 8
 # define THREADS_MAX 32
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 10
-# define POS_START_X 3
-# define POS_START_Y 3
+# define MAP_WIDTH 20
+# define MAP_HEIGHT 20
+# define POSITION_START_X 10.f
+# define POSITION_START_Y 12.f
+# define DIRECTION_START_X 1.f
+# define DIRECTION_START_Y 0.f
+# define CAMERA_PLANE_X 0.f
+# define CAMERA_PLANE_Y 0.66f
+# define DEGREE_IN_RADIANS 0.01745329238f
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -49,8 +54,8 @@
 # include "mlx.h"
 
 typedef struct vector2d {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }	t_vector2d;
 
 typedef struct s_image
@@ -83,6 +88,13 @@ typedef struct s_thread_data
 	int		x_end;
 }	t_thread_data;
 
+typedef struct s_player
+{
+	t_vector2d	position;
+	t_vector2d	direction;
+	t_vector2d	camera_plane;
+}	t_player;
+
 typedef struct s_app
 {
 	t_conf			*conf;
@@ -91,6 +103,7 @@ typedef struct s_app
 	void			*win;
 	t_thread_data	thread_info[THREADS_MAX];
 	int				**map;
+	t_player		player;
 }	t_app;
 
 /*
@@ -126,5 +139,10 @@ int		events_keydown(int keycode, t_app *app);
 int		events_mouse(int mousecode, int x, int y, t_app *app);
 int		events_mouse_track(int x, int y, t_app *app);
 int		events_loop(t_app *app);
+
+/*
+ * Graphics
+*/
+void	render_view(t_app *app);
 
 #endif
