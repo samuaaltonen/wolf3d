@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/08 13:57:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:16:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,19 @@ int	app_init(t_app **app)
 
 void	app_run(t_app *app)
 {
+	static const int	map[MAP_WIDTH][MAP_HEIGHT] = {
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	};
+
 	app->mlx = mlx_init();
 	app->win = mlx_new_window(app->mlx, app->conf->win_w,
 			app->conf->win_h, app->conf->win_name);
@@ -68,6 +81,7 @@ void	app_run(t_app *app)
 	mlx_mouse_hook(app->win, events_mouse, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, app->conf);
+	app->map = (int**)&map;
 	if (!app->image)
 		exit_error(NULL);
 	app_render(app);
@@ -81,6 +95,7 @@ void	app_render(t_app *app)
 	if (app->conf->toggle_help)
 		return (help_display(app));
 	update_fps_counter(app);
+	render_map(app->map);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	temp = ft_itoa(app->conf->fps);
 	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, "FPS:");

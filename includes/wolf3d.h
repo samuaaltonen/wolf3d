@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/08 13:55:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:18:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@
 # define MOUSE_SCROLL_DOWN 5
 # define THREADS_DEFAULT 8
 # define THREADS_MAX 32
+# define MAP_WIDTH 10
+# define MAP_HEIGHT 10
+# define POS_START_X 3
+# define POS_START_Y 3
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -43,6 +47,11 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "mlx.h"
+
+typedef struct vector2d {
+	int	x;
+	int	y;
+}	t_vector2d;
 
 typedef struct s_image
 {
@@ -81,6 +90,7 @@ typedef struct s_app
 	void			*mlx;
 	void			*win;
 	t_thread_data	thread_info[THREADS_MAX];
+	int				**map;
 }	t_app;
 
 /*
