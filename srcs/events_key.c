@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 13:10:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:02:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ int	events_keydown(int keycode, t_app *app)
 		temp = app->player.camera_plane.x;
 		app->player.camera_plane.x = app->player.camera_plane.x * cos(-ROTATION) - app->player.camera_plane.y * sin(-ROTATION);
 		app->player.camera_plane.y = temp * sin(-ROTATION) + app->player.camera_plane.y * cos(-ROTATION);
+	}
+	if (keycode == KEY_ARROW_UP || keycode == KEY_W)
+	{
+		if (app->player.position.x + app->player.direction.x < MAP_WIDTH - 1)
+			app->player.position.x += app->player.direction.x * MOVEMENT;
+		if (app->player.position.y + app->player.direction.y < MAP_HEIGHT - 1)
+			app->player.position.y += app->player.direction.y * MOVEMENT;
+	}
+	if (keycode == KEY_ARROW_DOWN || keycode == KEY_S)
+	{
+		if (app->player.position.x - app->player.direction.x > 0)
+			app->player.position.x -= app->player.direction.x * MOVEMENT;
+		if (app->player.position.y - app->player.direction.y > 0)
+			app->player.position.y -= app->player.direction.y * MOVEMENT;
 	}
 	app_render(app);
 	return (0);

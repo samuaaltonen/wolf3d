@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 13:35:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:01:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@
 # define MSG_ERROR_MAP_FILE_ACCESS "Could not open/close map file."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define KEY_ESC 53
+# define KEY_W 13
 # define KEY_A 0
 # define KEY_S 1
+# define KEY_D 2
 # define KEY_H 4
 # define KEY_ARROW_UP 126
 # define KEY_ARROW_DOWN 125
@@ -46,7 +48,8 @@
 # define DIRECTION_START_Y 0.f
 # define CAMERA_PLANE_X 0.f
 # define CAMERA_PLANE_Y 0.66f
-# define ROTATION 0.01745329238f
+# define ROTATION 0.05f
+# define MOVEMENT 1.f
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
