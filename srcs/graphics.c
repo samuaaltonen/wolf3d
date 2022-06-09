@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 13:22:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:35:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,47 @@ static void	draw_vertical_line(t_app *app, int x, int height, int texture)
 /*
  * Renders the current view of the player.
 */
-void	render_view(t_app *app)
+void	*render_view(void *data)
 {
-	int			x;
-	int			texture;
-	double		distance;
+	t_thread_data	*t;
+	t_app			*app;
+	int				x;
+	int				texture;
+	double			distance;
 
-	x = 0;
-	while (x < WIN_W)
+	t = (t_thread_data *)data;
+	app = (t_app *)t->app;
+	x = t->x_start - 1;
+	while (x < t->x_end)
 	{
 		texture = raycast(app, x, &distance);
 		draw_vertical_line(app, x, (int)(WIN_H / distance), texture);
 		x++;
+	}
+	pthread_exit(NULL);
+}
+
+/*
+ * Renders the current view of the player with multithreading.
+*/
+void	render_multithreading(t_app *app)
+{
+	int			id;
+	pthread_t	thread_identifiers[THREADS_MAX];
+
+	id = 0;
+	while (id < app->conf->thread_count)
+	{
+		if (pthread_create(&thread_identifiers[id], NULL, render_view,
+				(void *)(&(app->thread_info)[id])))
+			exit_error(MSG_ERROR_THREADS);
+		id++;
+	}
+	id = 0;
+	while (id < app->conf->thread_count)
+	{
+		pthread_join(thread_identifiers[id], NULL);
+		id++;
 	}
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 }

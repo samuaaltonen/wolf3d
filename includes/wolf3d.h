@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 13:28:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:35:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ int		events_loop(t_app *app);
  * Graphics
 */
 int		raycast(t_app *app, int x, double *distance);
-void	render_view(t_app *app);
+void	*render_view(void *data);
+void	render_multithreading(t_app *app);
 
 /*
  * Map

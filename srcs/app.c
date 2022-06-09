@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/08 18:30:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:36:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	app_render(t_app *app)
 		return (help_display(app));
 	update_fps_counter(app);
 	flush_image(app->image);
-	render_view(app);
+	render_multithreading(app);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	temp = ft_itoa(app->conf->fps);
 	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, "FPS:");
