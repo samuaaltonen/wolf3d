@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/08 18:39:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:51:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	draw_vertical_line(t_app *app, int x, int height, int texture)
 	if (end_pixel >= WIN_H)
 		end_pixel = WIN_H - 1;
 	i = 0;
-	//ft_printf("Wall height at %i: %i\n", x, height);
 	while (i < height)
 	{
 		put_pixel_to_image(app->image, x, start_pixel + i, 0xFFFFFF / texture);
@@ -43,29 +42,6 @@ static void	draw_vertical_line(t_app *app, int x, int height, int texture)
 */
 void	render_view(t_app *app)
 {
-	static const int	map[MAP_WIDTH][MAP_HEIGHT] = {
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,3,0,3,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	};
-
 	int			x;
 	double		camera_x;
 	t_vector2d	ray;
@@ -133,7 +109,7 @@ void	render_view(t_app *app)
 			}
 			//ft_printf("Checking DDA for %f, %f\n", map_pos.x, map_pos.y);
 			// Check hit
-			if (map[(int) map_pos.y][(int) map_pos.x])
+			if (app->map[(int) map_pos.y][(int) map_pos.x])
 				break;
 		}
 		//ft_printf("x: %i, wall hit at %f, %f\n", x, map_pos.x, map_pos.y);
@@ -147,7 +123,7 @@ void	render_view(t_app *app)
 
 		// Draw line
 		//ft_printf("wall distance: %f, ray y: %f\n", wall_distance, ray.y);
-		draw_vertical_line(app, x, (int) (WIN_H / wall_distance), map[(int) map_pos.y][(int) map_pos.x]);
+		draw_vertical_line(app, x, (int) (WIN_H / wall_distance), app->map[(int) map_pos.y][(int) map_pos.x]);
 		x++;
 	}
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
