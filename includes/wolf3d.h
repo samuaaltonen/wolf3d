@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 13:20:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:28:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define MOUSE_SCROLL_DOWN 5
 # define THREADS_DEFAULT 8
 # define THREADS_MAX 32
-# define MAP_FILE "map.txt"
+# define MAP_FILE "./map.txt"
 # define MAP_WIDTH 20
 # define MAP_HEIGHT 20
 # define POSITION_START_X 10.f
