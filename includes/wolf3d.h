@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:18:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:54:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ typedef struct vector2d {
 	double	x;
 	double	y;
 }	t_vector2d;
+
+typedef struct matrix2x2 {
+	t_vector2d	a;
+	t_vector2d	b;
+}	t_matrix2x2;
 
 typedef struct s_image
 {

@@ -6,28 +6,27 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:19:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:52:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
 /*
- * Handles events for key presses (keyup).
+ * Checks for collisions for movement.
 */
-int	events_keyup(int keycode, t_app *app)
+static int	is_collision(t_app *app, t_vector2d pos)
 {
-	if (keycode == KEY_ESC)
-		exit(EXIT_SUCCESS);
-	if (keycode == KEY_H)
-		app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
+	if (pos.x >= MAP_WIDTH - 1 || pos.y >= MAP_HEIGHT - 1)
+		return (1);
+	if (pos.x < 0 || pos.y < 0)
+		return (1);
+	if (app->map[(int)pos.y][(int)pos.x])
+		return (1);
 	return (0);
 }
 
-/*
- * Handles events for key presses (keydown).
-*/
-int	events_keydown(int keycode, t_app *app)
+static void	handle_player_direction(int keycode, t_app *app)
 {
 	double	temp;
 
@@ -49,20 +48,51 @@ int	events_keydown(int keycode, t_app *app)
 		app->player.camera_plane.x = app->player.camera_plane.x * cos(-ROTATION) - app->player.camera_plane.y * sin(-ROTATION);
 		app->player.camera_plane.y = temp * sin(-ROTATION) + app->player.camera_plane.y * cos(-ROTATION);
 	}
+}
+
+static void	handle_player_position(int keycode, t_app *app)
+{
 	if (keycode == KEY_ARROW_UP || keycode == KEY_W)
 	{
-		if (app->player.position.x + app->player.direction.x * MOVEMENT < MAP_WIDTH - 1)
-			app->player.position.x += app->player.direction.x * MOVEMENT;
-		if (app->player.position.y + app->player.direction.y * MOVEMENT < MAP_HEIGHT - 1)
-			app->player.position.y += app->player.direction.y * MOVEMENT;
+		if (!is_collision(app, (t_vector2d){
+			app->player.position.x + app->player.direction.x * MOVEMENT, 
+			app->player.position.y + app->player.direction.y * MOVEMENT}))
+			app->player.position = (t_vector2d){
+				app->player.position.x + app->player.direction.x * MOVEMENT,
+				app->player.position.y + app->player.direction.y * MOVEMENT
+			};
 	}
 	if (keycode == KEY_ARROW_DOWN || keycode == KEY_S)
 	{
-		if (app->player.position.x - app->player.direction.x * MOVEMENT > 0)
-			app->player.position.x -= app->player.direction.x * MOVEMENT;
-		if (app->player.position.y - app->player.direction.y * MOVEMENT > 0)
-			app->player.position.y -= app->player.direction.y * MOVEMENT;
+		if (!is_collision(app, (t_vector2d){
+			app->player.position.x - app->player.direction.x * MOVEMENT, 
+			app->player.position.y - app->player.direction.y * MOVEMENT}))
+			app->player.position = (t_vector2d){
+				app->player.position.x - app->player.direction.x * MOVEMENT,
+				app->player.position.y - app->player.direction.y * MOVEMENT
+			};
 	}
+}
+
+/*
+ * Handles events for key presses (keyup).
+*/
+int	events_keyup(int keycode, t_app *app)
+{
+	if (keycode == KEY_ESC)
+		exit(EXIT_SUCCESS);
+	if (keycode == KEY_H)
+		app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
+	return (0);
+}
+
+/*
+ * Handles events for key presses (keydown).
+*/
+int	events_keydown(int keycode, t_app *app)
+{
+	handle_player_direction(keycode, app);
+	handle_player_position(keycode, app);
 	app_render(app);
 	return (0);
 }
