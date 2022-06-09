@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:01:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:18:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@
 # define POSITION_START_Y 12.f
 # define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0.f
-# define CAMERA_PLANE_X 0.f
-# define CAMERA_PLANE_Y 0.66f
+# define CAMERA_START_X 0.f
+# define CAMERA_START_Y 0.66f
 # define ROTATION 0.05f
 # define MOVEMENT 1.f
 # include <fcntl.h>
@@ -58,6 +58,15 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "mlx.h"
+
+enum e_mlx_events {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_DESTROY = 17,
+};
 
 typedef struct vector2d {
 	double	x;
@@ -77,14 +86,14 @@ typedef struct s_image
 
 typedef struct s_conf
 {
-	char		*win_name;
-	int			win_w;
-	int			win_h;
-	int			toggle_help;
-	int			fps;
-	int			fps_time;
-	int			fps_count;
-	int			thread_count;
+	char	*win_name;
+	int		win_w;
+	int		win_h;
+	int		toggle_help;
+	int		fps;
+	int		fps_time;
+	int		fps_count;
+	int		thread_count;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -142,8 +151,10 @@ void	flush_image(t_image *image);
 */
 int		events_keyup(int keycode, t_app *app);
 int		events_keydown(int keycode, t_app *app);
-int		events_mouse(int mousecode, int x, int y, t_app *app);
+int		events_mouse_down(int mousecode, int x, int y, t_app *app);
+int		events_mouse_up(int mousecode, int x, int y, t_app *app);
 int		events_mouse_track(int x, int y, t_app *app);
+int		events_window_destroy(void);
 int		events_loop(t_app *app);
 
 /*

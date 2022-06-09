@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/08 13:55:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:16:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,19 @@
 /*
  * Handles events for mouse..
 */
-int	events_mouse(int mousecode, int x, int y, t_app *app)
+int	events_mouse_down(int mousecode, int x, int y, t_app *app)
+{
+	(void) mousecode;
+	(void) x;
+	(void) y;
+	(void) app;
+	return (0);
+}
+
+/*
+ * Handles events for mouse..
+*/
+int	events_mouse_up(int mousecode, int x, int y, t_app *app)
 {
 	(void) mousecode;
 	(void) x;

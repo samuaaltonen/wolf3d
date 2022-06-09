@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:02:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:19:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ int	events_keydown(int keycode, t_app *app)
 	}
 	if (keycode == KEY_ARROW_UP || keycode == KEY_W)
 	{
-		if (app->player.position.x + app->player.direction.x < MAP_WIDTH - 1)
+		if (app->player.position.x + app->player.direction.x * MOVEMENT < MAP_WIDTH - 1)
 			app->player.position.x += app->player.direction.x * MOVEMENT;
-		if (app->player.position.y + app->player.direction.y < MAP_HEIGHT - 1)
+		if (app->player.position.y + app->player.direction.y * MOVEMENT < MAP_HEIGHT - 1)
 			app->player.position.y += app->player.direction.y * MOVEMENT;
 	}
 	if (keycode == KEY_ARROW_DOWN || keycode == KEY_S)
 	{
-		if (app->player.position.x - app->player.direction.x > 0)
+		if (app->player.position.x - app->player.direction.x * MOVEMENT > 0)
 			app->player.position.x -= app->player.direction.x * MOVEMENT;
-		if (app->player.position.y - app->player.direction.y > 0)
+		if (app->player.position.y - app->player.direction.y * MOVEMENT > 0)
 			app->player.position.y -= app->player.direction.y * MOVEMENT;
 	}
 	app_render(app);
