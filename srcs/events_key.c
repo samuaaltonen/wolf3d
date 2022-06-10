@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:52:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:15:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
  * Checks for collisions for movement.
 */
-static int	is_collision(t_app *app, t_vector2d pos)
+static int	is_collision(t_app *app, t_vector2 pos)
 {
 	if (pos.x >= MAP_WIDTH - 1 || pos.y >= MAP_HEIGHT - 1)
 		return (1);
@@ -54,20 +54,20 @@ static void	handle_player_position(int keycode, t_app *app)
 {
 	if (keycode == KEY_ARROW_UP || keycode == KEY_W)
 	{
-		if (!is_collision(app, (t_vector2d){
+		if (!is_collision(app, (t_vector2){
 			app->player.position.x + app->player.direction.x * MOVEMENT, 
 			app->player.position.y + app->player.direction.y * MOVEMENT}))
-			app->player.position = (t_vector2d){
+			app->player.position = (t_vector2){
 				app->player.position.x + app->player.direction.x * MOVEMENT,
 				app->player.position.y + app->player.direction.y * MOVEMENT
 			};
 	}
 	if (keycode == KEY_ARROW_DOWN || keycode == KEY_S)
 	{
-		if (!is_collision(app, (t_vector2d){
+		if (!is_collision(app, (t_vector2){
 			app->player.position.x - app->player.direction.x * MOVEMENT, 
 			app->player.position.y - app->player.direction.y * MOVEMENT}))
-			app->player.position = (t_vector2d){
+			app->player.position = (t_vector2){
 				app->player.position.x - app->player.direction.x * MOVEMENT,
 				app->player.position.y - app->player.direction.y * MOVEMENT
 			};

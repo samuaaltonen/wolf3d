@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:18:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:15:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	app_run(t_app *app)
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, app->conf);
 	app->player = (t_player){
-		(t_vector2d){POSITION_START_X, POSITION_START_Y},
-		(t_vector2d){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2d){CAMERA_START_X, CAMERA_START_Y},
+		(t_vector2){POSITION_START_X, POSITION_START_Y},
+		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
+		(t_vector2){CAMERA_START_X, CAMERA_START_Y},
 	};
 	if (!app->image)
 		exit_error(NULL);

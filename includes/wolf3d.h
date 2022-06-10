@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:54:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:16:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,6 @@ enum e_mlx_events {
 	ON_DESTROY = 17,
 };
 
-typedef struct vector2d {
-	double	x;
-	double	y;
-}	t_vector2d;
-
-typedef struct matrix2x2 {
-	t_vector2d	a;
-	t_vector2d	b;
-}	t_matrix2x2;
-
 typedef struct s_image
 {
 	int		bpp;
@@ -110,9 +100,9 @@ typedef struct s_thread_data
 
 typedef struct s_player
 {
-	t_vector2d	position;
-	t_vector2d	direction;
-	t_vector2d	camera_plane;
+	t_vector2	position;
+	t_vector2	direction;
+	t_vector2	camera_plane;
 }	t_player;
 
 typedef struct s_app

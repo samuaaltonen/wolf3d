@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 10:42:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/07 16:05:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/10 13:24:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,16 @@ typedef struct s_superint
 	int	count;
 	int	*numbers;
 }	t_superint;
+
+typedef struct vector2 {
+	double	x;
+	double	y;
+}	t_vector2;
+
+typedef struct matrix2 {
+	t_vector2	a;
+	t_vector2	b;
+}	t_matrix2;
 
 int			ft_get_next_line(const int fd, char **line);
 void		ft_putchar(char c);
@@ -209,5 +219,6 @@ int			ft_superint_shift(t_superint **target, int shift);
 int			ft_superint_shift_block(t_superint **target, int shift);
 int			ft_printf(const char *format, ...);
 int			ft_dprintf(int fd, const char *format, ...);
+t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix);
 
 #endif

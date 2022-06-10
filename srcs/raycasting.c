@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:43:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:15:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /*
  * Calculates distance to next side depending on ray direction.
 */
-static t_vector2d	get_side_distance(t_app *app, t_vector2d *pos,
-	t_vector2d *ray, t_vector2d *delta_dist)
+static t_vector2	get_side_distance(t_app *app, t_vector2 *pos,
+	t_vector2 *ray, t_vector2 *delta_dist)
 {
-	t_vector2d	side_dist;
+	t_vector2	side_dist;
 
 	if (ray->x < 0)
 		side_dist.x = (app->player.position.x - pos->x) * delta_dist->x;
@@ -34,10 +34,10 @@ static t_vector2d	get_side_distance(t_app *app, t_vector2d *pos,
 /*
  * Calculates wall distance using DDA method (Digital differential analyzer). 
 */
-static double	get_wall_distance(t_app *app, t_vector2d *pos,
-	t_vector2d *ray, t_vector2d *delta_dist)
+static double	get_wall_distance(t_app *app, t_vector2 *pos,
+	t_vector2 *ray, t_vector2 *delta_dist)
 {
-	t_vector2d	side_dist;
+	t_vector2	side_dist;
 
 	side_dist = get_side_distance(app, pos, ray, delta_dist);
 	while (1)
@@ -69,15 +69,15 @@ static double	get_wall_distance(t_app *app, t_vector2d *pos,
 int	raycast(t_app *app, int x, double *distance)
 {
 	double		camera_x;
-	t_vector2d	ray;
-	t_vector2d	pos;
-	t_vector2d	delta_dist;
+	t_vector2	ray;
+	t_vector2	pos;
+	t_vector2	delta_dist;
 
 	camera_x = 2 * x / (double) WIN_W - 1.f;
 	ray.x = app->player.direction.x + app->player.camera_plane.x * camera_x;
 	ray.y = app->player.direction.y + app->player.camera_plane.y * camera_x;
-	pos = (t_vector2d){app->player.position.x, app->player.position.y};
-	delta_dist = (t_vector2d){fabs(1.f / ray.x), fabs(1.f / ray.y)};
+	pos = (t_vector2){app->player.position.x, app->player.position.y};
+	delta_dist = (t_vector2){fabs(1.f / ray.x), fabs(1.f / ray.y)};
 	*distance = get_wall_distance(app, &pos, &ray, &delta_dist);
 	return (app->map[(int) pos.y][(int) pos.x]);
 }
