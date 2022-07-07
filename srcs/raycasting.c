@@ -6,11 +6,26 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/07 15:35:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:43:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+/*
+ * Returns cardinal direction 
+*/
+static t_cardinal	get_cardinal(t_app *app, t_vector2 *pos, double side)
+{
+	if (side < 0) {
+		if (app->player.position.x < pos->x)
+			return (EAST);
+		return (WEST);
+	}
+	if (app->player.position.y < pos->y)
+		return (SOUTH);
+	return (NORTH);
+}
 
 /*
  * Calculates distance to next side depending on ray direction.
@@ -32,9 +47,10 @@ static t_vector2	get_side_distance(t_app *app, t_vector2 *pos,
 }
 
 /*
- * Calculates wall distance using DDA method (Digital differential analyzer). 
+ * Calculates wall distance using DDA method (Digital differential analyzer).
+ * Returns a vector containing distance and also side of wall that was hit
 */
-static double	get_wall_distance(t_app *app, t_vector2 *pos,
+static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 	t_vector2 *ray, t_vector2 *delta_dist)
 {
 	t_vector2	side_dist;
@@ -50,7 +66,7 @@ static double	get_wall_distance(t_app *app, t_vector2 *pos,
 			else
 				pos->x += 1.f;
 			if (app->map[(int) pos->y][(int) pos->x])
-				return (side_dist.x - delta_dist->x);
+				return ((t_vector2){side_dist.x - delta_dist->x, -1.0f});
 			continue ;
 		}
 		side_dist.y += delta_dist->y;
@@ -59,25 +75,30 @@ static double	get_wall_distance(t_app *app, t_vector2 *pos,
 		else
 			pos->y += 1.f;
 		if (app->map[(int) pos->y][(int) pos->x])
-			return (side_dist.y - delta_dist->y);
+			return ((t_vector2){side_dist.y - delta_dist->y, 1.0f});
 	}
 }
 
 /*
  * Casts a ray with given x coordinate (window coordinate).
 */
-int	raycast(t_app *app, int x, double *distance)
+t_rayhit	raycast(t_app *app, int x, double *distance)
 {
 	double		camera_x;
 	t_vector2	ray;
 	t_vector2	pos;
 	t_vector2	delta_dist;
+	t_vector2	dda;
 
 	camera_x = 2 * x / (double) WIN_W - 1.f;
 	ray.x = app->player.direction.x + app->player.camera_plane.x * camera_x;
 	ray.y = app->player.direction.y + app->player.camera_plane.y * camera_x;
 	pos = (t_vector2){app->player.position.x, app->player.position.y};
 	delta_dist = (t_vector2){fabs(1.f / ray.x), fabs(1.f / ray.y)};
-	*distance = get_wall_distance(app, &pos, &ray, &delta_dist);
-	return (app->map[(int) pos.y][(int) pos.x]);
+	dda = ray_dda(app, &pos, &ray, &delta_dist);
+	*distance = dda.x;
+	return ((t_rayhit){
+		get_cardinal(app, &pos, dda.y),
+		app->map[(int) pos.y][(int) pos.x]
+	});
 }

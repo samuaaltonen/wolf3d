@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 13:35:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:39:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
  * Draws vertical line to image based on wall distance (closer = higher)
 */
-static void	draw_vertical_line(t_app *app, int x, int height, int texture)
+static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 {
 	int	start_pixel;
 	int	end_pixel;
@@ -32,7 +32,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, int texture)
 	i = 0;
 	while (i < height)
 	{
-		put_pixel_to_image(app->image, x, start_pixel + i, 0xFFFFFF / texture);
+		put_pixel_to_image(app->image, x, start_pixel + i, rayhit.direction);
 		i++;
 	}
 }
@@ -45,7 +45,7 @@ void	*render_view(void *data)
 	t_thread_data	*t;
 	t_app			*app;
 	int				x;
-	int				texture;
+	t_rayhit		rayhit;
 	double			distance;
 
 	t = (t_thread_data *)data;
@@ -53,8 +53,8 @@ void	*render_view(void *data)
 	x = t->x_start - 1;
 	while (x < t->x_end)
 	{
-		texture = raycast(app, x, &distance);
-		draw_vertical_line(app, x, (int)(WIN_H / distance), texture);
+		rayhit = raycast(app, x, &distance);
+		draw_vertical_line(app, x, (int)(WIN_H / distance), rayhit);
 		x++;
 	}
 	pthread_exit(NULL);

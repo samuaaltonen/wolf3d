@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/10 11:16:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:44:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,15 @@ enum e_mlx_events {
 	ON_MOUSEDOWN = 4,
 	ON_MOUSEUP = 5,
 	ON_MOUSEMOVE = 6,
-	ON_DESTROY = 17,
+	ON_DESTROY = 17
 };
+
+typedef enum e_cardinal {
+	NORTH = 0xFF0000,
+	EAST = 0x00FF00,
+	SOUTH = 0x0000FF,
+	WEST = 0xFFFFFF
+}	t_cardinal;
 
 typedef struct s_image
 {
@@ -116,6 +123,12 @@ typedef struct s_app
 	t_player		player;
 }	t_app;
 
+typedef struct s_rayhit
+{
+	t_cardinal	direction;
+	int			type;
+}	t_rayhit;
+
 /*
  * Messages
 */
@@ -155,9 +168,9 @@ int		events_loop(t_app *app);
 /*
  * Graphics
 */
-int		raycast(t_app *app, int x, double *distance);
-void	*render_view(void *data);
-void	render_multithreading(t_app *app);
+t_rayhit	raycast(t_app *app, int x, double *distance);
+void		*render_view(void *data);
+void		render_multithreading(t_app *app);
 
 /*
  * Map
