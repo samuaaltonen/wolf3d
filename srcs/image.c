@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/07 16:29:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:13:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,21 @@ t_image	*init_image(void *mlx, t_conf *conf)
 		return (NULL);
 	image->width = conf->win_w;
 	image->height = conf->win_h;
+	image->img = mlx_new_image(mlx, image->width, image->height);
+	image->data = mlx_get_data_addr(image->img, &(image->bpp),
+			&(image->line_size), &(image->endian));
+	return (image);
+}
+
+t_image	*init_custom_image(void *mlx, int width, int height)
+{
+	t_image	*image;
+
+	image = (t_image *)malloc(sizeof(t_image));
+	if (!image)
+		return (NULL);
+	image->width = width;
+	image->height = height;
 	image->img = mlx_new_image(mlx, image->width, image->height);
 	image->data = mlx_get_data_addr(image->img, &(image->bpp),
 			&(image->line_size), &(image->endian));

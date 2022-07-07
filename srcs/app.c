@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/10 11:15:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:00:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+//int	mouse_activity_track(int x, int y, t_app *app);
 
 /*
  * Calculates FPS and displays it.
@@ -64,7 +66,7 @@ void	app_run(t_app *app)
 		exit_error(MSG_ERROR_WINDOW);
 	mlx_hook(app->win, ON_KEYUP, 0, events_keyup, app);
 	mlx_hook(app->win, ON_KEYDOWN, 0, events_keydown, app);
-	mlx_hook(app->win, ON_MOUSEMOVE, 0, events_mouse_track, app);
+	mlx_hook(app->win, ON_MOUSEMOVE, 0, mouse_activity_track, app);
 	mlx_hook(app->win, ON_DESTROY, 0, events_window_destroy, app);
 	mlx_hook(app->win, ON_MOUSEDOWN, 0, events_mouse_down, app);
 	mlx_hook(app->win, ON_MOUSEUP, 0, events_mouse_up, app);
@@ -88,7 +90,7 @@ void	app_render(t_app *app)
 	if (app->conf->toggle_help)
 		return (help_display(app));
 	update_fps_counter(app);
-	flush_image(app->image);
+	//flush_image(app->image);
 	render_multithreading(app);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	temp = ft_itoa(app->conf->fps);

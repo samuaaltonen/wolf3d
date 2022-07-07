@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/06/09 14:14:56 by saaltone         ###   ########.fr        #
+#    Updated: 2022/07/07 16:16:07 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBMLX=./libmlx
 LIBMLX_INCLUDES=./libmlx
 SOURCES_FILES=main.c error.c conf.c app.c events_key.c events_loop.c \
 				events_mouse.c events_window.c graphics.c raycasting.c \
-				image.c parser.c
+				image.c parser.c textures.c
 SOURCES=$(SOURCES_FILES:%.c=srcs/%.c)
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=./includes
