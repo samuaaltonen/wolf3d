@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/10 11:15:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:35:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static t_vector2	get_side_distance(t_app *app, t_vector2 *pos,
 	t_vector2	side_dist;
 
 	if (ray->x < 0)
-		side_dist.x = (app->player.position.x - pos->x) * delta_dist->x;
+		side_dist.x = (app->player.position.x - floor(pos->x)) * delta_dist->x;
 	else
-		side_dist.x = (pos->x + 1.f - app->player.position.x) * delta_dist->x;
+		side_dist.x = (floor(pos->x) + 1.f - app->player.position.x) * delta_dist->x;
 	if (ray->y < 0)
-		side_dist.y = (app->player.position.y - pos->y) * delta_dist->y;
+		side_dist.y = (app->player.position.y - floor(pos->y)) * delta_dist->y;
 	else
-		side_dist.y = (pos->y + 1.f - app->player.position.y) * delta_dist->y;
+		side_dist.y = (floor(pos->y) + 1.f - app->player.position.y) * delta_dist->y;
 	return (side_dist);
 }
 
