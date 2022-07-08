@@ -6,12 +6,16 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/07 16:28:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/08 11:48:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+/**
+ * Inits thread information structs. They contain info about what part of the
+ * window each thread calculates.
+*/
 void	init_thread_info(t_app *app)
 {
 	int	i;
@@ -28,8 +32,12 @@ void	init_thread_info(t_app *app)
 		};
 		i++;
 	}
+	app->thread_info[i].x_end = WIN_W - 1;
 }
 
+/**
+ * Initializes configuration struct.
+*/
 int	conf_init(t_app *app)
 {
 	if (!app)
