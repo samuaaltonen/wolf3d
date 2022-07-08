@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/07 16:44:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/08 11:52:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define CAMERA_START_Y 0.66f
 # define ROTATION 0.05f
 # define MOVEMENT 1.f
+# define TEX_SIZE 64
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -121,12 +122,14 @@ typedef struct s_app
 	t_thread_data	thread_info[THREADS_MAX];
 	int				map[MAP_HEIGHT][MAP_WIDTH];
 	t_player		player;
+	t_image			*sprite;
 }	t_app;
 
 typedef struct s_rayhit
 {
 	t_cardinal	direction;
 	int			type;
+	double		wall_X;
 }	t_rayhit;
 
 /*
@@ -153,6 +156,8 @@ void	app_render(t_app *app);
 t_image	*init_image(void *mlx, t_conf *conf);
 void	put_pixel_to_image(t_image *image, int x, int y, int color);
 void	flush_image(t_image *image);
+t_image	*load_image_sprite(int id, t_app *app);
+
 
 /*
  * Events
