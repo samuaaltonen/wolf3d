@@ -6,13 +6,11 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 13:36:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 13:42:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-//int	mouse_activity_track(int x, int y, t_app *app);
 
 /*
  * Calculates FPS and displays it.
@@ -26,6 +24,7 @@ static void	update_fps_counter(t_app *app)
 	{
 		time_since = time(NULL) - app->conf->fps_time;
 		app->conf->fps = app->conf->fps_count / time_since;
+		app->conf->delta_time = time_since / (double) app->conf->fps_count;
 		app->conf->fps_time = time(NULL);
 		app->conf->fps_count = 0;
 	}
