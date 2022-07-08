@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 11:52:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 13:25:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ typedef struct s_rayhit
 {
 	t_cardinal	direction;
 	int			type;
-	double		wall_X;
+	int		wall_X;
 }	t_rayhit;
 
 /*
@@ -157,6 +157,8 @@ t_image	*init_image(void *mlx, t_conf *conf);
 void	put_pixel_to_image(t_image *image, int x, int y, int color);
 void	flush_image(t_image *image);
 t_image	*load_image_sprite(int id, t_app *app);
+int	get_pixel_color(t_image *image, int x, int y);
+
 
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/07 16:43:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/08 13:32:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,28 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 }
 
 /*
+ * Calculate which part of the wall was hit for textureX
+ */
+int	get_texture_hit_x(t_vector2 *pos, t_vector2 dda, t_vector2 ray)
+{
+	double wallx;
+
+	if(dda.y < 0)
+		wallx = pos->y + dda.x * ray.y;
+	else
+		wallx = pos->x + dda.x * ray.x;
+	wallx -= floor(wallx);
+
+	int tex_x;
+	tex_x = (int)(wallx * (double)TEX_SIZE);
+	if(dda.y < 0 && ray.x > 0)
+		tex_x = TEX_SIZE - tex_x - 1;
+	if(dda.y > 0 && ray.y < 0)
+		tex_x = TEX_SIZE - tex_x - 1;
+	return (tex_x);
+}
+
+/*
  * Casts a ray with given x coordinate (window coordinate).
 */
 t_rayhit	raycast(t_app *app, int x, double *distance)
@@ -99,6 +121,7 @@ t_rayhit	raycast(t_app *app, int x, double *distance)
 	*distance = dda.x;
 	return ((t_rayhit){
 		get_cardinal(app, &pos, dda.y),
-		app->map[(int) pos.y][(int) pos.x]
+		app->map[(int) pos.y][(int) pos.x],
+		get_texture_hit_x(&pos, dda, ray)
 	});
 }
