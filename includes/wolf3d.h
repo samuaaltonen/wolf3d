@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 11:52:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 12:56:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define MSG_ERROR_ALLOC "Could not allocate memory."
 # define MSG_ERROR_IMAGE_INIT "Image initialization failed."
 # define MSG_ERROR_THREADS "Could not create a thread."
+# define MSG_ERROR_THREADS_JOIN "Could not join threads."
 # define MSG_ERROR_MAP_FILE_ACCESS "Could not open/close map file."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define KEY_ESC 53
@@ -45,7 +46,7 @@
 # define POSITION_START_X 10.f
 # define POSITION_START_Y 12.f
 # define DIRECTION_START_X 1.f
-# define DIRECTION_START_Y 0.f
+# define DIRECTION_START_Y 0
 # define CAMERA_START_X 0.f
 # define CAMERA_START_Y 0.66f
 # define ROTATION 0.05f
@@ -96,6 +97,7 @@ typedef struct s_conf
 	int		fps;
 	int		fps_time;
 	int		fps_count;
+	double	delta_time;
 	int		thread_count;
 }	t_conf;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 11:48:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 12:56:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	update_fps_counter(t_app *app)
 	{
 		time_since = time(NULL) - app->conf->fps_time;
 		app->conf->fps = app->conf->fps_count / time_since;
+		app->conf->delta_time = time_since / (double) app->conf->fps_count;
 		app->conf->fps_time = time(NULL);
 		app->conf->fps_count = 0;
 	}
