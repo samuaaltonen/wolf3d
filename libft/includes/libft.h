@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 10:42:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/10 13:24:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:50:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,7 @@ int			ft_superint_shift_block(t_superint **target, int shift);
 int			ft_printf(const char *format, ...);
 int			ft_dprintf(int fd, const char *format, ...);
 t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix);
+t_vector2	ft_vector_perpendicular(t_vector2 a);
+t_vector2	ft_vector_resize(t_vector2 a, double size);
 
 #endif

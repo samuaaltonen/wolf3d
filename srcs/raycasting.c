@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 13:32:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:02:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	get_texture_hit_x(t_vector2 *pos, t_vector2 dda, t_vector2 ray)
 /*
  * Casts a ray with given x coordinate (window coordinate).
 */
-t_rayhit	raycast(t_app *app, int x, double *distance)
+t_rayhit	raycast(t_app *app, int x)
 {
 	double		camera_x;
 	t_vector2	ray;
@@ -118,10 +118,10 @@ t_rayhit	raycast(t_app *app, int x, double *distance)
 	pos = (t_vector2){app->player.position.x, app->player.position.y};
 	delta_dist = (t_vector2){fabs(1.f / ray.x), fabs(1.f / ray.y)};
 	dda = ray_dda(app, &pos, &ray, &delta_dist);
-	*distance = dda.x;
 	return ((t_rayhit){
 		get_cardinal(app, &pos, dda.y),
 		app->map[(int) pos.y][(int) pos.x],
-		get_texture_hit_x(&pos, dda, ray)
+		get_texture_hit_x(&pos, dda, ray),
+		dda.x
 	});
 }

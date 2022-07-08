@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 15:39:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:38:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,14 @@ void	*render_view(void *data)
 	t_app			*app;
 	int				x;
 	t_rayhit		rayhit;
-	double			distance;
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
 	x = t->x_start;
 	while (x < t->x_end)
 	{
-		rayhit = raycast(app, x, &distance);
-		draw_vertical_line(app, x, (int)(WIN_H / distance), rayhit);
+		rayhit = raycast(app, x);
+		draw_vertical_line(app, x, (int)(WIN_H / rayhit.distance), rayhit);
 		x++;
 	}
 	pthread_exit(NULL);
@@ -88,7 +87,8 @@ void	render_multithreading(t_app *app)
 	id = 0;
 	while (id < app->conf->thread_count)
 	{
-		pthread_join(thread_identifiers[id], NULL);
+		if (pthread_join(thread_identifiers[id], NULL) != 0)
+			exit_error(MSG_ERROR_THREADS_JOIN);
 		id++;
 	}
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);

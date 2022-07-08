@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 15:48:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:02:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct s_rayhit
 	t_cardinal	direction;
 	int			type;
 	int			tex_x;
+	double		distance;
 }	t_rayhit;
 
 /*
@@ -176,7 +177,7 @@ int		events_loop(t_app *app);
 /*
  * Graphics
 */
-t_rayhit	raycast(t_app *app, int x, double *distance);
+t_rayhit	raycast(t_app *app, int x);
 void		*render_view(void *data);
 void		render_multithreading(t_app *app);
 

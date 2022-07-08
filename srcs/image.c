@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 15:32:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:37:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 
 	bytes = image->bpp / 8;
 	pixel_pos = (y * image->line_size) + (x * bytes);
-	if (pixel_pos < 0 || x > image->width || y > image->height)
+	if (pixel_pos < 0 || x >= image->width || y >= image->height)
 		return ;
 	pixel = image->data + pixel_pos;
 	*(int *)pixel = color;

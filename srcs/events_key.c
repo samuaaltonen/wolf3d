@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/10 11:15:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/08 12:38:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	handle_player_direction(int keycode, t_app *app)
 		app->player.camera_plane.x = app->player.camera_plane.x * cos(-ROTATION) - app->player.camera_plane.y * sin(-ROTATION);
 		app->player.camera_plane.y = temp * sin(-ROTATION) + app->player.camera_plane.y * cos(-ROTATION);
 	}
+	ft_printf("Direction vector: %20f %20f\n", app->player.direction.x, app->player.direction.y);
 }
 
 static void	handle_player_position(int keycode, t_app *app)
