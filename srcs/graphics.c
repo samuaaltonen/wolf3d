@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/07 16:39:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/08 11:49:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	*render_view(void *data)
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
-	x = t->x_start - 1;
+	x = t->x_start;
 	while (x < t->x_end)
 	{
 		rayhit = raycast(app, x, &distance);
