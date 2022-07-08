@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 13:42:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:27:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	app_run(t_app *app)
 	mlx_hook(app->win, ON_MOUSEDOWN, 0, events_mouse_down, app);
 	mlx_hook(app->win, ON_MOUSEUP, 0, events_mouse_up, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
-	app->image = init_image(app->mlx, app->conf);
-	app->sprite = load_image_sprite(0, app);
+	app->image = init_image(app->mlx, WIN_W, WIN_H);
+	app->sprite = init_xpm_image(app->mlx, TEX_SIZE * 8, TEX_SIZE, "./wolftextures.xpm");
 	app->player = (t_player){
 		(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},

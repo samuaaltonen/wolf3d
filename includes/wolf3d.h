@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 13:43:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:48:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ enum e_mlx_events {
 };
 
 typedef enum e_cardinal {
-	NORTH = 0xFF0000,
-	EAST = 0x00FF00,
-	SOUTH = 0x0000FF,
-	WEST = 0xFFFFFF
+	NORTH = 0,
+	EAST = 1,
+	SOUTH = 2,
+	WEST = 3
 }	t_cardinal;
 
 typedef struct s_image
@@ -131,7 +131,7 @@ typedef struct s_rayhit
 {
 	t_cardinal	direction;
 	int			type;
-	int			wall_X;
+	int			tex_x;
 }	t_rayhit;
 
 /*
@@ -155,13 +155,12 @@ void	app_render(t_app *app);
 /*
  * Images
 */
-t_image	*init_image(void *mlx, t_conf *conf);
+t_image	*init_image(void *mlx, int x, int y);
 void	put_pixel_to_image(t_image *image, int x, int y, int color);
 void	flush_image(t_image *image);
-t_image	*load_image_sprite(int id, t_app *app);
+//t_image	*load_image_sprite(t_app *app);
 int	get_pixel_color(t_image *image, int x, int y);
-
-
+t_image	*init_xpm_image(void *mlx, int width, int height, char *path);
 
 /*
  * Events

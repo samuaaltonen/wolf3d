@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/07 17:13:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:32:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,7 @@
 /*
  * Initializes image.
 */
-t_image	*init_image(void *mlx, t_conf *conf)
-{
-	t_image	*image;
-
-	image = (t_image *)malloc(sizeof(t_image));
-	if (!image)
-		return (NULL);
-	image->width = conf->win_w;
-	image->height = conf->win_h;
-	image->img = mlx_new_image(mlx, image->width, image->height);
-	image->data = mlx_get_data_addr(image->img, &(image->bpp),
-			&(image->line_size), &(image->endian));
-	return (image);
-}
-
-t_image	*init_custom_image(void *mlx, int width, int height)
+t_image	*init_image(void *mlx, int width, int height)
 {
 	t_image	*image;
 
@@ -46,17 +31,23 @@ t_image	*init_custom_image(void *mlx, int width, int height)
 }
 
 /*
- * Replaces image with new image with specific size.
+ * Initializes image.
 */
-void	replace_image_new(t_app *app, int width, int height)
+t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
 {
-	mlx_destroy_image(app->mlx, app->image->img);
-	free(app->image);
-	app->conf->win_w = width;
-	app->conf->win_h = height;
-	app->image = init_image(app->mlx, app->conf);
-	if (!app->image)
-		exit_error(NULL);
+	t_image	*image;
+
+	image = (t_image *)malloc(sizeof(t_image));
+	if (!image)
+		return (NULL);
+	image->width = width;
+	image->height = height;
+	image->img = mlx_xpm_file_to_image(mlx, path, &(image->width), &(image->height));
+	if(image->img == NULL)
+		exit_error("image failed to load\n");
+	image->data = mlx_get_data_addr(image->img, &(image->bpp),
+			&(image->line_size), &(image->endian));
+	return (image);
 }
 
 /* 

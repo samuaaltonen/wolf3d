@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 11:49:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:39:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,17 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	int	start_pixel;
 	int	end_pixel;
 	int	i;
+	double	y_step;
+	double	tex_y;
 
+	y_step = (TEX_SIZE / (double)height);
+
+	tex_y = 0;
 	if (height > WIN_H)
+	{
+		tex_y = (height - WIN_H) / 2 * y_step;
 		height = WIN_H;
+	}
 	start_pixel = WIN_H / 2 - height / 2;
 	end_pixel = WIN_H / 2 + height / 2;
 	if (start_pixel < 0)
@@ -32,7 +40,8 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	i = 0;
 	while (i < height)
 	{
-		put_pixel_to_image(app->image, x, start_pixel + i, rayhit.direction);
+		tex_y += y_step;
+		put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + rayhit.direction * 64, (int)tex_y & (TEX_SIZE - 1)));
 		i++;
 	}
 }
