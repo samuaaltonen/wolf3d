@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 11:53:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:05:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,25 @@ static int	map_is_valid(char *data)
 			return (0);
 		i++;
 	}
-	if (i < MAP_HEIGHT * MAP_WIDTH * 2 - 1)
+	if (i < MAP_HEIGHT * MAP_WIDTH * 5 - 1)
 		return (0);
 	return (1);
 }
 
 /*
- * Parses the map file and saves it into 2d int array.
+ * Parses the map file and saves it into 3d char array.
 */
 int	parse_map(t_app *app)
 {
 	int		i;
 	int		skip;
 	int		fd;
-	char	buffer[MAP_HEIGHT * MAP_WIDTH * 2 + 1];
+	char	buffer[MAP_HEIGHT * MAP_WIDTH * 5 + 1];
 
 	fd = open(MAP_FILE, O_RDONLY);
 	if (fd < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
-	if (read(fd, buffer, MAP_HEIGHT * MAP_WIDTH * 2) < 0 || close(fd) < 0)
+	if (read(fd, buffer, MAP_HEIGHT * MAP_WIDTH * 5) < 0 || close(fd) < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
 	if (!map_is_valid((char *)&buffer))
 		exit_error(MSG_ERROR_MAP_INVALID);
@@ -57,7 +57,10 @@ int	parse_map(t_app *app)
 			skip++;
 		else
 		{
-			app->map[i / MAP_HEIGHT][i % MAP_HEIGHT] = buffer[i + skip] - '0';
+			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][0] = buffer[i + skip];
+			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][1] = buffer[i + ++skip];
+			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][2] = buffer[i + ++skip];
+			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][3] = buffer[i + ++skip];
 			i++;
 		}
 	}

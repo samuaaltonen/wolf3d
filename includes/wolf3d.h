@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 13:48:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:12:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define MOUSE_SCROLL_DOWN 5
 # define THREADS_DEFAULT 8
 # define THREADS_MAX 32
-# define MAP_FILE "./map.txt"
+# define MAP_FILE "./map_quad.txt"
 # define MAP_WIDTH 20
 # define MAP_HEIGHT 20
 # define POSITION_START_X 10.f
@@ -129,7 +129,7 @@ typedef struct s_app
 	void			*mlx;
 	void			*win;
 	t_thread_data	thread_info[THREADS_MAX];
-	int				map[MAP_HEIGHT][MAP_WIDTH];
+	char			map[MAP_HEIGHT][MAP_WIDTH][4];
 	t_player		player;
 	t_image			*sprite;
 }	t_app;

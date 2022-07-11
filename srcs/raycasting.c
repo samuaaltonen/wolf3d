@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 16:02:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:00:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 				pos->x += -1.f;
 			else
 				pos->x += 1.f;
-			if (app->map[(int) pos->y][(int) pos->x])
+			if (app->map[(int) pos->y][(int) pos->x][0] > '0')
 				return ((t_vector2){side_dist.x - delta_dist->x, -1.0f});
 			continue ;
 		}
@@ -74,7 +74,7 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 			pos->y += -1.f;
 		else
 			pos->y += 1.f;
-		if (app->map[(int) pos->y][(int) pos->x])
+		if (app->map[(int) pos->y][(int) pos->x][0] > '0')
 			return ((t_vector2){side_dist.y - delta_dist->y, 1.0f});
 	}
 }
@@ -120,7 +120,7 @@ t_rayhit	raycast(t_app *app, int x)
 	dda = ray_dda(app, &pos, &ray, &delta_dist);
 	return ((t_rayhit){
 		get_cardinal(app, &pos, dda.y),
-		app->map[(int) pos.y][(int) pos.x],
+		app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos, dda.y)] - 1,
 		get_texture_hit_x(&pos, dda, ray),
 		dda.x
 	});

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 12:38:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:37:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_collision(t_app *app, t_vector2 pos)
 		return (1);
 	if (pos.x < 0 || pos.y < 0)
 		return (1);
-	if (app->map[(int)pos.y][(int)pos.x])
+	if (app->map[(int)pos.y][(int)pos.x][0] > '0')
 		return (1);
 	return (0);
 }
