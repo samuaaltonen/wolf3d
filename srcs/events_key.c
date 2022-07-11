@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 14:37:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:02:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	handle_player_direction(int keycode, t_app *app)
 		app->player.camera_plane.x = app->player.camera_plane.x * cos(-ROTATION) - app->player.camera_plane.y * sin(-ROTATION);
 		app->player.camera_plane.y = temp * sin(-ROTATION) + app->player.camera_plane.y * cos(-ROTATION);
 	}
-	ft_printf("Direction vector: %20f %20f\n", app->player.direction.x, app->player.direction.y);
 }
 
 static void	handle_player_position(int keycode, t_app *app)
@@ -92,8 +91,15 @@ int	events_keyup(int keycode, t_app *app)
 */
 int	events_keydown(int keycode, t_app *app)
 {
+	ft_printf("Keydown: %i\n", keycode);
 	handle_player_direction(keycode, app);
 	handle_player_position(keycode, app);
+	if (keycode == KEY_U)
+		app->conf->fov--;
+	if (keycode == KEY_I)
+		app->conf->fov++;
+	if (keycode == KEY_U || keycode == KEY_I)
+		app->player.camera_plane = init_camera_plane(app);
 	app_render(app);
 	return (0);
 }

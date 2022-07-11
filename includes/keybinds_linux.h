@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_perpendicular.c                          :+:      :+:    :+:   */
+/*   keybinds_linux.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 12:50:29 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 15:29:30 by saaltone         ###   ########.fr       */
+/*   Created: 2022/07/11 15:57:29 by saaltone          #+#    #+#             */
+/*   Updated: 2022/07/11 15:59:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef KEYBINDS_LINUX_H
+# define KEYBINDS_LINUX_H
 
-/**
- * Returns perpendicular right hand side 2d vector of vector a. 
- * Result is right hand side vector so it points to right of the original
- * vector.
-*/
-t_vector2	ft_vector_perpendicular(t_vector2 a)
-{
-	t_vector2	b;
-
-	b.x = -a.y;
-	b.y = a.x;
-	return (b);
-}
+#endif

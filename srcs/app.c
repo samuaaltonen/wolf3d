@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 11:48:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:02:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	app_run(t_app *app)
 	app->player = (t_player){
 		(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2){CAMERA_START_X, CAMERA_START_Y},
+		init_camera_plane(app),
 	};
 	if (!app->image || !app->sprite)
 		exit_error(NULL);

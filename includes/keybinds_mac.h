@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_perpendicular.c                          :+:      :+:    :+:   */
+/*   keybinds_mac.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 12:50:29 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 15:29:30 by saaltone         ###   ########.fr       */
+/*   Created: 2022/07/11 15:53:52 by saaltone          #+#    #+#             */
+/*   Updated: 2022/07/11 16:00:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef KEYBINDS_MAC_H
+# define KEYBINDS_MAC_H
 
-/**
- * Returns perpendicular right hand side 2d vector of vector a. 
- * Result is right hand side vector so it points to right of the original
- * vector.
-*/
-t_vector2	ft_vector_perpendicular(t_vector2 a)
-{
-	t_vector2	b;
+enum e_keybinds {
+	KEY_ESC = 53,
+	KEY_W = 13,
+	KEY_A = 0,
+	KEY_S = 1,
+	KEY_D = 2,
+	KEY_H = 4,
+	KEY_U = 32,
+	KEY_I = 34,
+	KEY_ARROW_UP = 126,
+	KEY_ARROW_DOWN = 125,
+	KEY_ARROW_LEFT = 123,
+	KEY_ARROW_RIGHT = 124,
+	KEY_PGUP = 116,
+	KEY_PGDOWN = 121,
+	MOUSE_CLICK_LEFT = 1,
+	MOUSE_SCROLL_UP = 4,
+	MOUSE_SCROLL_DOWN = 5
+};
 
-	b.x = -a.y;
-	b.y = a.x;
-	return (b);
-}
+#endif
