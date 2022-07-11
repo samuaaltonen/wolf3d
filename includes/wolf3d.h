@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 16:02:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:48:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ typedef enum e_cardinal {
 	WEST = 3
 }	t_cardinal;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
 typedef struct s_image
 {
 	int		bpp;
@@ -86,6 +92,7 @@ typedef struct s_image
 	int		endian;
 	char	*img;
 	char	*data;
+	t_point	texture_count;
 }	t_image;
 
 typedef struct s_conf

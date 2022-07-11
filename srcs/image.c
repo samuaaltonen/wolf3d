@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 16:37:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:49:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_image	*init_image(void *mlx, int width, int height)
 	image->img = mlx_new_image(mlx, image->width, image->height);
 	image->data = mlx_get_data_addr(image->img, &(image->bpp),
 			&(image->line_size), &(image->endian));
+	image->texture_count = (t_point){1, 1};
 	return (image);
 }
 
@@ -47,6 +48,7 @@ t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
 		exit_error("image failed to load\n");
 	image->data = mlx_get_data_addr(image->img, &(image->bpp),
 			&(image->line_size), &(image->endian));
+	image->texture_count = (t_point){1, 1};
 	return (image);
 }
 
