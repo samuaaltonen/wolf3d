@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 16:02:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:06:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	help_display(t_app *app)
 {
 	int					i;
 	static const char	*h[] = {
-		"[q]     Decrease thread count", "[w]     Increase thread count",
+		"[u]     Decrease FOV", "[i]     Increase FOV",
 		"[esc]   Exit", NULL,
 	};
 
