@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 15:27:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/11 11:48:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	app_run(t_app *app)
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){CAMERA_START_X, CAMERA_START_Y},
 	};
-	if (!app->image)
+	if (!app->image || !app->sprite)
 		exit_error(NULL);
 	app_render(app);
 	mlx_loop(app->mlx);
