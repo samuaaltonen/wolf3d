@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 16:02:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:17:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,18 @@ void	init_thread_info(t_app *app)
  * 
  * cameralenght = directionlenght * tan(FOV / 2)
 */
-t_vector2	init_camera_plane(t_app *app)
+void	init_camera_plane(t_app *app)
 {
 	t_vector2	camera_plane;
 	double		camera_length;
 	double		direction_length;
 
-	direction_length = ft_vector_length((t_vector2){
-		DIRECTION_START_X,
-		DIRECTION_START_Y
-	});
-	camera_length = direction_length * tan(app->conf->fov * DEG_IN_RADIAN / 2.0f);
-	camera_plane = ft_vector_resize(ft_vector_perpendicular((t_vector2){
-		DIRECTION_START_X,
-		DIRECTION_START_Y
-	}), camera_length);
-	return (camera_plane);
+	direction_length = ft_vector_length(app->player.direction);
+	camera_length = direction_length * tan(app->conf->fov
+			* DEG_IN_RADIAN / 2.0f);
+	camera_plane = ft_vector_resize(ft_vector_perpendicular(
+				app->player.direction), camera_length);
+	app->player.camera_plane = camera_plane;
 }
 
 /**
