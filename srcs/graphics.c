@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 15:11:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:56:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void	render_multithreading(t_app *app)
 			exit_error(MSG_ERROR_THREADS_JOIN);
 		id++;
 	}
+	cast_objects(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 }
 

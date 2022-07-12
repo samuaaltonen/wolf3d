@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 15:10:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:59:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,12 @@ typedef struct s_player
 	t_vector2	camera_plane;
 }	t_player;
 
+typedef struct s_object
+{
+	t_vector2	position;
+	int			texture;
+}	t_object;
+
 typedef struct s_app
 {
 	t_conf			*conf;
@@ -125,6 +131,9 @@ typedef struct s_app
 	char			map[MAP_HEIGHT][MAP_WIDTH][4];
 	t_player		player;
 	t_image			*sprite;
+	t_image			*coin;
+	t_object		*objects;
+	int				object_count;
 }	t_app;
 
 typedef struct s_rayhit
@@ -186,5 +195,11 @@ void		render_multithreading(t_app *app);
  * Map
 */
 int			parse_map(t_app *app);
+
+/*
+ * Objects
+*/
+void		init_objects(t_app *app);
+void		cast_objects(t_app *app);
 
 #endif
