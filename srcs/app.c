@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 16:59:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 11:42:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,25 @@ static void	help_display(t_app *app)
 
 int	app_init(t_app **app)
 {
+	int x;
+	int y;
+
 	*app = (t_app *)malloc(sizeof(t_app));
-	if (!(*app))
+	if (!(*app) || !check_map(*app))
 		return (0);
+	(*app)->map = (char ***)malloc(sizeof(char *) * (*app)->map_size.y);
+	y = 0;
+	while (y < (*app)->map_size.y)
+	{
+		x = 0;
+		(*app)->map[y] = (char **)malloc(sizeof(char *) * (*app)->map_size.x);
+		while(x < (*app)->map_size.x)
+		{
+			(*app)->map[y][x] = (char *)malloc(sizeof(char) * 4);
+			x++;
+		}
+		y++;
+	}
 	return (1);
 }
 
