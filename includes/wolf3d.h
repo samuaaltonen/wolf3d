@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 16:16:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:10:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int			events_loop(t_app *app);
 */
 t_rayhit	raycast(t_app *app, int x);
 void		*render_view(void *data);
+void		render_background(t_app *app);
 void		render_multithreading(t_app *app);
 
 /*

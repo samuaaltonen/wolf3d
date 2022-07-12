@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 15:05:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:11:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,77 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	while (i < height)
 	{
 		tex_y += y_step;
-		if(1)
+		if(1) //toggle for cardinal texturing
 			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (rayhit.type - '0') * 64, (int)tex_y & (TEX_SIZE - 1)));
 		else
 			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + rayhit.direction * 64, (int)tex_y & (TEX_SIZE - 1)));
 
 		i++;
+	}
+}
+
+/*
+ * Draws horizontal scanline for the floor
+*/
+static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
+{
+
+	t_point		texture_coord;
+	t_point		coord;
+	int			x;
+
+	x = 0;
+
+		while (x++ < WIN_W)
+		{
+			
+			coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
+			texture_coord.x = (int)(TEX_SIZE * (floor_pos->x - coord.x)) & (TEX_SIZE - 1);
+			texture_coord.y = (int)(TEX_SIZE * (floor_pos->y - coord.y)) & (TEX_SIZE - 1);
+			floor_pos->x += step->x;
+			floor_pos->y += step->y;
+
+			put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x, texture_coord.y));
+			put_pixel_to_image(app->image, x, (abs)(y - WIN_H)  , get_pixel_color(app->sprite, texture_coord.x + (((int)floor_pos->x + (int)floor_pos->y) % 8) * 64, texture_coord.y));
+
+		}
+}
+
+static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
+{
+	t_vector2	ray_left;
+	t_vector2	ray_right;
+	int			ray_pos;
+	double		player_height;
+	double		distance;
+
+	ray_left = (t_vector2){app->player.direction.x - app->player.camera_plane.x, app->player.direction.y - app->player.camera_plane.y};
+	ray_right = (t_vector2){app->player.direction.x + app->player.camera_plane.x, app->player.direction.y + app->player.camera_plane.y};
+	ray_pos = y - WIN_H / 2;
+	player_height = 0.5 * WIN_H;
+
+	distance = player_height / ray_pos;
+	step->x = distance * (ray_right.x - ray_left.x) / WIN_W;
+	step->y = distance * (ray_right.y - ray_left.y) / WIN_W;
+	floor_pos->x = app->player.position.x + distance * ray_left.x;
+	floor_pos->y = app->player.position.y + distance * ray_left.y;
+}
+
+/*
+ * Simply render all the ground and floor
+*/
+void	render_background(t_app *app)
+{
+	int				y;
+	t_vector2		step;
+	t_vector2		floor_pos;
+
+	y = WIN_H / 2;
+	while (y < WIN_H)
+	{
+		floor_cast(app, y, &step, &floor_pos);
+		draw_horizontal_line(app, y, &step, &floor_pos);
+		y++;
 	}
 }
 
@@ -71,6 +136,7 @@ void	*render_view(void *data)
 	}
 	pthread_exit(NULL);
 }
+
 
 /*
  * Renders the current view of the player with multithreading.
@@ -97,3 +163,4 @@ void	render_multithreading(t_app *app)
 	}
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 }
+
