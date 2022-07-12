@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 10:42:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 11:40:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:15:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,5 +223,6 @@ double		ft_vector_length(t_vector2 a);
 t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix);
 t_vector2	ft_vector_perpendicular(t_vector2 a);
 t_vector2	ft_vector_resize(t_vector2 a, double size);
+t_matrix2	ft_matrix_inverse(t_matrix2 matrix);
 
 #endif

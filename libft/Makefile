@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/07/11 11:41:21 by saaltone         ###   ########.fr        #
+#    Updated: 2022/07/12 16:15:14 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ LIBFT_SOURCE_FILES=ft_putchar.c ft_memalloc.c ft_memdel.c ft_strnew.c \
 		  ft_superint_compare.c ft_superint_divide.c ft_superint_log10.c \
 		  ft_free_array.c ft_strchr_count.c ft_vector_length.c \
 		  ft_vector_multiply_matrix.c ft_vector_perpendicular.c \
-		  ft_vector_resize.c
+		  ft_vector_resize.c ft_matrix_inverse.c
 LIBFT_SOURCES=$(LIBFT_SOURCE_FILES:%.c=srcs/%.c)
 LIBFT_OBJECTS=$(LIBFT_SOURCE_FILES:%.c=%.o)
 LIBFT_INCLUDES=./includes
