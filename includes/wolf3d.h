@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 15:10:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:45:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ typedef struct s_app
 	void			*mlx;
 	void			*win;
 	t_thread_data	thread_info[THREADS_MAX];
-	char			map[MAP_HEIGHT][MAP_WIDTH][4];
+	t_point			map_size;
+	char			***map;
 	t_player		player;
 	t_image			*sprite;
 }	t_app;
@@ -186,5 +187,6 @@ void		render_multithreading(t_app *app);
  * Map
 */
 int			parse_map(t_app *app);
+int			check_map(t_app *app);
 
 #endif
