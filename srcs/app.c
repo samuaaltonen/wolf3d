@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 11:42:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:03:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,20 @@ int	app_init(t_app **app)
 	if (!(*app) || !check_map(*app))
 		return (0);
 	(*app)->map = (char ***)malloc(sizeof(char *) * (*app)->map_size.y);
+	if (!((*app)->map))
+		return (0);
 	y = 0;
 	while (y < (*app)->map_size.y)
 	{
 		x = 0;
 		(*app)->map[y] = (char **)malloc(sizeof(char *) * (*app)->map_size.x);
+		if (!((*app)->map[y]))
+			return (0);
 		while(x < (*app)->map_size.x)
 		{
 			(*app)->map[y][x] = (char *)malloc(sizeof(char) * 4);
+			if (!((*app)->map[y][x]))
+				return (0);
 			x++;
 		}
 		y++;
