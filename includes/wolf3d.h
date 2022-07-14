@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:46:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:29:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define MSG_ERROR_THREADS "Could not create a thread."
 # define MSG_ERROR_THREADS_JOIN "Could not join threads."
 # define MSG_ERROR_MAP_FILE_ACCESS "Could not open/close map file."
+# define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define THREADS_DEFAULT 8
 # define THREADS_MAX 32
@@ -34,6 +35,7 @@
 # define MAP_WIDTH 20
 # define MAP_HEIGHT 20
 # define MAP_BYTES 4
+# define MAP_MAX_OBJECT_IDS 9
 # define POSITION_START_X 10.f
 # define POSITION_START_Y 12.f
 # define DIRECTION_START_X 1.f
@@ -45,6 +47,7 @@
 # define ROTATION 0.05f
 # define MOVEMENT 1.f
 # define TEX_SIZE 64
+# define ANIMATION_MAX_SEQUENCE 64
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -85,6 +88,7 @@ typedef struct s_image
 	int		endian;
 	char	*img;
 	char	*data;
+	double	distance_offset;
 	t_point	texture_count;
 }	t_image;
 
@@ -100,6 +104,7 @@ typedef struct s_conf
 	double	delta_time;
 	int		thread_count;
 	int		fov;
+	int		object_step;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -119,7 +124,7 @@ typedef struct s_player
 typedef struct s_object
 {
 	t_vector2	position;
-	int			texture;
+	int			texture_id;
 	int			width;
 	int			height;
 }	t_object;
@@ -135,7 +140,7 @@ typedef struct s_app
 	char			***map;
 	t_player		player;
 	t_image			*sprite;
-	t_image			*coin;
+	t_image			*object_sprites[MAP_MAX_OBJECT_IDS];
 	t_object		*objects;
 	int				object_count;
 	double			distance_buffer[WIN_W];
@@ -206,6 +211,7 @@ int			check_map(t_app *app);
  * Objects
 */
 void		init_objects(t_app *app);
+void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
 
 #endif

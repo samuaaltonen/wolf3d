@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 14:58:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:25:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ void	app_run(t_app *app)
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
 	app->sprite = init_xpm_image(app->mlx, TEX_SIZE * 8, TEX_SIZE, "./wolftextures.xpm");
-	app->coin = init_xpm_image(app->mlx, TEX_SIZE * 64, TEX_SIZE, "./coin_spritesheet.xpm");
 	app->player = (t_player){
 		(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0, 0}
 	};
+	load_object_textures(app);
 	init_camera_plane(app);
-	if (!app->image || !app->sprite || !app->coin)
+	if (!app->image || !app->sprite)
 		exit_error(NULL);
 	app_render(app);
 	mlx_loop(app->mlx);
