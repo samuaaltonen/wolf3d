@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:03:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:34:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	app_init(t_app **app)
 			return (0);
 		while(x < (*app)->map_size.x)
 		{
-			(*app)->map[y][x] = (char *)malloc(sizeof(char) * 4);
+			(*app)->map[y][x] = (char *)malloc(sizeof(char) * MAP_BYTES);
 			if (!((*app)->map[y][x]))
 				return (0);
 			x++;

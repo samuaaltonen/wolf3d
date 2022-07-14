@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:38:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:43:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ int	parse_map(t_app *app)
 	int		skip;
 	int		fd;
 	char	buffer[app->map_size.y * app->map_size.x * 5 + 1];
+	int test;
 
 	fd = open(MAP_FILE, O_RDONLY);
 	if (fd < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
 	ft_bzero(buffer, app->map_size.y * app->map_size.x * 5 + 1);
-	if (read(fd, buffer, app->map_size.y * app->map_size.x * 5) < 0 || close(fd) < 0)
+	if ((test = read(fd, buffer, app->map_size.y * app->map_size.x * 5)) < 0 || close(fd) < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
 	if (!map_is_valid((char *)&buffer, app))
 		exit_error(MSG_ERROR_MAP_INVALID);
@@ -70,10 +71,10 @@ int	parse_map(t_app *app)
 			skip++;
 		else
 		{
-			app->map[i / app->map_size.y][i % app->map_size.x][0] = buffer[i + skip];
-			app->map[i / app->map_size.y][i % app->map_size.x][1] = buffer[i + ++skip];
-			app->map[i / app->map_size.y][i % app->map_size.x][2] = buffer[i + ++skip];
-			app->map[i / app->map_size.y][i % app->map_size.x][3] = buffer[i + ++skip];
+			app->map[i / app->map_size.x][i % app->map_size.x][0] = buffer[i + skip];
+			app->map[i / app->map_size.x][i % app->map_size.x][1] = buffer[i + ++skip];
+			app->map[i / app->map_size.x][i % app->map_size.x][2] = buffer[i + ++skip];
+			app->map[i / app->map_size.x][i % app->map_size.x][3] = buffer[i + ++skip];
 			i++;
 		}
 	}
@@ -111,5 +112,7 @@ int	check_map(t_app *app)
 	free(line);
 	app->map_size.y = line_count;
 	app->map_size.x = (line_length + 1) / 5;
+	ft_printf("%i x, %i y sizes\n", app->map_size.x, app->map_size.y);
+
 	return (1);
 }
