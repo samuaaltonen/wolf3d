@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 11:43:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:22:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ typedef struct s_object
 {
 	t_vector2	position;
 	int			texture;
+	int			width;
+	int			height;
 }	t_object;
 
 typedef struct s_app
@@ -135,6 +137,7 @@ typedef struct s_app
 	t_image			*coin;
 	t_object		*objects;
 	int				object_count;
+	double			distance_buffer[WIN_W];
 }	t_app;
 
 typedef struct s_rayhit
