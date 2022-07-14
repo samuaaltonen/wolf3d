@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 15:56:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:22:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	*render_view(void *data)
 	{
 		rayhit = raycast(app, x);
 		draw_vertical_line(app, x, (int)(WIN_H / rayhit.distance), rayhit);
+		app->distance_buffer[x] = rayhit.distance;
 		x++;
 	}
 	pthread_exit(NULL);
