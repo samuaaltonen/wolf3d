@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 14:43:07 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/14 17:02:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ static int	map_is_valid(char *data, t_app *app)
 		{
 			if (data[i] >= '0' && data[i] <= '9')
 				bytes++;
-			else if (data[i] == ' ' || data[i] == '\n')
+			else
 				return (0);
 		}
 		else if (bytes >= MAP_BYTES)
 		{
-			if (data[i] >= '0' && data[i] <= '9')
-				return (0);
-			else if (data[i] == ' ' || data[i] == '\n')
+			if (data[i] == ' ' || data[i] == '\n')
 				bytes = 0;
+			else
+				return (0);
 		}
 			i++;
 	}
