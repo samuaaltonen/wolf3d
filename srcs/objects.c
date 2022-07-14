@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:42:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:50:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_objects(t_app *app)
 			if (app->map[y][x][0] == '0' && app->map[y][x][3] > '0')
 			{
 				app->objects[i] = (t_object){
-					(t_vector2){(double)x, (double)y},
+					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
 					app->map[y][x][3] - '0', 0, 0
 				};
 				i++;
