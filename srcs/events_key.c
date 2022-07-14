@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 16:14:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:51:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 static int	is_collision(t_app *app, t_vector2 pos)
 {
-	if (pos.x >= MAP_WIDTH - 1 || pos.y >= MAP_HEIGHT - 1)
+	if (pos.x >= app->map_size.x - 1 || pos.y >= app->map_size.y - 1)
 		return (1);
 	if (pos.x < 0 || pos.y < 0)
 		return (1);

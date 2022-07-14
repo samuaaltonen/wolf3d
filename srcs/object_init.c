@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 15:29:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:49:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static int	get_object_count(t_app *app)
 
 	y = 0;
 	object_count = 0;
-	while (y < MAP_HEIGHT)
+	while (y < app->map_size.y)
 	{
 		x = 0;
-		while (x < MAP_WIDTH)
+		while (x < app->map_size.x)
 		{
 			if (app->map[y][x][0] == '0' && app->map[y][x][3] > '0')
 				object_count++;
