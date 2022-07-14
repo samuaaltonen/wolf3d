@@ -6,28 +6,40 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 16:47:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:38:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static int	map_is_valid(char *data)
+static int	map_is_valid(char *data, t_app *app)
 {
 	int	i;
+	int bytes;
 
 	if (!data)
 		return (0);
 	i = 0;
+	bytes = 0;
 	while (data[i])
 	{
-		if ((data[i] < '0' || data[i] > '9')
-			&& data[i] != ' '
-			&& data[i] != '\n')
-			return (0);
-		i++;
+		if (bytes < MAP_BYTES)
+		{
+			if (data[i] >= '0' && data[i] <= '9')
+				bytes++;
+			else if (data[i] == ' ' || data[i] == '\n')
+				return (0);
+		}
+		else if (bytes >= MAP_BYTES)
+		{
+			if (data[i] >= '0' && data[i] <= '9')
+				return (0);
+			else if (data[i] == ' ' || data[i] == '\n')
+				bytes = 0;
+		}
+			i++;
 	}
-	if (i < MAP_HEIGHT * MAP_WIDTH * 5 - 1)
+	if (!(i == app->map_size.y * app->map_size.x * 5 - 1))
 		return (0);
 	return (1);
 }
@@ -40,14 +52,15 @@ int	parse_map(t_app *app)
 	int		i;
 	int		skip;
 	int		fd;
-	char	buffer[MAP_HEIGHT * MAP_WIDTH * 5 + 1];
+	char	buffer[app->map_size.y * app->map_size.x * 5 + 1];
 
 	fd = open(MAP_FILE, O_RDONLY);
 	if (fd < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
-	if (read(fd, buffer, MAP_HEIGHT * MAP_WIDTH * 5) < 0 || close(fd) < 0)
+	ft_bzero(buffer, app->map_size.y * app->map_size.x * 5 + 1);
+	if (read(fd, buffer, app->map_size.y * app->map_size.x * 5) < 0 || close(fd) < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
-	if (!map_is_valid((char *)&buffer))
+	if (!map_is_valid((char *)&buffer, app))
 		exit_error(MSG_ERROR_MAP_INVALID);
 	i = 0;
 	skip = 0;
@@ -57,10 +70,10 @@ int	parse_map(t_app *app)
 			skip++;
 		else
 		{
-			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][0] = buffer[i + skip];
-			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][1] = buffer[i + ++skip];
-			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][2] = buffer[i + ++skip];
-			app->map[i / MAP_HEIGHT][i % MAP_WIDTH][3] = buffer[i + ++skip];
+			app->map[i / app->map_size.y][i % app->map_size.x][0] = buffer[i + skip];
+			app->map[i / app->map_size.y][i % app->map_size.x][1] = buffer[i + ++skip];
+			app->map[i / app->map_size.y][i % app->map_size.x][2] = buffer[i + ++skip];
+			app->map[i / app->map_size.y][i % app->map_size.x][3] = buffer[i + ++skip];
 			i++;
 		}
 	}
@@ -76,13 +89,14 @@ int	check_map(t_app *app)
 	int read;
 
 	line_length = 0;
-	line_count = 0;
+	line_count = -1;
 	read = 1;
 	fd = open(MAP_FILE, O_RDONLY);
 	if(fd < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
 	while(read > 0)
 	{
+		line_count++;
 		read = ft_get_next_line(fd, &line);
 		if(read < 0)
 			exit_error(MSG_ERROR);
@@ -93,10 +107,9 @@ int	check_map(t_app *app)
 			free(line);
 			exit_error(MSG_ERROR);
 		}
-		line_count++;
 	}
 	free(line);
 	app->map_size.y = line_count;
-	app->map_size.x = line_length;
+	app->map_size.x = (line_length + 1) / 5;
 	return (1);
 }

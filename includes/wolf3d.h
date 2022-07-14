@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:22:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:46:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define MAP_FILE "./map_quad.txt"
 # define MAP_WIDTH 20
 # define MAP_HEIGHT 20
+# define MAP_BYTES 4
 # define POSITION_START_X 10.f
 # define POSITION_START_Y 12.f
 # define DIRECTION_START_X 1.f
