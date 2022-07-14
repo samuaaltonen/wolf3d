@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:22:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:24:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	int			x;
 
 	x = 0;
-
+		
 		while (x++ < WIN_W)
 		{
 			
@@ -70,11 +70,18 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 			texture_coord.y = (int)(TEX_SIZE * (floor_pos->y - coord.y)) & (TEX_SIZE - 1);
 			floor_pos->x += step->x;
 			floor_pos->y += step->y;
-
-			put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x, texture_coord.y));
-			put_pixel_to_image(app->image, x, (abs)(y - WIN_H)  , get_pixel_color(app->sprite, texture_coord.x + (((int)floor_pos->x + (int)floor_pos->y) % 8) * 64, texture_coord.y));
-
+			if(floor_pos->x >= app->map_size.x)
+				continue;
+			if(floor_pos->y >= app->map_size.y)
+				continue;
+			if(floor_pos->x < 0)
+				continue;
+			if(floor_pos->y < 0)
+				continue;
+			put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - '0') * 64 , texture_coord.y));
+			put_pixel_to_image(app->image, x, (abs)(y - WIN_H)  , get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - '0') * 64, texture_coord.y));
 		}
+
 }
 
 static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
@@ -91,8 +98,8 @@ static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 	player_height = 0.5 * WIN_H;
 
 	distance = player_height / ray_pos;
-	step->x = distance * (ray_right.x - ray_left.x) / WIN_W;
-	step->y = distance * (ray_right.y - ray_left.y) / WIN_W;
+	step->x = distance * (ray_right.x - ray_left.x) / (double)WIN_W;
+	step->y = distance * (ray_right.y - ray_left.y) / (double)WIN_W;
 	floor_pos->x = app->player.position.x + distance * ray_left.x;
 	floor_pos->y = app->player.position.y + distance * ray_left.y;
 }
@@ -106,7 +113,7 @@ void	render_background(t_app *app)
 	t_vector2		step;
 	t_vector2		floor_pos;
 
-	y = WIN_H / 2;
+	y = WIN_H / 2 + 1;
 	while (y < WIN_H)
 	{
 		floor_cast(app, y, &step, &floor_pos);
@@ -163,6 +170,5 @@ void	render_multithreading(t_app *app)
 		id++;
 	}
 	cast_objects(app);
-	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 }
 
