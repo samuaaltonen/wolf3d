@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 14:57:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:02:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION 0.05f
-# define MOVEMENT 1.f
+# define MOVEMENT 0.75f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"

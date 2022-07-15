@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 15:51:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:00:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,27 @@ static void	handle_player_direction(int keycode, t_app *app)
 
 static void	handle_player_position(int keycode, t_app *app)
 {
+	t_vector2	perpendicular;
+	t_vector2	new_pos;
+
 	if (keycode == KEY_ARROW_UP || keycode == KEY_W)
-	{
-		if (!is_collision(app, (t_vector2){
-			app->player.position.x + app->player.direction.x * MOVEMENT, 
-			app->player.position.y + app->player.direction.y * MOVEMENT}))
-			app->player.position = (t_vector2){
-				app->player.position.x + app->player.direction.x * MOVEMENT,
-				app->player.position.y + app->player.direction.y * MOVEMENT
-			};
-	}
+		new_pos = (t_vector2){app->player.position.x + app->player.direction.x * MOVEMENT,
+				app->player.position.y + app->player.direction.y * MOVEMENT};
 	if (keycode == KEY_ARROW_DOWN || keycode == KEY_S)
+		new_pos = (t_vector2){app->player.position.x - app->player.direction.x * MOVEMENT, 
+			app->player.position.y - app->player.direction.y * MOVEMENT};
+	if (keycode == KEY_A || keycode == KEY_D)
 	{
-		if (!is_collision(app, (t_vector2){
-			app->player.position.x - app->player.direction.x * MOVEMENT, 
-			app->player.position.y - app->player.direction.y * MOVEMENT}))
-			app->player.position = (t_vector2){
-				app->player.position.x - app->player.direction.x * MOVEMENT,
-				app->player.position.y - app->player.direction.y * MOVEMENT
-			};
+		perpendicular = ft_vector_perpendicular(app->player.direction);
+		if (keycode == KEY_A)
+			new_pos = (t_vector2){app->player.position.x - perpendicular.x * MOVEMENT, 
+				app->player.position.y - perpendicular.y * MOVEMENT};
+		if (keycode == KEY_D)
+			new_pos = (t_vector2){app->player.position.x + perpendicular.x * MOVEMENT, 
+				app->player.position.y + perpendicular.y * MOVEMENT};
 	}
+	if ((keycode == KEY_ARROW_UP || keycode == KEY_ARROW_DOWN || keycode == KEY_W || keycode == KEY_S || keycode == KEY_A || keycode == KEY_D) && !is_collision(app, new_pos))
+		app->player.position = new_pos;
 }
 
 /*
