@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:59:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:55:27 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,25 @@ void	init_thread_info(t_app *app)
 {
 	int	i;
 	int	width_per_thread;
+	int height_per_thread;
 
 	i = 0;
 	width_per_thread = WIN_W / app->conf->thread_count;
+	height_per_thread = (WIN_H / 2) / app->conf->thread_count;
 	while (i < app->conf->thread_count && i < THREADS_MAX)
 	{
 		app->thread_info[i] = (t_thread_data){
 			app,
 			width_per_thread * i,
-			width_per_thread * (i + 1),
+			width_per_thread * (i + 1) - 1,
+			height_per_thread * i + WIN_H / 2 + 1,
+			height_per_thread * (i + 1) + WIN_H / 2,
+			i
 		};
 		i++;
 	}
-	app->thread_info[i].x_end = WIN_W - 1;
+	app->thread_info[i - 1].y_end = WIN_H - 1;
+	app->thread_info[i - 1].x_end = WIN_W - 1;
 }
 
 /**

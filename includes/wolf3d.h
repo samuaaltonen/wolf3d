@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 12:06:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:22:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ typedef struct s_thread_data
 	void	*app;
 	int		x_start;
 	int		x_end;
+	int		y_start;
+	int		y_end;
+	int		id;
 }	t_thread_data;
 
 typedef struct s_player
@@ -198,9 +201,8 @@ int			events_loop(t_app *app);
 int			raycast(t_app *app, int x, t_rayhit *rayhit);
 int			check_ray_pos(t_app *app, t_vector2 *ray);
 void		*render_view(void *data);
-void		render_background(t_app *app);
-void		render_multithreading(t_app *app);
-
+void		*render_background(void *data);
+void		render_multithreading(t_app *app, void *(*renderer)(void *));
 /*
  * Map
 */

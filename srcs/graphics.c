@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 13:18:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:54:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 		if(!check_ray_pos(app, floor_pos))
 			continue;
 		put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - '0') * 64 , texture_coord.y));
-		put_pixel_to_image(app->image, x, (abs)(y - WIN_H)  , get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - '0') * 64, texture_coord.y));
+		put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - '0') * 64, texture_coord.y));
 	}
 
 }
@@ -99,19 +99,23 @@ static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 /*
  * Simply render all the ground and floor
 */
-void	render_background(t_app *app)
+void	*render_background(void *data)
 {
+	t_thread_data	*t;
+	t_app			*app;
 	int				y;
 	t_vector2		step;
 	t_vector2		floor_pos;
 
-	y = WIN_H / 2 + 1;
-	while (y < WIN_H)
+	t = (t_thread_data *)data;
+	app = (t_app *)t->app;
+	y = t->y_start - 1;
+	while (++y <= t->y_end)
 	{
 		floor_cast(app, y, &step, &floor_pos);
 		draw_horizontal_line(app, y, &step, &floor_pos);
-		y++;
 	}
+	pthread_exit(NULL);
 }
 
 /*
@@ -127,7 +131,7 @@ void	*render_view(void *data)
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
 	x = t->x_start - 1;
-	while (++x < t->x_end)
+	while (++x <= t->x_end)
 	{
 		if(!raycast(app, x, &rayhit))
 			continue;
@@ -141,7 +145,7 @@ void	*render_view(void *data)
 /*
  * Renders the current view of the player with multithreading.
 */
-void	render_multithreading(t_app *app)
+void	render_multithreading(t_app *app, void *(*renderer)(void *))
 {
 	int			id;
 	pthread_t	thread_identifiers[THREADS_MAX];
@@ -149,7 +153,7 @@ void	render_multithreading(t_app *app)
 	id = 0;
 	while (id < app->conf->thread_count)
 	{
-		if (pthread_create(&thread_identifiers[id], NULL, render_view,
+		if (pthread_create(&thread_identifiers[id], NULL, renderer,
 				(void *)(&(app->thread_info)[id])))
 			exit_error(MSG_ERROR_THREADS);
 		id++;
@@ -163,4 +167,3 @@ void	render_multithreading(t_app *app)
 	}
 	cast_objects(app);
 }
-
