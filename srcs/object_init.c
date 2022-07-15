@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 15:49:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:21:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	init_objects(t_app *app)
 			{
 				app->objects[i] = (t_object){
 					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
-					app->map[y][x][3] - '0', 0, 0
+					app->map[y][x][3] - '0' - 1, 0, 0
 				};
 				i++;
 			}
@@ -75,16 +75,27 @@ void	init_objects(t_app *app)
 */
 void	load_object_textures(t_app *app)
 {
-	int					i;
-	static const char	*texture_ids[MAP_MAX_OBJECT_IDS] = {
-		"./coin_spritesheet.xpm"
+	int							i;
+	static const t_sprite_data	sprite_infos[] = {
+		{TEXTURE_COIN_SPIN, NULL, 1.0f, 0, 64},
+		{TEXTURE_COIN_WHIRL, NULL, 1.0f, 0, 64},
+		{TEXTURE_PILLAR, NULL, 1.0f, 0, 64},
+		{TEXTURE_CANNON, NULL, 1.0f, 0, 64},
+		{NULL, NULL, 0, 0, 0}
 	};
 
 	i = 0;
-	while (i < MAP_MAX_OBJECT_IDS && texture_ids[i])
+	while (i < MAP_MAX_OBJECT_IDS && sprite_infos[i].path)
 	{
-		app->object_sprites[i + 1] = init_xpm_image(app->mlx, TEX_SIZE * 64, TEX_SIZE, (char *)texture_ids[i]);
-		if (!(app->object_sprites[i + 1]))
+		app->object_sprites[i] = (t_sprite_data) {
+			sprite_infos[i].path,
+			init_xpm_image(app->mlx, TEX_SIZE, TEX_SIZE, sprite_infos[i].path),
+			sprite_infos[i].offset_multiplier,
+			sprite_infos[i].animation_step,
+			0
+		};
+		app->object_sprites[i].total_steps = app->object_sprites[i].image->width / TEX_SIZE;
+		if (!(app->object_sprites[i].image))
 			exit_error(MSG_ERROR_TEXTURE_FILE_ACCESS);
 		i++;
 	}

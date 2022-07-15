@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 14:22:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:57:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,16 @@
 # define POSITION_START_Y 12.f
 # define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0
-# define CAMERA_START_X 0.f
-# define CAMERA_START_Y 0.66f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION 0.05f
 # define MOVEMENT 1.f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
-# define ANIMATION_MAX_SEQUENCE 64
+# define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
+# define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
+# define TEXTURE_PILLAR "./assets/pillar_64.xpm"
+# define TEXTURE_CANNON "./assets/cannon_64.xpm"
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -87,8 +88,6 @@ typedef struct s_image
 	int		endian;
 	char	*img;
 	char	*data;
-	double	distance_offset;
-	t_point	texture_count;
 }	t_image;
 
 typedef struct s_conf
@@ -103,7 +102,6 @@ typedef struct s_conf
 	double	delta_time;
 	int		thread_count;
 	int		fov;
-	int		object_step;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -116,6 +114,15 @@ typedef struct s_thread_data
 	int		id;
 }	t_thread_data;
 
+typedef struct s_sprite_data
+{
+	char	*path;
+	t_image	*image;
+	double	offset_multiplier;
+	int		animation_step;
+	int		total_steps;
+}	t_sprite_data;
+
 typedef struct s_player
 {
 	t_vector2	position;
@@ -126,7 +133,7 @@ typedef struct s_player
 typedef struct s_object
 {
 	t_vector2	position;
-	int			texture_id;
+	int			sprite_id;
 	int			width;
 	int			height;
 }	t_object;
@@ -142,8 +149,8 @@ typedef struct s_app
 	char			***map;
 	t_player		player;
 	t_image			*sprite;
-	t_image			*object_sprites[MAP_MAX_OBJECT_IDS];
 	t_object		*objects;
+	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
 	double			distance_buffer[WIN_W];
 }	t_app;

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 17:02:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:38:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,9 @@ int	check_map(t_app *app)
 			free(line);
 			exit_error(MSG_ERROR);
 		}
+		if(read > 0)
+			free(line);
 	}
-	free(line);
 	app->map_size.y = line_count;
 	app->map_size.x = (line_length + 1) / 5;
 	ft_printf("%i x, %i y sizes\n", app->map_size.x, app->map_size.y);
