@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 12:06:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:00:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define ANIMATION_MAX_SEQUENCE 64
+# define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
+# define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
+# define TEXTURE_PILLAR "./assets/pillar_64.xpm"
+# define TEXTURE_CANNON "./assets/cannon_64.xpm"
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -113,6 +117,15 @@ typedef struct s_thread_data
 	int		x_end;
 }	t_thread_data;
 
+typedef struct s_sprite_data
+{
+	char	*path;
+	t_image	*image;
+	double	offset_multiplier;
+	int		animation_step;
+	int		total_steps;
+}	t_sprite_data;
+
 typedef struct s_player
 {
 	t_vector2	position;
@@ -123,7 +136,7 @@ typedef struct s_player
 typedef struct s_object
 {
 	t_vector2	position;
-	int			texture_id;
+	int			sprite_id;
 	int			width;
 	int			height;
 }	t_object;
@@ -139,8 +152,8 @@ typedef struct s_app
 	char			***map;
 	t_player		player;
 	t_image			*sprite;
-	t_image			*object_sprites[MAP_MAX_OBJECT_IDS];
 	t_object		*objects;
+	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
 	double			distance_buffer[WIN_W];
 }	t_app;
