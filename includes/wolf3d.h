@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 15:50:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:06:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION 0.05f
 # define MOVEMENT 1.f
+# define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define ANIMATION_MAX_SEQUENCE 64
 # include <fcntl.h>
@@ -194,7 +195,8 @@ int			events_loop(t_app *app);
 /*
  * Graphics
 */
-t_rayhit	raycast(t_app *app, int x);
+int			raycast(t_app *app, int x, t_rayhit *rayhit);
+int			check_ray_pos(t_app *app, t_vector2 *ray);
 void		*render_view(void *data);
 void		render_background(t_app *app);
 void		render_multithreading(t_app *app);

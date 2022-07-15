@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 16:24:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:18:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,19 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	t_point		coord;
 	int			x;
 
-	x = 0;
-		
-		while (x++ < WIN_W)
-		{
-			
-			coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
-			texture_coord.x = (int)(TEX_SIZE * (floor_pos->x - coord.x)) & (TEX_SIZE - 1);
-			texture_coord.y = (int)(TEX_SIZE * (floor_pos->y - coord.y)) & (TEX_SIZE - 1);
-			floor_pos->x += step->x;
-			floor_pos->y += step->y;
-			if(floor_pos->x >= app->map_size.x)
-				continue;
-			if(floor_pos->y >= app->map_size.y)
-				continue;
-			if(floor_pos->x < 0)
-				continue;
-			if(floor_pos->y < 0)
-				continue;
-			put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - '0') * 64 , texture_coord.y));
-			put_pixel_to_image(app->image, x, (abs)(y - WIN_H)  , get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - '0') * 64, texture_coord.y));
-		}
+	x = -1;
+	while (++x < WIN_W)
+	{
+		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
+		texture_coord.x = (int)(TEX_SIZE * (floor_pos->x - coord.x)) & (TEX_SIZE - 1);
+		texture_coord.y = (int)(TEX_SIZE * (floor_pos->y - coord.y)) & (TEX_SIZE - 1);
+		floor_pos->x += step->x;
+		floor_pos->y += step->y;
+		if(!check_ray_pos(app, floor_pos))
+			continue;
+		put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - '0') * 64 , texture_coord.y));
+		put_pixel_to_image(app->image, x, (abs)(y - WIN_H)  , get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - '0') * 64, texture_coord.y));
+	}
 
 }
 
@@ -134,13 +126,13 @@ void	*render_view(void *data)
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
-	x = t->x_start;
-	while (x < t->x_end)
+	x = t->x_start - 1;
+	while (++x < t->x_end)
 	{
-		rayhit = raycast(app, x);
+		if(!raycast(app, x, &rayhit))
+			continue;
 		draw_vertical_line(app, x, (int)(WIN_H / rayhit.distance), rayhit);
 		app->distance_buffer[x] = rayhit.distance;
-		x++;
 	}
 	pthread_exit(NULL);
 }
