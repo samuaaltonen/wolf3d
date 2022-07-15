@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 14:19:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:48:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	progress_animations(t_app *app)
 int	events_loop(t_app *app)
 {
 	progress_animations(app);
+	//mlx_hook(app->win, ON_KEYDOWN, 0, events_keydown, app);
 	app_render(app);
-	mlx_put_image_to_window(app->mlx,app->win,app->sprite->img,0,0);
 	return (0);
 }
