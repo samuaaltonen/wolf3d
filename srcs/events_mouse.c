@@ -6,14 +6,14 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/09 14:16:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:04:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
 /*
- * Handles events for mouse..
+ * Handles events for mouse key down.
 */
 int	events_mouse_down(int mousecode, int x, int y, t_app *app)
 {
@@ -25,7 +25,7 @@ int	events_mouse_down(int mousecode, int x, int y, t_app *app)
 }
 
 /*
- * Handles events for mouse..
+ * Handles events for mouse key up.
 */
 int	events_mouse_up(int mousecode, int x, int y, t_app *app)
 {
@@ -37,13 +37,18 @@ int	events_mouse_up(int mousecode, int x, int y, t_app *app)
 }
 
 /*
- * Tracks mouse position and sets initial c value depending on mouse
- * coordinates. (This is used in Julia set).
+ * Tracks mouse position and changes player direction accordingly.
 */
 int	events_mouse_track(int x, int y, t_app *app)
 {
-	(void) x;
-	(void) y;
-	(void) app;
+	t_point	delta;
+
+	if (app->conf->mouse_position.x != 0 && app->conf->mouse_position.y != 0)
+	{
+		delta.x = x - app->conf->mouse_position.x;
+		if (delta.x != 0)
+			player_rotate(app, ROTATION * (double) delta.x / MOUSE_SENSITIVITY);
+	}
+	app->conf->mouse_position = (t_point){x, y};
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 15:02:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:04:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define MOVEMENT 0.75f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
+# define MOUSE_SENSITIVITY 25.f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
@@ -102,6 +103,7 @@ typedef struct s_conf
 	double	delta_time;
 	int		thread_count;
 	int		fov;
+	t_point	mouse_position;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -116,11 +118,11 @@ typedef struct s_thread_data
 
 typedef struct s_sprite_data
 {
-	char	*path;
-	t_image	*image;
-	double	offset_multiplier;
-	int		animation_step;
-	int		total_steps;
+	char		*path;
+	t_image		*image;
+	double		offset_multiplier;
+	int			animation_step;
+	int			total_steps;
 }	t_sprite_data;
 
 typedef struct s_player
@@ -222,5 +224,10 @@ int			check_map(t_app *app);
 void		init_objects(t_app *app);
 void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
+
+/**
+ * Player
+*/
+void		player_rotate(t_app *app, double angle);
 
 #endif

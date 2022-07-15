@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 15:00:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:24:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,10 @@ static int	is_collision(t_app *app, t_vector2 pos)
 
 static void	handle_player_direction(int keycode, t_app *app)
 {
-	double	temp;
-
 	if (keycode == KEY_ARROW_RIGHT)
-	{
-		temp = app->player.direction.x;
-		app->player.direction.x = app->player.direction.x * cos(ROTATION) - app->player.direction.y * sin(ROTATION);
-		app->player.direction.y = temp * sin(ROTATION) + app->player.direction.y * cos(ROTATION);
-		temp = app->player.camera_plane.x;
-		app->player.camera_plane.x = app->player.camera_plane.x * cos(ROTATION) - app->player.camera_plane.y * sin(ROTATION);
-		app->player.camera_plane.y = temp * sin(ROTATION) + app->player.camera_plane.y * cos(ROTATION);
-	}
+		player_rotate(app, ROTATION);
 	if (keycode == KEY_ARROW_LEFT)
-	{
-		temp = app->player.direction.x;
-		app->player.direction.x = app->player.direction.x * cos(-ROTATION) - app->player.direction.y * sin(-ROTATION);
-		app->player.direction.y = temp * sin(-ROTATION) + app->player.direction.y * cos(-ROTATION);
-		temp = app->player.camera_plane.x;
-		app->player.camera_plane.x = app->player.camera_plane.x * cos(-ROTATION) - app->player.camera_plane.y * sin(-ROTATION);
-		app->player.camera_plane.y = temp * sin(-ROTATION) + app->player.camera_plane.y * cos(-ROTATION);
-	}
+		player_rotate(app, -ROTATION);
 }
 
 static void	handle_player_position(int keycode, t_app *app)
