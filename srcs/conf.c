@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/14 13:59:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:19:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	conf_init(t_app *app)
 	app->conf->win_h = WIN_H;
 	app->conf->thread_count = THREADS_DEFAULT;
 	app->conf->fov = FOV;
-	app->conf->object_step = 0;
 	init_thread_info(app);
 	init_objects(app);
 	return (1);

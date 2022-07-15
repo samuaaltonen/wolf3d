@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 14:03:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:21:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ void	load_object_textures(t_app *app)
 			init_xpm_image(app->mlx, TEX_SIZE, TEX_SIZE, sprite_infos[i].path),
 			sprite_infos[i].offset_multiplier,
 			sprite_infos[i].animation_step,
-			sprite_infos[i].total_steps
+			0
 		};
+		app->object_sprites[i].total_steps = app->object_sprites[i].image->width / TEX_SIZE;
 		if (!(app->object_sprites[i].image))
 			exit_error(MSG_ERROR_TEXTURE_FILE_ACCESS);
 		i++;

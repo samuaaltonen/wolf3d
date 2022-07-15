@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 13:54:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:22:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	draw_object(t_app *app, t_vector2 *transform, int index, int screen_x)
 			while(y < draw_end.y)
 			{
 				texture_pixel.y = (y - WIN_H / 2+ app->objects[index].height / 2) * TEX_SIZE / app->objects[index].height;
-				color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, texture_pixel.x + app->conf->object_step * TEX_SIZE, texture_pixel.y);
+				color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, texture_pixel.x + app->object_sprites[app->objects[index].sprite_id].animation_step * TEX_SIZE, texture_pixel.y);
 				if (color > 0)
 					put_pixel_to_image(app->image, x, y, color);
 				y++;

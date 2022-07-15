@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 14:00:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:23:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@
 # define POSITION_START_Y 12.f
 # define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0
-# define CAMERA_START_X 0.f
-# define CAMERA_START_Y 0.66f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION 0.05f
 # define MOVEMENT 1.f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
-# define ANIMATION_MAX_SEQUENCE 64
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
@@ -91,8 +88,6 @@ typedef struct s_image
 	int		endian;
 	char	*img;
 	char	*data;
-	double	distance_offset;
-	t_point	texture_count;
 }	t_image;
 
 typedef struct s_conf
@@ -107,7 +102,6 @@ typedef struct s_conf
 	double	delta_time;
 	int		thread_count;
 	int		fov;
-	int		object_step;
 }	t_conf;
 
 typedef struct s_thread_data
