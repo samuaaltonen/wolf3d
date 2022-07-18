@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 14:09:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:39:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define THREADS_MAX 32
 # define MAP_FILE "./map_quad.txt"
 # define MAP_BYTES 4
+# define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
 # define POSITION_START_X 10.f
 # define POSITION_START_Y 12.f

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 14:20:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:42:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,10 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 */
 int	get_pixel_color(t_image *image, int x, int y)
 {
-	int		bytes;
 	int		pixel_pos;
 	char	*pixel;
 
-	bytes = image->bpp / 8;
-	pixel_pos = (y * image->line_size) + (x * bytes);
+	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
 	if (pixel_pos < 0 || x > image->width || y > image->height)
 		return (0);
 	pixel = image->data + pixel_pos;
