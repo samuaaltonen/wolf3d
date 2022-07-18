@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 16:04:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:31:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # endif
 # define WOLF3D_H
 # define WIN_NAME "Wolf 3D"
-# define WIN_W 1920
-# define WIN_H 1080
+# define WIN_W 1280
+# define WIN_H 1000
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
 # define MSG_ERROR_ALLOC "Could not allocate memory."
@@ -49,6 +49,7 @@
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
 # define TEXTURE_CANNON "./assets/cannon_64.xpm"
+# define TEXTURE_PANELS "./assets/texture_spritesheet.xpm"
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -138,6 +139,7 @@ typedef struct s_object
 	int			sprite_id;
 	int			width;
 	int			height;
+	t_vector2	render_step;
 }	t_object;
 
 typedef struct s_app

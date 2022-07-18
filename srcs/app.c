@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 16:39:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:09:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	app_run(t_app *app)
 	mlx_hook(app->win, ON_MOUSEUP, 0, events_mouse_up, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
-	app->sprite = init_xpm_image(app->mlx, TEX_SIZE * 8, TEX_SIZE, "./wolftextures.xpm");
+	app->sprite = init_xpm_image(app->mlx, TEX_SIZE * 8, TEX_SIZE, TEXTURE_PANELS);
 	app->player = (t_player){
 		(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
