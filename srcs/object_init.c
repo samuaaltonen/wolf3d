@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 11:54:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:35:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	init_objects(t_app *app)
 			{
 				app->objects[i] = (t_object){
 					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
-					app->map[y][x][3] - '0' - 1, 0, 0
+					app->map[y][x][3] - '0' - 1, 0, 0,
+					(t_vector2){0.f,0.f}
 				};
 				i++;
 			}

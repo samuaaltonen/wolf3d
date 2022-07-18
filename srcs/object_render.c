@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 14:22:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:22:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ void	draw_object(t_app *app, t_vector2 *transform, int index, int screen_x)
 {
 	t_point	draw_start;
 	t_point	draw_end;
-	t_point	texture_pixel;
+	//t_point	texture_pixel;
 	int		x;
 	int		y;
 	int		color;
+	double	texture_step;
 
 	draw_start.x = -app->objects[index].width / 2 + screen_x;
 	draw_start.y = -app->objects[index].height / 2 + WIN_H / 2;
@@ -33,21 +34,31 @@ void	draw_object(t_app *app, t_vector2 *transform, int index, int screen_x)
 		draw_end.x = WIN_W - 1;
 	if (draw_end.y >= WIN_H)
 		draw_end.y = WIN_H - 1;
-	x = draw_start.x;
-	while (x < draw_end.x)
+	x = draw_start.x - 1;
+
+	
+	texture_step = TEX_SIZE / (double)(app->objects[index].width);
+	t_vector2 texture_pixel;
+
+
+	texture_pixel.x = 0;
+	if(draw_end.x - draw_start.x < app->objects[index].width && draw_end.x < WIN_W - 1)
+		texture_pixel.x = (draw_start.x - draw_end.x) * texture_step;
+	while (++x < draw_end.x)
 	{
-		texture_pixel.x = (x - (-app->objects[index].width / 2 + screen_x)) * TEX_SIZE / app->objects[index].width;
 		y = draw_start.y;
+		texture_pixel.y = 0;
 		if (transform->y > 0 && transform->y < app->distance_buffer[x])
-			while(y < draw_end.y)
-			{
-				texture_pixel.y = (y - WIN_H / 2+ app->objects[index].height / 2) * TEX_SIZE / app->objects[index].height;
-				color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, texture_pixel.x + app->object_sprites[app->objects[index].sprite_id].animation_step * TEX_SIZE, texture_pixel.y);
-				if (color > 0)
-					put_pixel_to_image(app->image, x, y, color);
-				y++;
-			}
-		x++;
+		{
+		while(++y < draw_end.y)
+		{
+		color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, texture_pixel.x + app->object_sprites[app->objects[index].sprite_id].animation_step * TEX_SIZE, texture_pixel.y);
+			if (color > 0)
+				put_pixel_to_image(app->image, x, y, color | 0x16000000);
+		texture_pixel.y += texture_step;
+		}
+		}
+		texture_pixel.x += texture_step;
 	}
 }
 
