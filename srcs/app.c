@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 15:58:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:39:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	app_run(t_app *app)
 	app->mlx = mlx_init();
 	app->win = mlx_new_window(app->mlx, app->conf->win_w,
 			app->conf->win_h, app->conf->win_name);
+	mlx_do_key_autorepeatoff(app->mlx);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
 	mlx_hook(app->win, ON_KEYUP, 0, events_keyup, app);

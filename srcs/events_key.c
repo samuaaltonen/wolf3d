@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 15:24:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:25:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	handle_player_position(int keycode, t_app *app)
 */
 int	events_keyup(int keycode, t_app *app)
 {
+	ft_printf("Keyup: %i\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(EXIT_SUCCESS);
 	if (keycode == KEY_H)
