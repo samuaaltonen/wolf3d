@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 16:39:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:29:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ static void	help_display(t_app *app)
 {
 	int					i;
 	static const char	*h[] = {
-		"[u]     Decrease FOV", "[i]     Increase FOV",
-		"[esc]   Exit", NULL,
+		"[arrow left]       Rotate left" , "[arrow right]      Rotate right",
+		"[arrow up]/[w]     Move forward", "[arrow down]\[s]   Move backward",
+		"[a]                Move left",    "[d]                Move right",
+		"[u]                Decrease FOV", "[i]                Increase FOV",
+		"[esc]              Exit", NULL,
 	};
 
 	flush_image(app->image);

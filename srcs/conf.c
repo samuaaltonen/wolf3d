@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 15:18:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:37:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	conf_init(t_app *app)
 	app->conf->thread_count = THREADS_DEFAULT;
 	app->conf->fov = FOV;
 	app->conf->mouse_position = (t_point){0, 0};
+	app->conf->keystates = 0;
 	init_thread_info(app);
 	init_objects(app);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 16:04:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:09:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # define DIRECTION_START_Y 0
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
-# define ROTATION 0.05f
-# define MOVEMENT 0.75f
+# define ROTATION 0.025f
+# define MOVEMENT 0.0625f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define MOUSE_SENSITIVITY 25.f
@@ -74,6 +74,24 @@ typedef enum e_cardinal {
 	WEST = 3
 }	t_cardinal;
 
+typedef enum e_movement {
+	FORWARD = 0,
+	BACKWARD = 1,
+	LEFT = 2,
+	RIGHT = 3
+}	t_movement;
+
+enum e_keystates {
+	FORWARD_DOWN = 1,
+	FORWARD_W_DOWN = 2,
+	BACKWARD_DOWN = 4,
+	BACKWARD_S_DOWN = 8,
+	LEFT_DOWN = 16,
+	RIGHT_DOWN = 32,
+	ROTATE_LEFT_DOWN = 64,
+	ROTATE_RIGHT_DOWN = 128
+};
+
 typedef struct s_point
 {
 	int	x;
@@ -104,6 +122,7 @@ typedef struct s_conf
 	int		thread_count;
 	int		fov;
 	t_point	mouse_position;
+	int		keystates;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -229,5 +248,6 @@ void		cast_objects(t_app *app);
  * Player
 */
 void		player_rotate(t_app *app, double angle);
+void		player_move(t_app *app, t_movement movement, double speed);
 
 #endif
