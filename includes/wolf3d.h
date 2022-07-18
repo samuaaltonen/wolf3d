@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 14:39:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:45:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@
 # define DIRECTION_START_Y 0
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
-# define ROTATION 0.025f
-# define MOVEMENT 0.0625f
+# define ROTATION_SPEED 0.03125f
+# define MOVEMENT_SPEED 0.0625f
+# define TARGET_FRAME_TIME 0.01666f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define MOUSE_SENSITIVITY 25.f
+# define FPS_UPDATE_FREQUENCY 0.0625f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
@@ -117,13 +119,15 @@ typedef struct s_conf
 	int		win_h;
 	int		toggle_help;
 	int		fps;
-	int		fps_time;
+	clock_t	fps_clock;
 	int		fps_count;
 	double	delta_time;
 	int		thread_count;
 	int		fov;
 	t_point	mouse_position;
 	int		keystates;
+	double	movement_speed;
+	double	rotation_speed;
 }	t_conf;
 
 typedef struct s_thread_data

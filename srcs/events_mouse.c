@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/15 16:04:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:52:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	events_mouse_track(int x, int y, t_app *app)
 	{
 		delta.x = x - app->conf->mouse_position.x;
 		if (delta.x != 0)
-			player_rotate(app, ROTATION * (double) delta.x / MOUSE_SENSITIVITY);
+			player_rotate(app, app->conf->rotation_speed * (double) delta.x / MOUSE_SENSITIVITY);
 	}
 	app->conf->mouse_position = (t_point){x, y};
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 14:30:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:25:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ static void	progress_animations(t_app *app)
 static void	handle_movement(t_app *app)
 {
 	if (app->conf->keystates & FORWARD_DOWN || app->conf->keystates & FORWARD_W_DOWN)
-		player_move(app, FORWARD, MOVEMENT);
+		player_move(app, FORWARD, app->conf->movement_speed);
 	if (app->conf->keystates & BACKWARD_DOWN || app->conf->keystates & BACKWARD_S_DOWN)
-		player_move(app, BACKWARD, MOVEMENT);
+		player_move(app, BACKWARD, app->conf->movement_speed);
 	if (app->conf->keystates & LEFT_DOWN)
-		player_move(app, LEFT, MOVEMENT);
+		player_move(app, LEFT, app->conf->movement_speed);
 	if (app->conf->keystates & RIGHT_DOWN)
-		player_move(app, RIGHT, MOVEMENT);
+		player_move(app, RIGHT, app->conf->movement_speed);
 	if (app->conf->keystates & ROTATE_LEFT_DOWN)
-		player_rotate(app, -ROTATION);
+		player_rotate(app, -app->conf->rotation_speed);
 	if (app->conf->keystates & ROTATE_RIGHT_DOWN)
-		player_rotate(app, ROTATION);
+		player_rotate(app, app->conf->rotation_speed);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 13:37:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:42:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,14 @@ int	conf_init(t_app *app)
 	app->conf->toggle_help = 0;
 	app->conf->win_w = WIN_W;
 	app->conf->win_h = WIN_H;
+	app->conf->fps_count = 1;
+	app->conf->fps_clock = clock();
 	app->conf->thread_count = THREADS_DEFAULT;
 	app->conf->fov = FOV;
 	app->conf->mouse_position = (t_point){0, 0};
 	app->conf->keystates = 0;
+	app->conf->movement_speed = MOVEMENT_SPEED;
+	app->conf->rotation_speed = ROTATION_SPEED;
 	init_thread_info(app);
 	init_objects(app);
 	return (1);
