@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:53:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/11 16:05:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:31:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ enum e_keybinds {
 	KEY_ARROW_LEFT = 123,
 	KEY_ARROW_RIGHT = 124,
 	KEY_PGUP = 116,
-	KEY_PGDOWN = 121,
+	KEY_PGDOWN = 121
+};
+
+enum e_mousebinds {
 	MOUSE_CLICK_LEFT = 1,
 	MOUSE_SCROLL_UP = 4,
 	MOUSE_SCROLL_DOWN = 5

@@ -6,36 +6,44 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 13:09:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:24:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
 /*
- * Calculates FPS and displays it.
+ * Calculates FPS and scales movement speeds according to frame time. 
 */
 static void	update_fps_counter(t_app *app)
 {
-	int	time_since;
+	double	time_since;
 
 	app->conf->fps_count++;
-	if (time(NULL) > app->conf->fps_time + 2)
+	time_since = (clock() - app->conf->fps_clock) / (double) CLOCKS_PER_SEC;
+	if (time_since > FPS_UPDATE_FREQUENCY)
 	{
-		time_since = time(NULL) - app->conf->fps_time;
-		app->conf->fps = app->conf->fps_count / time_since;
+		app->conf->fps = (int) (app->conf->fps_count / time_since);
 		app->conf->delta_time = time_since / (double) app->conf->fps_count;
-		app->conf->fps_time = time(NULL);
-		app->conf->fps_count = 0;
+		app->conf->fps_clock = clock();
+		app->conf->fps_count = 1;
+		app->conf->movement_speed = MOVEMENT_SPEED * app->conf->delta_time / TARGET_FRAME_TIME;
+		app->conf->rotation_speed = ROTATION_SPEED * app->conf->delta_time / TARGET_FRAME_TIME;
 	}
 }
 
+/**
+ * Displays help manu.
+*/
 static void	help_display(t_app *app)
 {
 	int					i;
 	static const char	*h[] = {
-		"[u]     Decrease FOV", "[i]     Increase FOV",
-		"[esc]   Exit", NULL,
+		"[arrow left]       Rotate left" , "[arrow right]      Rotate right",
+		"[arrow up]/[w]     Move forward", "[arrow down]\[s]   Move backward",
+		"[a]                Move left",    "[d]                Move right",
+		"[u]                Decrease FOV", "[i]                Increase FOV",
+		"[esc]              Exit", NULL,
 	};
 
 	flush_image(app->image);

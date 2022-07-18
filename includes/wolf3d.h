@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 13:31:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:24:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define THREADS_MAX 32
 # define MAP_FILE "./map_quad.txt"
 # define MAP_BYTES 4
+# define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
 # define POSITION_START_X 10.f
 # define POSITION_START_Y 12.f
@@ -40,11 +41,13 @@
 # define DIRECTION_START_Y 0
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
-# define ROTATION 0.05f
-# define MOVEMENT 0.75f
+# define ROTATION_SPEED 0.03125f
+# define MOVEMENT_SPEED 0.0625f
+# define TARGET_FRAME_TIME 0.01666f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define MOUSE_SENSITIVITY 25.f
+# define FPS_UPDATE_FREQUENCY 0.0625f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
@@ -75,6 +78,24 @@ typedef enum e_cardinal {
 	WEST = 3
 }	t_cardinal;
 
+typedef enum e_movement {
+	FORWARD = 0,
+	BACKWARD = 1,
+	LEFT = 2,
+	RIGHT = 3
+}	t_movement;
+
+enum e_keystates {
+	FORWARD_DOWN = 1,
+	FORWARD_W_DOWN = 2,
+	BACKWARD_DOWN = 4,
+	BACKWARD_S_DOWN = 8,
+	LEFT_DOWN = 16,
+	RIGHT_DOWN = 32,
+	ROTATE_LEFT_DOWN = 64,
+	ROTATE_RIGHT_DOWN = 128
+};
+
 typedef struct s_point
 {
 	int	x;
@@ -99,12 +120,15 @@ typedef struct s_conf
 	int		win_h;
 	int		toggle_help;
 	int		fps;
-	int		fps_time;
+	clock_t	fps_clock;
 	int		fps_count;
 	double	delta_time;
 	int		thread_count;
 	int		fov;
 	t_point	mouse_position;
+	int		keystates;
+	double	movement_speed;
+	double	rotation_speed;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -231,5 +255,6 @@ void		cast_objects(t_app *app);
  * Player
 */
 void		player_rotate(t_app *app, double angle);
+void		player_move(t_app *app, t_movement movement, double speed);
 
 #endif
