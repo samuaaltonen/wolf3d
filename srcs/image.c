@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 14:42:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:32:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,22 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 	pixel = image->data + pixel_pos;
 	*(int *)pixel = color;
 }
+
+void	put_pixel_to_image_depth(t_image *image, int x, int y, int color)
+{
+	int		bytes;
+	int		pixel_pos;
+	char	*pixel;
+
+	bytes = image->bpp / 8;
+	pixel_pos = (y * image->line_size) + (x * bytes);
+	if (pixel_pos < 0 || x >= image->width || y >= image->height)
+		return ;
+	pixel = image->data + pixel_pos;
+	if(*(int *)pixel >> 24 == 0 || *(int *)pixel >> 24 > color >> 24)
+		*(int *)pixel = color;
+}
+
 
 /*
  * Returns pixel color at given position.

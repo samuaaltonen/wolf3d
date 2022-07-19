@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 17:24:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:23:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	app_render(t_app *app)
 	flush_image(app->image);
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_view);
+	render_multithreading(app, render_objects);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	temp = ft_itoa(app->conf->fps);

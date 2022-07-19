@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 17:24:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:31:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ typedef struct s_app
 	t_object		*objects;
 	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
+	int				objects_pool_size;
 	double			distance_buffer[WIN_W];
 }	t_app;
 
@@ -215,6 +216,7 @@ void		app_render(t_app *app);
 */
 t_image		*init_image(void *mlx, int x, int y);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
+void		put_pixel_to_image_depth(t_image *image, int x, int y, int color);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
 t_image		*init_xpm_image(void *mlx, int width, int height, char *path);
@@ -237,6 +239,7 @@ int			raycast(t_app *app, int x, t_rayhit *rayhit);
 int			check_ray_pos(t_app *app, t_vector2 *ray);
 void		*render_view(void *data);
 void		*render_background(void *data);
+void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
 /*
  * Map
@@ -247,6 +250,7 @@ int			check_map(t_app *app);
 /*
  * Objects
 */
+void		draw_object(t_app *app, t_vector2 *transform, int index, int screen_x, int depth);
 void		init_objects(t_app *app);
 void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
