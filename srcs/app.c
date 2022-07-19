@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 14:23:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:37:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	help_display(t_app *app)
 	int					i;
 	static const char	*h[] = {
 		"[arrow left]       Rotate left" , "[arrow right]      Rotate right",
-		"[arrow up]/[w]     Move forward", "[arrow down]\[s]   Move backward",
+		"[arrow up]/[w]     Move forward", "[arrow down]/[s]   Move backward",
 		"[a]                Move left",    "[d]                Move right",
 		"[u]                Decrease FOV", "[i]                Increase FOV",
 		"[esc]              Exit", NULL,

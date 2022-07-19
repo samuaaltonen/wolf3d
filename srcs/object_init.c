@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 14:04:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:48:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,6 @@ void	init_objects(t_app *app)
 		}
 	}
 	app->object_count = i;
-	if(i > app->conf->thread_count)
-		app->objects_pool_size = i / app->conf->thread_count;
-	app->objects_pool_size =  app->conf->thread_count / i;
-
 }
 
 /**

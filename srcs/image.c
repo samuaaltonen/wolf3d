@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 13:32:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:35:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,28 @@ t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
 */
 void	put_pixel_to_image(t_image *image, int x, int y, int color)
 {
-	int		bytes;
 	int		pixel_pos;
 	char	*pixel;
 
-	bytes = image->bpp / 8;
-	pixel_pos = (y * image->line_size) + (x * bytes);
+	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
 	if (pixel_pos < 0 || x >= image->width || y >= image->height)
 		return ;
 	pixel = image->data + pixel_pos;
 	*(int *)pixel = color;
 }
 
-void	put_pixel_to_image_depth(t_image *image, int x, int y, int color)
+void	put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color)
 {
-	int		bytes;
 	int		pixel_pos;
 	char	*pixel;
+	unsigned int	depth;
 
-	bytes = image->bpp / 8;
-	pixel_pos = (y * image->line_size) + (x * bytes);
+	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
 	if (pixel_pos < 0 || x >= image->width || y >= image->height)
 		return ;
 	pixel = image->data + pixel_pos;
-	if(*(int *)pixel >> 24 == 0 || *(int *)pixel >> 24 > color >> 24)
+	depth = *(int *)pixel >> 24;
+	if(depth == 0 || depth > (color >> 24))
 		*(int *)pixel = color;
 }
 

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 14:31:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:05:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void		app_render(t_app *app);
 */
 t_image		*init_image(void *mlx, int x, int y);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
-void		put_pixel_to_image_depth(t_image *image, int x, int y, int color);
+void		put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
 t_image		*init_xpm_image(void *mlx, int width, int height, char *path);

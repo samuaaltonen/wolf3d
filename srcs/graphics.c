@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 14:31:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:52:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,14 @@ void	*render_objects(void *data)
 	t_app			*app;
 	int				i;
 	t_vector2		dist;
-	double		distance;
+	double			distance;
 	t_vector2		transform;
 	int				screen_x;
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
 	i = t->id;
-	while (i <= t->id * app->objects_pool_size)
+	while (i <= (t->id + 1) * app->objects_pool_size)
 	{
 		if(i < app->object_count)
 		{
