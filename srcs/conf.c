@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 15:55:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:03:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void	init_thread_info(t_app *app)
 
 	i = 0;
 	width_per_thread = WIN_W / app->conf->thread_count;
-	height_per_thread = (WIN_H / 2) / app->conf->thread_count;
+	height_per_thread = (WIN_H * 0.5f) / app->conf->thread_count;
 	while (i < app->conf->thread_count && i < THREADS_MAX)
 	{
 		app->thread_info[i] = (t_thread_data){
 			app,
 			width_per_thread * i,
 			width_per_thread * (i + 1) - 1,
-			height_per_thread * i + WIN_H / 2 + 1,
-			height_per_thread * (i + 1) + WIN_H / 2,
+			height_per_thread * i + WIN_H * 0.5f + 1,
+			height_per_thread * (i + 1) + WIN_H * 0.5f,
 			i
 		};
 		i++;
@@ -85,9 +85,9 @@ int	conf_init(t_app *app)
 	app->conf->rotation_speed = ROTATION_SPEED;
 	init_thread_info(app);
 	init_objects(app);
-	if(app->object_count > app->conf->thread_count)
+	if (app->object_count > app->conf->thread_count)
 		app->objects_pool_size = app->object_count / app->conf->thread_count;
 	else
-		app->objects_pool_size =  app->conf->thread_count / app->object_count;
+		app->objects_pool_size = app->object_count;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 13:19:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:45:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ void	*render_objects(void *data)
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
-	i = t->id;
-	while (i <= (t->id + 1) * app->objects_pool_size)
+	i = t->id - 1;
+	while (++i <= (t->id + 1) * app->objects_pool_size)
 	{
 		if(i < app->object_count)
 		{
@@ -148,15 +148,24 @@ void	*render_objects(void *data)
 			app->player.direction
 		}));
 		distance = ft_vector_length(dist);
+
+		if ((transform.y / distance < 0.75f))
+			continue;
+
+		double rad = atan2(dist.x, dist.y);
+		if(rad < 0)
+			rad = rad + 2 * M_PI;
+		rad = rad * (180 / M_PI);
+		app->objects[i].frame_id = (rad * 64 / 360);
+		//ft_printf("%i\n", (int)(rad * 64 / 360));
 		if(distance > MAX_RAY_DISTANCE)
 			distance = MAX_RAY_DISTANCE;
 		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
-		draw_object(app, &transform, i, screen_x, (int)(255 / MAX_RAY_DISTANCE * distance));
+		draw_object(app, i, screen_x, (int)(255 / MAX_RAY_DISTANCE * distance));
 		}
-		i++;
 	}
 	pthread_exit(NULL);
 }

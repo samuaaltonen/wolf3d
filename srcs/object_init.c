@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 13:19:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:50:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,16 @@ static int	get_object_count(t_app *app)
 	int	y;
 	int	object_count;
 
-	y = 0;
+	y = -1;
 	object_count = 0;
-	while (y < app->map_size.y)
+	while (++y < app->map_size.y)
 	{
-		x = 0;
-		while (x < app->map_size.x)
+		x = -1;
+		while (++x < app->map_size.x)
 		{
 			if (app->map[y][x][0] == 'A' && app->map[y][x][3] > 'A')
 				object_count++;
-			x++;
 		}
-		y++;
 	}
 	return (object_count);
 }
@@ -61,8 +59,7 @@ void	init_objects(t_app *app)
 			{
 				app->objects[i] = (t_object){
 					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
-					app->map[y][x][3] - 'A' - 1, 0, 0,
-					(t_vector2){0.f,0.f}
+					app->map[y][x][3] - 'A' - 1, 0, 0, 0
 				};
 				i++;
 			}

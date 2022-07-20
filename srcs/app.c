@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 13:12:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:20:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@
 static void	update_fps_counter(t_app *app)
 {
 	double	time_since;
+	clock_t	time_now;
 
 	app->conf->fps_count++;
-	time_since = (clock() - app->conf->fps_clock) / (double) CLOCKS_PER_SEC;
+	time_now = clock();
+	time_since = (time_now - app->conf->fps_clock) / (double) CLOCKS_PER_SEC;
 	if (time_since > FPS_UPDATE_FREQUENCY)
 	{
 		app->conf->fps = (int) (app->conf->fps_count / time_since);
 		app->conf->delta_time = time_since / (double) app->conf->fps_count;
-		app->conf->fps_clock = clock();
+		app->conf->fps_clock = time_now;
 		app->conf->fps_count = 1;
-		app->conf->movement_speed = MOVEMENT_SPEED * app->conf->delta_time / TARGET_FRAME_TIME;
-		app->conf->rotation_speed = ROTATION_SPEED * app->conf->delta_time / TARGET_FRAME_TIME;
+		app->conf->movement_speed = MOVEMENT_SPEED * app->conf->delta_time ;
+		app->conf->rotation_speed = ROTATION_SPEED * app->conf->delta_time ;
 	}
 }
 
@@ -58,8 +60,8 @@ static void	help_display(t_app *app)
 
 int	app_init(t_app **app)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	*app = (t_app *)malloc(sizeof(t_app));
 	if (!(*app) || !check_map(*app))
@@ -67,21 +69,19 @@ int	app_init(t_app **app)
 	(*app)->map = (char ***)malloc(sizeof(char *) * (*app)->map_size.y);
 	if (!((*app)->map))
 		return (0);
-	y = 0;
-	while (y < (*app)->map_size.y)
+	y = -1;
+	while (++y < (*app)->map_size.y)
 	{
-		x = 0;
+		x = -1;
 		(*app)->map[y] = (char **)malloc(sizeof(char *) * (*app)->map_size.x);
 		if (!((*app)->map[y]))
 			return (0);
-		while(x < (*app)->map_size.x)
+		while (++x < (*app)->map_size.x)
 		{
 			(*app)->map[y][x] = (char *)malloc(sizeof(char) * MAP_BYTES);
 			if (!((*app)->map[y][x]))
 				return (0);
-			x++;
 		}
-		y++;
 	}
 	return (1);
 }
@@ -91,6 +91,7 @@ void	app_run(t_app *app)
 	app->mlx = mlx_init();
 	app->win = mlx_new_window(app->mlx, app->conf->win_w,
 			app->conf->win_h, app->conf->win_name);
+	app->fps_info = ft_strnew(3);
 	mlx_do_key_autorepeatoff(app->mlx);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
@@ -102,12 +103,12 @@ void	app_run(t_app *app)
 	mlx_hook(app->win, ON_MOUSEUP, 0, events_mouse_up, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
-	app->sprite = init_xpm_image(app->mlx, TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
+	app->sprite = init_xpm_image(app->mlx,
+		TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
 	app->player = (t_player){
 		(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2){0, 0}
-	};
+		(t_vector2){0, 0}};
 	load_object_textures(app);
 	init_camera_plane(app);
 	if (!app->image || !app->sprite)
@@ -118,8 +119,6 @@ void	app_run(t_app *app)
 
 void	app_render(t_app *app)
 {
-	char	*temp;
-
 	if (app->conf->toggle_help)
 		return (help_display(app));
 	update_fps_counter(app);
@@ -129,8 +128,9 @@ void	app_render(t_app *app)
 	render_multithreading(app, render_objects);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
-	temp = ft_itoa(app->conf->fps);
+	app->fps_info[0] = app->conf->fps / 10 / 10 % 10 + '0';
+	app->fps_info[1] = app->conf->fps / 10 % 10 + '0';
+	app->fps_info[2] = app->conf->fps % 10 + '0';
 	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, "FPS:");
-	mlx_string_put(app->mlx, app->win, 120, 20, 0xFFFFFF, temp);
-	free(temp);
+	mlx_string_put(app->mlx, app->win, 120, 20, 0xFFFFFF, app->fps_info);
 }

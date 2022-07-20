@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 13:24:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:52:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MSG_ERROR_MAP_FILE_ACCESS "Could not open/close map file."
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
-# define THREADS_DEFAULT 8
+# define THREADS_DEFAULT 1
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
@@ -41,9 +41,8 @@
 # define DIRECTION_START_Y 0
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
-# define ROTATION_SPEED 0.03125f
-# define MOVEMENT_SPEED 0.0625f
-# define TARGET_FRAME_TIME 0.01666f
+# define ROTATION_SPEED 1.8f
+# define MOVEMENT_SPEED 3.2f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define TEX_COUNT 10
@@ -164,7 +163,7 @@ typedef struct s_object
 	int			sprite_id;
 	int			width;
 	int			height;
-	t_vector2	render_step;
+	int			frame_id;
 }	t_object;
 
 typedef struct s_app
@@ -182,7 +181,7 @@ typedef struct s_app
 	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
 	int				objects_pool_size;
-	double			distance_buffer[WIN_W];
+	char			*fps_info;
 }	t_app;
 
 typedef struct s_rayhit
@@ -251,7 +250,7 @@ int			check_map(t_app *app);
 /*
  * Objects
 */
-void		draw_object(t_app *app, t_vector2 *transform, int index, int screen_x, int depth);
+void		draw_object(t_app *app, int index, int screen_x, int depth);
 void		init_objects(t_app *app);
 void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
