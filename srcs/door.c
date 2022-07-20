@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:11:42 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 16:32:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:44:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,18 @@ void	init_doors(t_app *app)
 */
 void	door_action(t_app *app)
 {
-	(void)app;
+	int		i;
+	double	distance;
+
+	i = -1;
+	while (++i < app->door_count)
+	{
+		distance = ft_vector_length((t_vector2){
+			app->doors[i].position.x - app->player.position.x,
+			app->doors[i].position.y - app->player.position.y
+		});
+		if (distance > DOOR_ACTION_DISTANCE_THRESHOLD)
+			continue;
+		ft_printf("Actiion on door at (%f, %f)\n", app->doors[i].position.x, app->doors[i].position.y);
+	}
 }

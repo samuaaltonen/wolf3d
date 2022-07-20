@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 16:09:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:45:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define DOOR_MAP_IDENTIFIER 'L'
 # define DOOR_ANIMATION_DURATION 1.f
 # define DOOR_CLOSING_THRESHOLD 10.f
+# define DOOR_ACTION_DISTANCE_THRESHOLD 2.f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
