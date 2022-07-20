@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 15:41:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:57:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= LEFT_DOWN;
 	if (keycode == KEY_D)
 		app->conf->keystates ^= RIGHT_DOWN;
+	if (keycode == KEY_F)
+		door_action(app);
 	if (keycode == KEY_ESC)
 		exit(EXIT_SUCCESS);
 	if (keycode == KEY_H)

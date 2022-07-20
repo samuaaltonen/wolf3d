@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:11:42 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 15:55:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:32:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_doors(t_app *app)
 			if (app->map[y][x][0] == DOOR_MAP_IDENTIFIER)
 			{
 				app->doors[i] = (t_door){
-					(t_point){x, y},
+					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
 					CLOSED,
 					0.f
 				};

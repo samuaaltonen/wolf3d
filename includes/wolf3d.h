@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 15:38:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:09:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define DOOR_MAP_IDENTIFIER 'L'
+# define DOOR_ANIMATION_DURATION 1.f
+# define DOOR_CLOSING_THRESHOLD 10.f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
@@ -177,9 +179,9 @@ typedef struct s_object
 
 typedef struct s_door
 {
-	t_point			coords;
-	t_doorstate		state;
-	double			animation_step;
+	t_vector2	position;
+	t_doorstate	state;
+	double		animation_step;
 }	t_door;
 
 typedef struct s_app
@@ -283,5 +285,6 @@ void		player_move(t_app *app, t_movement movement, double speed);
  * Doors
 */
 void		init_doors(t_app *app);
+void		door_action(t_app *app);
 
 #endif
