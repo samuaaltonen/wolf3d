@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 15:52:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 13:19:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	{
 		tex_y += y_step;
 		if(1) //toggle for cardinal texturing
-			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (rayhit.type - '0') * 64, (int)tex_y & (TEX_SIZE - 1)) | ((int)rayhit.distance << 24));
+			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (rayhit.type - 'A') * 64, (int)tex_y & (TEX_SIZE - 1)) | ((int)rayhit.distance << 24));
 		else
 			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + rayhit.direction * 64, (int)tex_y & (TEX_SIZE - 1)));
 
@@ -73,8 +73,8 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 		floor_pos->y += step->y;
 		if(!check_ray_pos(app, floor_pos))
 			continue;
-		put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - '0') * TEX_SIZE , texture_coord.y));
-		put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - '0') * TEX_SIZE, texture_coord.y));
+		put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y));
+		put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y));
 	}
 
 }

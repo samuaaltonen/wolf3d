@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 16:05:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 13:24:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define THREADS_DEFAULT 8
 # define THREADS_MAX 32
-# define MAP_FILE "./map_quad.txt"
+# define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
@@ -46,6 +46,7 @@
 # define TARGET_FRAME_TIME 0.01666f
 # define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
+# define TEX_COUNT 10
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
