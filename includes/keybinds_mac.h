@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:53:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 13:31:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:42:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ enum e_keybinds {
 	KEY_A = 0,
 	KEY_S = 1,
 	KEY_D = 2,
+	KEY_F = 3,
 	KEY_H = 4,
 	KEY_U = 32,
 	KEY_I = 34,

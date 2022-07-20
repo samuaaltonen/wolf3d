@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 13:24:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:38:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define TEX_COUNT 10
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
+# define DOOR_MAP_IDENTIFIER 'L'
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
@@ -86,7 +87,7 @@ typedef enum e_movement {
 	RIGHT = 3
 }	t_movement;
 
-enum e_keystates {
+enum e_keystate {
 	FORWARD_DOWN = 1,
 	FORWARD_W_DOWN = 2,
 	BACKWARD_DOWN = 4,
@@ -96,6 +97,13 @@ enum e_keystates {
 	ROTATE_LEFT_DOWN = 64,
 	ROTATE_RIGHT_DOWN = 128
 };
+
+typedef enum e_doorstate {
+	CLOSED = 0,
+	OPEN = 1,
+	CLOSING = 2,
+	OPENING = 3
+}	t_doorstate;
 
 typedef struct s_point
 {
@@ -167,6 +175,13 @@ typedef struct s_object
 	t_vector2	render_step;
 }	t_object;
 
+typedef struct s_door
+{
+	t_point			coords;
+	t_doorstate		state;
+	double			animation_step;
+}	t_door;
+
 typedef struct s_app
 {
 	t_conf			*conf;
@@ -179,6 +194,8 @@ typedef struct s_app
 	t_player		player;
 	t_image			*sprite;
 	t_object		*objects;
+	t_door			*doors;
+	int				door_count;
 	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
 	int				objects_pool_size;
@@ -261,5 +278,10 @@ void		cast_objects(t_app *app);
 */
 void		player_rotate(t_app *app, double angle);
 void		player_move(t_app *app, t_movement movement, double speed);
+
+/**
+ * Doors
+*/
+void		init_doors(t_app *app);
 
 #endif

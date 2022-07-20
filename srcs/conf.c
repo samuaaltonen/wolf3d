@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 15:55:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/20 15:37:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	conf_init(t_app *app)
 	app->conf->rotation_speed = ROTATION_SPEED;
 	init_thread_info(app);
 	init_objects(app);
+	init_doors(app);
 	if(app->object_count > app->conf->thread_count)
 		app->objects_pool_size = app->object_count / app->conf->thread_count;
 	else
