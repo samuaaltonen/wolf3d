@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/18 15:25:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:41:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	handle_movement(t_app *app)
 int	events_loop(t_app *app)
 {
 	progress_animations(app);
+	progress_doors(app);
 	handle_movement(app);
 	app_render(app);
 	return (0);
