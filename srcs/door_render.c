@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 16:41:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:28:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,9 @@ static void	draw_door(t_app *app, int x, int h, t_rayhit rayhit, double offset)
 
 	y_step = (TEX_SIZE / (double)h);
 	tex_y = 0;
-	if (h > WIN_H)
-	{
-		tex_y = (h - WIN_H) / 2 * y_step;
-		h = WIN_H;
-	}
 	start_pixel = WIN_H / 2 - h / 2;
 	end_pixel = WIN_H / 2 + h / 2;
 	start_pixel += (int)(offset * (double)(end_pixel - start_pixel));
-	if (start_pixel < 0)
-		start_pixel = 0;
 	if (end_pixel >= WIN_H)
 		end_pixel = WIN_H - 1;
 	i = 0;
@@ -63,7 +56,8 @@ static void	draw_door(t_app *app, int x, int h, t_rayhit rayhit, double offset)
 	while (i < h)
 	{
 		tex_y += y_step;
-		put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (DOOR_MAP_IDENTIFIER - 'A' - 1) * 64, (int)tex_y & (TEX_SIZE - 1)) | ((int)rayhit.distance << 24));
+		if (start_pixel + i > 0)
+			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (DOOR_MAP_IDENTIFIER - 'A' - 1) * 64, (int)tex_y & (TEX_SIZE - 1)) | ((int)rayhit.distance << 24));
 		i++;
 	}
 }
