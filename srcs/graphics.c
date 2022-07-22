@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 18:08:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:09:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 		tex_y = (height - WIN_H) / 2 * y_step;
 		height = WIN_H;
 	}
-	start_pixel = WIN_H / 2 - height / 2;
+	start_pixel = WIN_H / 2 - height / 2 - 1;
 	end_pixel = WIN_H / 2 + height / 2;
 	if (start_pixel < 0)
 		start_pixel = 0;
@@ -40,8 +40,8 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	i = 0;
 	if(rayhit.distance > MAX_RAY_DISTANCE)
 		rayhit.distance = MAX_RAY_DISTANCE;
-	rayhit.distance = 255 / MAX_RAY_DISTANCE * rayhit.distance;
-	while (i < height)
+	rayhit.distance = 255 / MAX_RAY_DISTANCE * rayhit.distance + 1.f;
+	while (i < height + 1)
 	{
 		tex_y += y_step;
 		if(1) //toggle for cardinal texturing
@@ -62,8 +62,14 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	t_point		texture_coord;
 	t_point		coord;
 	int			x;
+	double		distance;
 
+	distance = 0.5 * WIN_H / (y - WIN_H / 2);
 	x = -1;
+	if(distance > MAX_RAY_DISTANCE)
+			distance = MAX_RAY_DISTANCE;
+		distance = 255 / MAX_RAY_DISTANCE * distance + 1;
+
 	while (++x < WIN_W)
 	{
 		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
@@ -73,10 +79,9 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 		floor_pos->y += step->y;
 		if(!check_ray_pos(app, floor_pos))
 			continue;
-		put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y));
-		put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y));
+		put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y) | ((int)distance << 24));
+		put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y) | ((int)distance << 24));
 	}
-
 }
 
 static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
@@ -89,8 +94,8 @@ static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 
 	ray_left = (t_vector2){app->player.direction.x - app->player.camera_plane.x, app->player.direction.y - app->player.camera_plane.y};
 	ray_right = (t_vector2){app->player.direction.x + app->player.camera_plane.x, app->player.direction.y + app->player.camera_plane.y};
-	ray_pos = y - WIN_H / 2;
-	player_height = 0.5 * WIN_H;
+	ray_pos = y - WIN_H * 0.5f;
+	player_height = 0.5f * WIN_H;
 
 	distance = player_height / ray_pos;
 	step->x = distance * (ray_right.x - ray_left.x) / (double)WIN_W;
@@ -162,14 +167,14 @@ void	*render_objects(void *data)
 			app->objects[i].frame_id = ((int)(rad * 64 / 360) % 64);
 		if(app->objects[i].sprite_id < 2)
 			app->objects[i].frame_id = app->object_sprites[app->objects[i].sprite_id].animation_step;
-		ft_printf("%i\n", ((app->objects[i].frame_id)));
+		//ft_printf("%i\n", ((app->objects[i].frame_id)));
 		if(distance > MAX_RAY_DISTANCE)
 			distance = MAX_RAY_DISTANCE;
 		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
-		draw_object(app, i, screen_x, (int)(255 / MAX_RAY_DISTANCE * distance));
+		draw_object(app, i, screen_x, (int)(255 / MAX_RAY_DISTANCE * distance + 1.f));
 		}
 	}
 	pthread_exit(NULL);

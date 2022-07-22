@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 18:08:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:09:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 50.f
+# define MAX_RAY_DISTANCE 25.f
 # define TEX_SIZE 64
 # define TEX_COUNT 10
+# define DEPTH 0
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define DOOR_MAP_IDENTIFIER 'L'

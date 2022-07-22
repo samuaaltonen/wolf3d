@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/19 16:35:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:54:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
 	return (image);
 }
 
+static int	add_shade(double shade, int color)
+{
+        return ((((color & 0xFF000000))) |
+				(int)(((color & 0xFF0000) >> 16) * shade) << 16 |
+            	(int)(((color & 0x00FF00) >> 8) * shade) << 8 |
+                (int)(((color & 0x0000FF)) * shade));
+}
+
 /* 
  * Changes color of specific pixel in image.
  *
@@ -72,6 +80,9 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 	if (pixel_pos < 0 || x >= image->width || y >= image->height)
 		return ;
 	pixel = image->data + pixel_pos;
+	if(DEPTH)
+		color = ((color >> 8) & 0xFF0000) | (color & 0xFF000000); 
+	color = add_shade(1.f - ((color & 0xFF000000) >> 24) / 255.f , color);
 	*(int *)pixel = color;
 }
 
@@ -86,7 +97,10 @@ void	put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color)
 		return ;
 	pixel = image->data + pixel_pos;
 	depth = *(int *)pixel >> 24;
-	if(depth == 0 || depth > (color >> 24))
+	if(DEPTH)
+		color = ((color >> 8) & 0xFF0000) | (color & 0xFF000000); 
+	color = add_shade(1.f - ((color & 0xFF000000) >> 24) / 255.f , color);
+	if(depth == 0 || !(depth <= (color >> 24)))
 		*(int *)pixel = color;
 }
 

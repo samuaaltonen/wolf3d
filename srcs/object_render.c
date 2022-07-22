@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 14:43:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:00:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	draw_object(t_app *app, int index, int screen_x, int depth)
 	t_vector2	texture_step;
 	t_vector2 texture_pixel;
 
-	draw_start.x = -app->objects[index].width / 2 + screen_x;
-	draw_start.y = -app->objects[index].height / 2 + WIN_H / 2;
-	draw_end.x = app->objects[index].width / 2 + screen_x;
-	draw_end.y = app->objects[index].height / 2 + WIN_H / 2;
+	draw_start.x = -app->objects[index].width * 0.5f + screen_x;
+	draw_start.y = -app->objects[index].height * 0.5f + WIN_H * 0.5f;
+	draw_end.x = app->objects[index].width * 0.5f + screen_x;
+	draw_end.y = app->objects[index].height * 0.5f + WIN_H * 0.5f;
 	if (draw_start.x < 0)
 		draw_start.x = 0;
 	if (draw_start.y < 0)
@@ -39,16 +39,18 @@ void	draw_object(t_app *app, int index, int screen_x, int depth)
 
 	
 	texture_step.x = TEX_SIZE / (double)(app->objects[index].width);
-	texture_step.y = TEX_SIZE / (double)(app->objects[index].width);
+	texture_step.y = TEX_SIZE / (double)(app->objects[index].height);
 	texture_pixel.x = 0.f;
 	if(draw_end.x - draw_start.x < app->objects[index].width - 1 && draw_end.x < WIN_W - 1)
 		texture_pixel.x = (draw_start.x - draw_end.x) * texture_step.x + 64.f;
-	//ft_printf("pixel offset %i\n", (int)texture_pixel.x + app->objects[index].frame_id * TEX_SIZE);
+
+	//ft_printf("start.y %i, end.y %i, height %i, new value %i\n", draw_start.y, draw_end.y, app->objects[index].height, (draw_start.y - draw_end.y) * texture_step.y + 64.f);
 	while (++x < draw_end.x)
 	{
 		y = draw_start.y;
-		texture_pixel.y = -1;
-
+		texture_pixel.y = 1;
+		if(draw_end.y - draw_start.y < app->objects[index].height - 1 && draw_end.y < WIN_H - 1)
+			texture_pixel.y = (draw_start.y - draw_end.y) * texture_step.y + 64.f;
 		while(++y < draw_end.y)
 		{
 		color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, (int)texture_pixel.x - ((app->objects[index].frame_id) * TEX_SIZE) - TEX_SIZE, texture_pixel.y);
@@ -56,7 +58,6 @@ void	draw_object(t_app *app, int index, int screen_x, int depth)
 			put_pixel_to_image_depth(app->image, x, y, color | (depth << 24));
 		texture_pixel.y += texture_step.y;
 		}
-		
 		texture_pixel.x += texture_step.x;
 	}
 }

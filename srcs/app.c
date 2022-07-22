@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 15:42:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:09:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	app_render(t_app *app)
 		return (help_display(app));
 	update_fps_counter(app);
 	flush_image(app->image);
+	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_view);
 	render_multithreading(app, render_objects);
