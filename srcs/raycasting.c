@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 13:19:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 16:22:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 				pos->x += 1.f;
 			if(!check_ray_pos(app, pos))
 				return((t_vector2){MAX_RAY_DISTANCE, 0.f});
-			if (app->map[(int) pos->y][(int) pos->x][0] > 'A')
+			if (app->map[(int) pos->y][(int) pos->x][0] > 'A' && (app->conf->render_moving_doors || app->map[(int) pos->y][(int) pos->x][0] != DOOR_MAP_IDENTIFIER_MOVING))
 				return ((t_vector2){side_dist.x - delta_dist->x, -1.0f});
 			continue ;
 		}
@@ -78,7 +78,7 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 			pos->y += 1.f;
 		if(!check_ray_pos(app, pos))
 				return((t_vector2){MAX_RAY_DISTANCE, 0.f});
-		if (app->map[(int) pos->y][(int) pos->x][0] > 'A')
+		if (app->map[(int) pos->y][(int) pos->x][0] > 'A' && (app->conf->render_moving_doors || app->map[(int) pos->y][(int) pos->x][0] != DOOR_MAP_IDENTIFIER_MOVING))
 			return ((t_vector2){side_dist.y - delta_dist->y, 1.0f});
 	}
 }
@@ -118,8 +118,9 @@ int	check_ray_pos(t_app *app, t_vector2 *ray)
 	return(1);
 }
 
-/*
- * Casts a ray with given x coordinate (window coordinate).
+/**
+ * Casts a ray with given x coordinate (window coordinate). Returns 1 on wall
+ * hit.
 */
 int			raycast(t_app *app, int x, t_rayhit *rayhit)
 {
@@ -141,7 +142,8 @@ int			raycast(t_app *app, int x, t_rayhit *rayhit)
 		get_cardinal(app, &pos, dda.y),
 		app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos, dda.y)] - 1,
 		get_texture_hit_x(&pos, dda, ray),
-		dda.x
+		dda.x,
+		pos
 	};
 	return (1);
 }

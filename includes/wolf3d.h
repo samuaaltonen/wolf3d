@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 14:41:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/22 16:34:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 # define TEX_COUNT 10
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
-# define EMPTY_MAP_IDENTIFIER 'A'
 # define DOOR_MAP_IDENTIFIER 'L'
+# define DOOR_MAP_IDENTIFIER_MOVING 'Z'
 # define DOOR_ANIMATION_DURATION 1.f
 # define DOOR_CLOSING_THRESHOLD 5.f
 # define DOOR_ACTION_DISTANCE_THRESHOLD 2.f
@@ -141,6 +141,8 @@ typedef struct s_conf
 	int		keystates;
 	double	movement_speed;
 	double	rotation_speed;
+	int		has_moving_doors;
+	int		render_moving_doors;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -209,9 +211,10 @@ typedef struct s_app
 typedef struct s_rayhit
 {
 	t_cardinal	direction;
-	int			type;
+	char		type;
 	int			tex_x;
 	double		distance;
+	t_vector2	hit_pos;
 }	t_rayhit;
 
 /*
@@ -290,5 +293,6 @@ void		player_move(t_app *app, t_movement movement, double speed);
 void		init_doors(t_app *app);
 void		door_action(t_app *app);
 void		progress_doors(t_app *app);
+void		render_moving_doors(t_app *app);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 16:52:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 15:42:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ void	app_render(t_app *app)
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_view);
 	render_multithreading(app, render_objects);
+	if (app->conf->has_moving_doors)
+		render_moving_doors(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	app->fps_info[0] = app->conf->fps / 10 / 10 % 10 + '0';

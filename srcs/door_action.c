@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 14:40:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/22 16:49:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	door_update(t_app *app, int index, t_doorstate state)
 	if (state == CLOSED)
 		app->map[(int) app->doors[index].position.y][(int) app->doors[index].position.x][0] = DOOR_MAP_IDENTIFIER;
 	else
-		app->map[(int) app->doors[index].position.y][(int) app->doors[index].position.x][0] = EMPTY_MAP_IDENTIFIER;
+		app->map[(int) app->doors[index].position.y][(int) app->doors[index].position.x][0] = DOOR_MAP_IDENTIFIER_MOVING;
 }
 
 /**
@@ -36,19 +36,18 @@ void	door_action(t_app *app)
 	i = -1;
 	while (++i < app->door_count)
 	{
+		if (app->doors[i].state != CLOSED)
+			continue;
 		distance = ft_vector_length((t_vector2){
 			app->doors[i].position.x - app->player.position.x,
 			app->doors[i].position.y - app->player.position.y
 		});
-		if (distance > DOOR_ACTION_DISTANCE_THRESHOLD || distance < 0.5f)
+		if (distance > DOOR_ACTION_DISTANCE_THRESHOLD)
 			continue;
 		if (app->doors[i].state == CLOSED)
 			door_update(app, i, OPENING);
-		if (app->doors[i].state == OPEN)
-			door_update(app, i, CLOSING);
 		app->doors[i].animation_begin = clock();
 		app->doors[i].animation_step = 0.f;
-		ft_printf("Action on door at (%f, %f). New state: %d\n", app->doors[i].position.x, app->doors[i].position.y, app->doors[i].state);
 	}
 }
 
@@ -60,11 +59,15 @@ void	progress_doors(t_app *app)
 	double	animation_increase;
 	int		i;
 
+	app->conf->has_moving_doors = 0;
 	animation_increase = app->conf->delta_time / DOOR_ANIMATION_DURATION;
 	i = -1;
 	while (++i < app->door_count)
 	{
-		if (app->doors[i].state == OPEN && app->doors[i].animation_begin < clock() - DOOR_CLOSING_THRESHOLD * CLOCKS_PER_SEC)
+		if (app->doors[i].state == OPEN
+			&& app->doors[i].animation_begin < clock() - DOOR_CLOSING_THRESHOLD * CLOCKS_PER_SEC
+			&& ((int) app->player.position.x != (int) app->doors[i].position.x
+			|| (int) app->player.position.y != (int) app->doors[i].position.y))
 		{
 			door_update(app, i, CLOSING);
 			app->doors[i].animation_begin = clock();
@@ -77,6 +80,6 @@ void	progress_doors(t_app *app)
 		if (app->doors[i].state == CLOSING && app->doors[i].animation_step >= 1.f)
 			door_update(app, i, CLOSED);
 		app->doors[i].animation_step += animation_increase;
-		ft_printf("Animation on door at (%f, %f). Progress: %03.2f %%\n", app->doors[i].position.x, app->doors[i].position.y, app->doors[i].animation_step * 100);
+		app->conf->has_moving_doors = 1;
 	}
 }

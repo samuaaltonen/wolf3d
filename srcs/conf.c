@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 12:02:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/22 15:33:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	conf_init(t_app *app)
 	app->conf->keystates = 0;
 	app->conf->movement_speed = MOVEMENT_SPEED;
 	app->conf->rotation_speed = ROTATION_SPEED;
+	app->conf->render_moving_doors = 0;
+	app->conf->has_moving_doors = 0;
 	init_thread_info(app);
 	init_objects(app);
 	init_doors(app);
