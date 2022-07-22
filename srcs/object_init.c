@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 16:50:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:45:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,22 @@ void	init_objects(t_app *app)
 
 /**
  * Loads object textures into memory.
+ * 	char		*path;
+ *	t_image		*image;
+ *	double		offset_multiplier;
+ *	int			animation_step;
+ *	int			total_steps;
+ *	int			mirrored;
 */
 void	load_object_textures(t_app *app)
 {
 	int							i;
 	static const t_sprite_data	sprite_infos[] = {
-		{TEXTURE_COIN_SPIN, NULL, 1.0f, 0, 64},
-		{TEXTURE_COIN_WHIRL, NULL, 1.0f, 0, 64},
-		{TEXTURE_PILLAR, NULL, 1.0f, 0, 64},
-		{TEXTURE_CANNON, NULL, 1.0f, 0, 64},
-		{NULL, NULL, 0, 0, 0}
+		{TEXTURE_COIN_SPIN, NULL, 1.0f, 0, 64, 1},
+		{TEXTURE_COIN_WHIRL, NULL, 1.0f, 0, 64, 0},
+		{TEXTURE_PILLAR, NULL, 0.95f, 0, 64, 0},
+		{TEXTURE_CANNON, NULL, 1.0f, 0, 64, 0},
+		{NULL, NULL, 0, 0, 0, 0}
 	};
 
 	i = 0;
@@ -90,7 +96,8 @@ void	load_object_textures(t_app *app)
 			init_xpm_image(app->mlx, TEX_SIZE, TEX_SIZE, sprite_infos[i].path),
 			sprite_infos[i].offset_multiplier,
 			sprite_infos[i].animation_step,
-			0
+			0,
+			sprite_infos[i].mirrored
 		};
 		if (!(app->object_sprites[i].image))
 			exit_error(MSG_ERROR_TEXTURE_FILE_ACCESS);

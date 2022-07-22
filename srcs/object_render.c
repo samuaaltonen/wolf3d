@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 16:39:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:43:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	draw_object(t_app *app, int index, int screen_x, int depth)
 	texture_pixel.x = 0.f;
 	if(draw_end.x - draw_start.x < app->objects[index].width - 1 && draw_end.x < WIN_W - 1)
 		texture_pixel.x = (draw_start.x - draw_end.x) * texture_step.x + 64.f;
-	ft_printf("pixel offset %i\n", (int)texture_pixel.x + app->objects[index].frame_id * TEX_SIZE);
+	//ft_printf("pixel offset %i\n", (int)texture_pixel.x + app->objects[index].frame_id * TEX_SIZE);
 	while (++x < draw_end.x)
 	{
 		y = draw_start.y;
@@ -51,9 +51,9 @@ void	draw_object(t_app *app, int index, int screen_x, int depth)
 
 		while(++y < draw_end.y)
 		{
-		color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, (int)texture_pixel.x + app->objects[index].frame_id * TEX_SIZE, texture_pixel.y);
-			if (color > 0)
-				put_pixel_to_image_depth(app->image, x, y, color | (depth << 24));
+		color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, (int)texture_pixel.x - ((app->objects[index].frame_id) * TEX_SIZE) - TEX_SIZE, texture_pixel.y);
+		if (color > 0)
+			put_pixel_to_image_depth(app->image, x, y, color | (depth << 24));
 		texture_pixel.y += texture_step.y;
 		}
 		

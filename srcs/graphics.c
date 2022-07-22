@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 15:22:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:08:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,13 @@ void	*render_objects(void *data)
 		if(rad < 0)
 			rad = rad + 2 * M_PI;
 		rad = rad * (180 / M_PI);
-		app->objects[i].frame_id = (rad * 64 / 360);
-		//ft_printf("%i\n", (int)(rad * 64 / 360));
+		if(app->object_sprites[app->objects[i].sprite_id].mirrored)
+			app->objects[i].frame_id = ((int)(rad * 64 / 180) % 64);
+		else
+			app->objects[i].frame_id = ((int)(rad * 64 / 360) % 64);
+		if(app->objects[i].sprite_id < 2)
+			app->objects[i].frame_id = app->object_sprites[app->objects[i].sprite_id].animation_step;
+		ft_printf("%i\n", ((app->objects[i].frame_id)));
 		if(distance > MAX_RAY_DISTANCE)
 			distance = MAX_RAY_DISTANCE;
 		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
