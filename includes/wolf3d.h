@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 16:52:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:41:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
-# define POSITION_START_X 10.f
-# define POSITION_START_Y 12.f
+# define POSITION_START_X 16.f
+# define POSITION_START_Y 10.f
 # define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0
 # define FOV 66
@@ -48,9 +48,10 @@
 # define TEX_COUNT 10
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
+# define EMPTY_MAP_IDENTIFIER 'A'
 # define DOOR_MAP_IDENTIFIER 'L'
 # define DOOR_ANIMATION_DURATION 1.f
-# define DOOR_CLOSING_THRESHOLD 10.f
+# define DOOR_CLOSING_THRESHOLD 5.f
 # define DOOR_ACTION_DISTANCE_THRESHOLD 2.f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
@@ -181,6 +182,7 @@ typedef struct s_door
 {
 	t_vector2	position;
 	t_doorstate	state;
+	clock_t		animation_begin;
 	double		animation_step;
 }	t_door;
 
@@ -261,6 +263,7 @@ void		*render_view(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
+
 /*
  * Map
 */
@@ -286,5 +289,6 @@ void		player_move(t_app *app, t_movement movement, double speed);
 */
 void		init_doors(t_app *app);
 void		door_action(t_app *app);
+void		progress_doors(t_app *app);
 
 #endif

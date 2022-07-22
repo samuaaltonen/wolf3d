@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/07/20 15:38:56 by saaltone         ###   ########.fr        #
+#    Updated: 2022/07/22 13:45:22 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBMLX_INCLUDES=./libmlx
 SOURCES_FILES=main.c error.c conf.c app.c events_key.c events_loop.c \
 				events_mouse.c events_window.c graphics.c raycasting.c \
 				image.c parser.c object_init.c object_render.c player.c \
-				door.c
+				door_init.c door_action.c door_render.c
 SOURCES=$(SOURCES_FILES:%.c=srcs/%.c)
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=./includes
