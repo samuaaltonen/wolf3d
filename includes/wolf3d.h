@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:47:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:16:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
-# define THREADS_DEFAULT 1
+# define THREADS_DEFAULT 2
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
-# define POSITION_START_X 19.f
-# define POSITION_START_Y 12.f
+# define POSITION_START_X 5.5f
+# define POSITION_START_Y 8.f
 # define COLLISION_OFFSET 0.125f
-# define DIRECTION_START_X 1.f
-# define DIRECTION_START_Y 0
+# define DIRECTION_START_X 0
+# define DIRECTION_START_Y -1.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
@@ -51,9 +51,9 @@
 # define DEPTH 0
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
-# define DOOR_MAP_IDENTIFIER 'L'
+# define DOOR_MAP_IDENTIFIER 'P'
 # define DOOR_MAP_IDENTIFIER_MOVING 'Z'
-# define DOOR_ANIMATION_DURATION 1.f
+# define DOOR_ANIMATION_DURATION 0.125f
 # define DOOR_CLOSING_THRESHOLD 5.f
 # define DOOR_ACTION_DISTANCE_THRESHOLD 2.f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"

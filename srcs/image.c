@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 17:54:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:50:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
 static int	add_shade(double shade, int color)
 {
         return ((((color & 0xFF000000))) |
-				(int)(((color & 0xFF0000) >> 16) * shade) << 16 |
-            	(int)(((color & 0x00FF00) >> 8) * shade) << 8 |
+				((int)((color & 0xFF0000) * shade) & 0xFF0000) |
+            	((int)((color & 0x00FF00) * shade) & 0x00FF00) |
                 (int)(((color & 0x0000FF)) * shade));
 }
 
