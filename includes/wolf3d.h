@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:26:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:47:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,8 @@ void		*render_view(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
+void		clamp_distance(double *distance);
+
 
 /*
  * Map

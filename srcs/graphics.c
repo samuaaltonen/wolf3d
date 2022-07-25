@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:17:32 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:36:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	if (end_pixel >= WIN_H)
 		end_pixel = WIN_H - 1;
 	i = 0;
-	if(rayhit.distance > MAX_RAY_DISTANCE)
-		rayhit.distance = MAX_RAY_DISTANCE;
-	rayhit.distance = 254 / MAX_RAY_DISTANCE * rayhit.distance + 1.f;
+	clamp_distance(&rayhit.distance);
 	while (i < height + 1)
 	{
 		tex_y += y_step;
@@ -51,6 +49,13 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 
 		i++;
 	}
+}
+
+void	clamp_distance(double *distance)
+{
+	if(*distance > MAX_RAY_DISTANCE)
+		*distance = MAX_RAY_DISTANCE;
+		*distance = 254 / MAX_RAY_DISTANCE * *distance + 1;
 }
 
 /*
@@ -66,10 +71,7 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 
 	distance = 0.5 * WIN_H / (y - WIN_H / 2);
 	x = -1;
-	if(distance > MAX_RAY_DISTANCE)
-			distance = MAX_RAY_DISTANCE;
-		distance = 254 / MAX_RAY_DISTANCE * distance + 1;
-
+	clamp_distance(&distance);
 	while (++x < WIN_W)
 	{
 		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
@@ -79,8 +81,16 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 		floor_pos->y += step->y;
 		if(!check_ray_pos(app, floor_pos))
 			continue;
-		put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y) | ((int)distance << 24));
-		put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y) | ((int)distance << 24));
+		if(DEPTH)
+		{
+			put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y) | ((int)distance << 24));
+			put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y) | ((int)distance << 24));
+		}
+		else
+		{
+			put_pixel_to_image(app->image, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y));
+			put_pixel_to_image(app->image, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y));
+		}
 	}
 }
 
@@ -126,6 +136,16 @@ void	*render_background(void *data)
 	pthread_exit(NULL);
 }
 
+
+static double	get_radial_direction(t_vector2 vector)
+{
+	double rad = atan2(vector.x, vector.y);
+		if(rad < 0)
+			rad = rad + 2 * M_PI;
+		rad = rad * (180 / M_PI);
+		return (rad);
+}
+
 /* 
  * Object multithreaded rendering
  */
@@ -138,6 +158,7 @@ void	*render_objects(void *data)
 	double			distance;
 	t_vector2		transform;
 	int				screen_x;
+	double			rad;
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
@@ -153,14 +174,9 @@ void	*render_objects(void *data)
 			app->player.direction
 		}));
 		distance = ft_vector_length(dist);
-
 		if ((transform.y / distance < 0.75f))
 			continue;
-
-		double rad = atan2(dist.x, dist.y);
-		if(rad < 0)
-			rad = rad + 2 * M_PI;
-		rad = rad * (180 / M_PI);
+		rad = get_radial_direction(dist);
 		if(app->object_sprites[app->objects[i].sprite_id].mirrored)
 			app->objects[i].frame_id = ((int)(rad * 64 / 180) % 64);
 		else
@@ -168,13 +184,11 @@ void	*render_objects(void *data)
 		if(app->objects[i].sprite_id < 2)
 			app->objects[i].frame_id = app->object_sprites[app->objects[i].sprite_id].animation_step;
 		//ft_printf("%i\n", ((app->objects[i].frame_id)));
-		if(distance > MAX_RAY_DISTANCE)
-			distance = MAX_RAY_DISTANCE;
+		clamp_distance(&distance);
 		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
-
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
-		draw_object(app, i, screen_x, (int)(254 / MAX_RAY_DISTANCE * distance + 1.f));
+		draw_object(app, i, screen_x, distance);
 		}
 	pthread_exit(NULL);
 }

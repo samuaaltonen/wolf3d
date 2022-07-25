@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 11:58:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:43:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ static void	draw_door(t_app *app, int x, int h, t_rayhit rayhit, double offset)
 	if (end_pixel >= WIN_H)
 		end_pixel = WIN_H - 1;
 	i = 0;
-	if(rayhit.distance > MAX_RAY_DISTANCE)
-		rayhit.distance = MAX_RAY_DISTANCE;
-	rayhit.distance = 254 / MAX_RAY_DISTANCE * rayhit.distance + 1.f;
+	clamp_distance(&rayhit.distance);
 	h = end_pixel - start_pixel;
 	while (i < h)
 	{
