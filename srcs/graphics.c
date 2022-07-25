@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 18:09:39 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:39:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	i = 0;
 	if(rayhit.distance > MAX_RAY_DISTANCE)
 		rayhit.distance = MAX_RAY_DISTANCE;
-	rayhit.distance = 255 / MAX_RAY_DISTANCE * rayhit.distance + 1.f;
+	rayhit.distance = 254 / MAX_RAY_DISTANCE * rayhit.distance + 1.f;
 	while (i < height + 1)
 	{
 		tex_y += y_step;
@@ -68,7 +68,7 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	x = -1;
 	if(distance > MAX_RAY_DISTANCE)
 			distance = MAX_RAY_DISTANCE;
-		distance = 255 / MAX_RAY_DISTANCE * distance + 1;
+		distance = 254 / MAX_RAY_DISTANCE * distance + 1;
 
 	while (++x < WIN_W)
 	{
@@ -174,7 +174,7 @@ void	*render_objects(void *data)
 
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
-		draw_object(app, i, screen_x, (int)(255 / MAX_RAY_DISTANCE * distance + 1.f));
+		draw_object(app, i, screen_x, (int)(254 / MAX_RAY_DISTANCE * distance + 1.f));
 		}
 	}
 	pthread_exit(NULL);
