@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:21:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:33:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,22 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	t_vector2	new_pos;
 
 	if (movement == FORWARD)
-		new_pos = (t_vector2){app->player.position.x + app->player.direction.x * speed,
-				app->player.position.y + app->player.direction.y * speed};
+		new_pos = (t_vector2){app->player.position.x + app->player.direction.x * speed, app->player.position.y + app->player.direction.y * speed};
 	if (movement == BACKWARD)
-		new_pos = (t_vector2){app->player.position.x - app->player.direction.x * speed, 
-			app->player.position.y - app->player.direction.y * speed};
+		new_pos = (t_vector2){app->player.position.x - app->player.direction.x * speed, app->player.position.y - app->player.direction.y * speed};
 	if (movement == LEFT || movement == RIGHT)
 	{
 		perpendicular = ft_vector_perpendicular(app->player.direction);
 		if (movement == LEFT)
-			new_pos = (t_vector2){app->player.position.x - perpendicular.x * speed, 
-				app->player.position.y - perpendicular.y * speed};
+			new_pos = (t_vector2){app->player.position.x - perpendicular.x * speed, app->player.position.y - perpendicular.y * speed};
 		if (movement == RIGHT)
-			new_pos = (t_vector2){app->player.position.x + perpendicular.x * speed, 
-				app->player.position.y + perpendicular.y * speed};
+			new_pos = (t_vector2){app->player.position.x + perpendicular.x * speed, app->player.position.y + perpendicular.y * speed};
 	}
-	if (!is_collision(app, (t_vector2){new_pos.x, app->player.position.y}))
+	if (!is_collision(app, (t_vector2){new_pos.x - COLLISION_OFFSET, app->player.position.y})
+		&& !is_collision(app, (t_vector2){new_pos.x + COLLISION_OFFSET, app->player.position.y}))
 		app->player.position.x = new_pos.x;
-	if (!is_collision(app, (t_vector2){app->player.position.x, new_pos.y}))
+	if (!is_collision(app, (t_vector2){app->player.position.x, new_pos.y - COLLISION_OFFSET})
+		&& !is_collision(app, (t_vector2){app->player.position.x, new_pos.y + COLLISION_OFFSET}))
 		app->player.position.y = new_pos.y;
 	coin_grab(app);
 }

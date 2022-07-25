@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:16:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:26:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define MAP_MAX_OBJECT_IDS 9
 # define POSITION_START_X 19.f
 # define POSITION_START_Y 12.f
+# define COLLISION_OFFSET 0.125f
 # define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0
 # define FOV 66
