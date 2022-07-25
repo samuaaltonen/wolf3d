@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:16:17 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:17:32 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ void	*render_objects(void *data)
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
 		draw_object(app, i, screen_x, (int)(254 / MAX_RAY_DISTANCE * distance + 1.f));
 		}
-	}
 	pthread_exit(NULL);
 }
 
