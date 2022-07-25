@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 12:43:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:21:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void	player_move(t_app *app, t_movement movement, double speed)
 			new_pos = (t_vector2){app->player.position.x + perpendicular.x * speed, 
 				app->player.position.y + perpendicular.y * speed};
 	}
-	if (!is_collision(app, new_pos))
-		app->player.position = new_pos;
+	if (!is_collision(app, (t_vector2){new_pos.x, app->player.position.y}))
+		app->player.position.x = new_pos.x;
+	if (!is_collision(app, (t_vector2){app->player.position.x, new_pos.y}))
+		app->player.position.y = new_pos.y;
 	coin_grab(app);
 }
