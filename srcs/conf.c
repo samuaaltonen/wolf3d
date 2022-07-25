@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 15:33:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:07:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	conf_init(t_app *app)
 	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->render_moving_doors = 0;
 	app->conf->has_moving_doors = 0;
+	app->conf->coin_points = 0;
 	init_thread_info(app);
 	init_objects(app);
 	init_doors(app);

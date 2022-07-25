@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 14:45:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:39:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	init_objects(t_app *app)
 			{
 				app->objects[i] = (t_object){
 					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
-					app->map[y][x][3] - 'A' - 1, 0, 0, 0
+					app->map[y][x][3] - 'A' - 1, 0, 0, 0, 1
 				};
 				i++;
 			}
@@ -68,14 +68,8 @@ void	init_objects(t_app *app)
 	app->object_count = i;
 }
 
-/**
+/*
  * Loads object textures into memory.
- * 	char		*path;
- *	t_image		*image;
- *	double		offset_multiplier;
- *	int			animation_step;
- *	int			total_steps;
- *	int			mirrored;
 */
 void	load_object_textures(t_app *app)
 {

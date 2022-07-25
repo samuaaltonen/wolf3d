@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 18:09:38 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:08:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	app_run(t_app *app)
 	app->mlx = mlx_init();
 	app->win = mlx_new_window(app->mlx, app->conf->win_w,
 			app->conf->win_h, app->conf->win_name);
-	app->fps_info = ft_strnew(3);
+	//app->fps_info = "Coins collected:    FPS:   ";
+	ft_strcpy(app->fps_info, "Coins collected:    FPS:   ");
 	mlx_do_key_autorepeatoff(app->mlx);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
@@ -131,9 +132,11 @@ void	app_render(t_app *app)
 		render_moving_doors(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
-	app->fps_info[0] = app->conf->fps / 10 / 10 % 10 + '0';
-	app->fps_info[1] = app->conf->fps / 10 % 10 + '0';
-	app->fps_info[2] = app->conf->fps % 10 + '0';
-	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, "FPS:");
-	mlx_string_put(app->mlx, app->win, 120, 20, 0xFFFFFF, app->fps_info);
+	app->fps_info[24] = app->conf->fps / 100 % 10 + '0';
+	app->fps_info[25] = app->conf->fps / 10 % 10 + '0';
+	app->fps_info[26] = app->conf->fps % 10 + '0';
+	app->fps_info[16] = app->conf->coin_points / 100 % 10 + '0';
+	app->fps_info[17] = app->conf->coin_points / 10 % 10 + '0';
+	app->fps_info[18] = app->conf->coin_points % 10 + '0';
+	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, app->fps_info);
 }

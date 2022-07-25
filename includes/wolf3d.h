@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 12:37:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:16:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 25.f
+# define MAX_RAY_DISTANCE 50.f
 # define TEX_SIZE 64
 # define TEX_COUNT 10
 # define DEPTH 0
@@ -136,6 +136,7 @@ typedef struct s_conf
 	int		fps;
 	clock_t	fps_clock;
 	int		fps_count;
+	int		coin_points;
 	double	delta_time;
 	int		thread_count;
 	int		fov;
@@ -157,6 +158,14 @@ typedef struct s_thread_data
 	int		id;
 }	t_thread_data;
 
+/*
+	char		*path;
+	t_image		*image;
+	double		offset_multiplier;
+	int			animation_step;
+	int			total_steps;
+	int			mirrored;
+ */
 typedef struct s_sprite_data
 {
 	char		*path;
@@ -174,6 +183,14 @@ typedef struct s_player
 	t_vector2	camera_plane;
 }	t_player;
 
+/*
+	t_vector2	position;
+	int			sprite_id;
+	int			width;
+	int			height;
+	int			frame_id;
+	int			active;
+ */
 typedef struct s_object
 {
 	t_vector2	position;
@@ -181,6 +198,7 @@ typedef struct s_object
 	int			width;
 	int			height;
 	int			frame_id;
+	int			active;
 }	t_object;
 
 typedef struct s_door
@@ -208,7 +226,7 @@ typedef struct s_app
 	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
 	int				objects_pool_size;
-	char			*fps_info;
+	char			fps_info[28];
 }	t_app;
 
 typedef struct s_rayhit
@@ -283,6 +301,8 @@ void		draw_object(t_app *app, int index, int screen_x, int depth);
 void		init_objects(t_app *app);
 void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
+void		coin_grab(t_app *app);
+
 
 /**
  * Player
