@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 18:09:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:37:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@
 # define MSG_ERROR_MAP_FILE_ACCESS "Could not open/close map file."
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
+# define MSG_ERROR_MAP_SIZE "Map size is too small."
 # define THREADS_DEFAULT 1
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
-# define POSITION_START_X 16.f
-# define POSITION_START_Y 10.f
+# define POSITION_START_X 19.f
+# define POSITION_START_Y 12.f
 # define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0
 # define FOV 66

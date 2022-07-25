@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 13:20:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:36:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ int	check_map(t_app *app)
 	}
 	app->map_size.y = line_count;
 	app->map_size.x = (line_length + 1) / 5;
+	if (POSITION_START_X >= (double) app->map_size.x - 1.f
+		|| POSITION_START_Y >= (double) app->map_size.y - 1.f)
+		exit_error(MSG_ERROR_MAP_SIZE);
 	ft_printf("%i x, %i y sizes\n", app->map_size.x, app->map_size.y);
 
 	return (1);
