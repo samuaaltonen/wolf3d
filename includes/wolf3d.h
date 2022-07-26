@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 13:29:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:57:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 50.f
+# define MAX_RAY_DISTANCE 15.f
 # define TEX_SIZE 64
 # define TEX_COUNT 10
 # define DEPTH 0
@@ -54,7 +54,7 @@
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define COIN_SPIN_MAP_IDENTIFIER 'B'
 # define COIN_WHIRL_MAP_IDENTIFIER 'C'
-# define DOOR_MAP_IDENTIFIER 'P'
+# define DOOR_MAP_IDENTIFIER 'T'
 # define DOOR_MAP_IDENTIFIER_MOVING 'Z'
 # define DOOR_ANIMATION_DURATION 0.125f
 # define DOOR_CLOSING_THRESHOLD 5.f
@@ -220,6 +220,7 @@ typedef struct s_app
 {
 	t_conf			*conf;
 	t_image			*image;
+	t_image			*depthmap;
 	void			*mlx;
 	void			*win;
 	t_thread_data	thread_info[THREADS_MAX];
@@ -269,7 +270,8 @@ void		app_render(t_app *app);
 */
 t_image		*init_image(void *mlx, int x, int y);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
-void		put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color);
+//void		put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color);
+void		put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y, int color, float distance);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
 t_image		*init_xpm_image(void *mlx, int width, int height, char *path);
@@ -294,7 +296,7 @@ void		*render_view(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
-void		clamp_distance(double *distance);
+void		clamp_distance(float *distance);
 
 
 /*
@@ -306,7 +308,7 @@ int			check_map(t_app *app);
 /*
  * Objects
 */
-void		draw_object(t_app *app, int index, int screen_x, int depth);
+void		draw_object(t_app *app, int index, int screen_x, float depth);
 void		init_objects(t_app *app);
 void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
@@ -331,5 +333,8 @@ void		render_moving_doors(t_app *app);
  * Finish scene
 */
 void		finish_display(t_app *app);
+
+//debug
+void		read_depthmap(t_image *depth_image);
 
 #endif

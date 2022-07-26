@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 12:57:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:57:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	app_run(t_app *app)
 	mlx_hook(app->win, ON_MOUSEUP, 0, events_mouse_up, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
+	app->depthmap = init_image(app->mlx, WIN_W, WIN_H);
 	app->sprite = init_xpm_image(app->mlx,
 		TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
 	app->player = (t_player){
@@ -126,13 +127,16 @@ void	app_render(t_app *app)
 		return (finish_display(app));
 	update_fps_counter(app);
 	flush_image(app->image);
+	flush_image(app->depthmap);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_view);
 	render_multithreading(app, render_objects);
 	if (app->conf->has_moving_doors)
 		render_moving_doors(app);
+	//read_depthmap(app->depthmap);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
+	//mlx_put_image_to_window(app->mlx, app->win, app->depthmap->img, 0, 0);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	app->fps_info[24] = app->conf->fps / 100 % 10 + '0';
 	app->fps_info[25] = app->conf->fps / 10 % 10 + '0';

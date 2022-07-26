@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:43:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:20:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	draw_door(t_app *app, int x, int h, t_rayhit rayhit, double offset)
 	if (end_pixel >= WIN_H)
 		end_pixel = WIN_H - 1;
 	i = 0;
-	clamp_distance(&rayhit.distance);
+	clamp_distance((float*)&rayhit.distance);
 	h = end_pixel - start_pixel;
 	while (i < h)
 	{
