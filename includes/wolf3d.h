@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 13:57:07 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 14:00:06 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ typedef struct s_app
 	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
 	int				objects_pool_size;
-	char			fps_info[28];
+	char			fps_info[31];
 }	t_app;
 
 typedef struct s_rayhit
