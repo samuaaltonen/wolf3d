@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 13:44:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 14:58:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 		if(1) //toggle for cardinal texturing
 			put_pixel_to_image_depth(app->image, app->depthmap, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (rayhit.type - 'A') * 64, (int)tex_y & (TEX_SIZE - 1)), rayhit.distance);
 		else
-			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + rayhit.direction * 64, (int)tex_y & (TEX_SIZE - 1)));
+			put_pixel_to_image_depth(app->image, app->depthmap, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + rayhit.direction * 64, (int)tex_y & (TEX_SIZE - 1)), rayhit.distance);
 
 		i++;
 	}
@@ -154,10 +154,11 @@ void	*render_objects(void *data)
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
-	i = t->id - 1;
-	while (++i <= (t->id + 1) * app->objects_pool_size)
+	i = -(t->id);
+	while (i < app->object_count)
 	{
-		if(i >= app->object_count || app->objects[i].active == 0)
+		i += app->conf->thread_count;
+		if (app->objects[i].active == 0)
 			continue;
 		dist.x = (app->objects[i].position.x - app->player.position.x) * app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
 		dist.y = (app->objects[i].position.y - app->player.position.y) * app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
@@ -169,11 +170,11 @@ void	*render_objects(void *data)
 		if ((transform.y / distance < 0.75f))
 			continue;
 		rad = get_radial_direction(dist);
-		if(app->object_sprites[app->objects[i].sprite_id].mirrored)
+		if (app->object_sprites[app->objects[i].sprite_id].mirrored)
 			app->objects[i].frame_id = ((int)(rad * 64 / 180) % 64);
 		else
 			app->objects[i].frame_id = ((int)(rad * 64 / 360) % 64);
-		if(app->objects[i].sprite_id < 2)
+		if (app->objects[i].sprite_id < 2)
 			app->objects[i].frame_id = app->object_sprites[app->objects[i].sprite_id].animation_step;
 		//ft_printf("%i\n", ((app->objects[i].frame_id)));
 		clamp_distance((float*)&distance);
@@ -181,7 +182,7 @@ void	*render_objects(void *data)
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
 		draw_object(app, i, screen_x, distance);
-		}
+	}
 	pthread_exit(NULL);
 }
 

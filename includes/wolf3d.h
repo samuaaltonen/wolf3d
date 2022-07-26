@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 14:00:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 14:08:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 15.f
+# define MAX_RAY_DISTANCE 40.f
 # define TEX_SIZE 64
 # define TEX_COUNT 10
 # define DEPTH 0
