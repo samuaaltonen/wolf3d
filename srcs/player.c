@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:33:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:08:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 static int	is_collision(t_app *app, t_vector2 pos)
 {
-	if (pos.x >= app->map_size.x - 1 || pos.y >= app->map_size.y - 1)
+	if (pos.x >= app->map_size.x || pos.y >= app->map_size.y)
 		return (1);
 	if (pos.x < 0 || pos.y < 0)
 		return (1);

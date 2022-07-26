@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 14:08:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:03:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
 # define MSG_FINISH "Congratulations, you won!"
-# define THREADS_DEFAULT 2
+# define THREADS_DEFAULT 8
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
@@ -233,7 +233,6 @@ typedef struct s_app
 	int				door_count;
 	t_sprite_data	object_sprites[MAP_MAX_OBJECT_IDS];
 	int				object_count;
-	int				objects_pool_size;
 	char			fps_info[31];
 }	t_app;
 
