@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:08:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 12:57:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	app_render(t_app *app)
 {
 	if (app->conf->toggle_help)
 		return (help_display(app));
+	if (app->conf->coin_points >= app->conf->coin_max)
+		return (finish_display(app));
 	update_fps_counter(app);
 	flush_image(app->image);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);

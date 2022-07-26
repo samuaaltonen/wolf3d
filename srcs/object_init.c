@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 12:39:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:09:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ void	init_objects(t_app *app)
 					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
 					app->map[y][x][3] - 'A' - 1, 0, 0, 0, 1
 				};
+				if (app->map[y][x][3] == COIN_SPIN_MAP_IDENTIFIER
+					|| app->map[y][x][3] == COIN_WHIRL_MAP_IDENTIFIER)
+					app->conf->coin_max++;
 				i++;
 			}
 		}

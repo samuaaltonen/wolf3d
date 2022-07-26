@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 13:07:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/26 12:58:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	conf_init(t_app *app)
 	app->conf->render_moving_doors = 0;
 	app->conf->has_moving_doors = 0;
 	app->conf->coin_points = 0;
+	app->conf->coin_max = 0;
+	app->conf->finish_scene_begin = 0;
 	init_thread_info(app);
 	init_objects(app);
 	init_doors(app);

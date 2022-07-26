@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/25 15:16:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:29:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
+# define MSG_FINISH "Congratulations, you won!"
 # define THREADS_DEFAULT 2
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
@@ -51,11 +52,14 @@
 # define DEPTH 0
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
+# define COIN_SPIN_MAP_IDENTIFIER 'B'
+# define COIN_WHIRL_MAP_IDENTIFIER 'C'
 # define DOOR_MAP_IDENTIFIER 'P'
 # define DOOR_MAP_IDENTIFIER_MOVING 'Z'
 # define DOOR_ANIMATION_DURATION 0.125f
 # define DOOR_CLOSING_THRESHOLD 5.f
 # define DOOR_ACTION_DISTANCE_THRESHOLD 2.f
+# define FINISH_SCENE_DURATION 2.f
 # define TEXTURE_COIN_SPIN "./assets/coin_spin.xpm"
 # define TEXTURE_COIN_WHIRL "./assets/coin_whirl.xpm"
 # define TEXTURE_PILLAR "./assets/pillar_64.xpm"
@@ -138,6 +142,7 @@ typedef struct s_conf
 	clock_t	fps_clock;
 	int		fps_count;
 	int		coin_points;
+	int		coin_max;
 	double	delta_time;
 	int		thread_count;
 	int		fov;
@@ -147,6 +152,7 @@ typedef struct s_conf
 	double	rotation_speed;
 	int		has_moving_doors;
 	int		render_moving_doors;
+	clock_t	finish_scene_begin;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -320,5 +326,10 @@ void		init_doors(t_app *app);
 void		door_action(t_app *app);
 void		progress_doors(t_app *app);
 void		render_moving_doors(t_app *app);
+
+/**
+ * Finish scene
+*/
+void		finish_display(t_app *app);
 
 #endif
