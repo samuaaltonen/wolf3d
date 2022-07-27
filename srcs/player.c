@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 16:08:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/27 14:05:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	t_vector2	perpendicular;
 	t_vector2	new_pos;
 
+	if (!(movement == FORWARD || movement == BACKWARD
+		|| movement == LEFT || movement == RIGHT))
+		return ;
 	if (movement == FORWARD)
 		new_pos = (t_vector2){app->player.position.x + app->player.direction.x * speed, app->player.position.y + app->player.direction.y * speed};
 	if (movement == BACKWARD)
