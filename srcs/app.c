@@ -96,12 +96,12 @@ void	app_run(t_app *app)
 	mlx_do_key_autorepeatoff(app->mlx);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
-	mlx_hook(app->win, ON_KEYUP, 0, events_keyup, app);
-	mlx_hook(app->win, ON_KEYDOWN, 0, events_keydown, app);
-	mlx_hook(app->win, ON_MOUSEMOVE, 0, events_mouse_track, app);
-	mlx_hook(app->win, ON_DESTROY, 0, events_window_destroy, app);
-	mlx_hook(app->win, ON_MOUSEDOWN, 0, events_mouse_down, app);
-	mlx_hook(app->win, ON_MOUSEUP, 0, events_mouse_up, app);
+	mlx_hook(app->win, ON_KEYUP, KEY_RELEASE_MASK, events_keyup, app);
+	mlx_hook(app->win, ON_KEYDOWN, KEY_PRESS_MASK, events_keydown, app);
+	mlx_hook(app->win, ON_MOUSEMOVE, POINTER_MOTION_MASK, events_mouse_track, app);
+	mlx_hook(app->win, ON_MOUSEDOWN, BUTTON_PRESS_MASK, events_mouse_down, app);
+	mlx_hook(app->win, ON_MOUSEUP, BUTTON_RELEASE_MASK, events_mouse_up, app);
+	mlx_hook(app->win, ON_DESTROY, NO_EVENT_MASK, events_window_destroy, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
 	app->depthmap = init_image(app->mlx, WIN_W, WIN_H);

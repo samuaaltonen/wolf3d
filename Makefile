@@ -16,6 +16,8 @@ LIBFT=./libft
 LIBFT_INCLUDES=./libft/includes
 LIBMLX=./libmlx
 LIBMLX_INCLUDES=./libmlx
+LIBMLX_LINUX=./libmlx_linux
+LIBMLX_LINUX_INCLUDES=./libmlx_linux
 SOURCES_FILES=main.c error.c conf.c app.c events_key.c events_loop.c \
 				events_mouse.c events_window.c graphics.c raycasting.c \
 				image.c parser.c object_init.c object_render.c player.c \
@@ -57,5 +59,14 @@ comp:
 	-L $(LIBFT) \
 	-L $(LIBMLX) \
 	-lft -lmlx -framework OpenGL -framework AppKit
+
+linux:
+	gcc $(COMP_FLAGS) $(SOURCES) -o $(NAME) \
+	-I $(INCLUDES) \
+	-I $(LIBFT_INCLUDES) \
+	-I $(LIBMLX_LINUX_INCLUDES) \
+	-L $(LIBFT) \
+	-L $(LIBMLX_LINUX) \
+	-lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -pthread
 
 .PHONY: all clean fclean re comp

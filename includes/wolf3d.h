@@ -31,7 +31,7 @@
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
 # define MSG_FINISH "Congratulations, you won!"
-# define THREADS_DEFAULT 8
+# define THREADS_DEFAULT 16
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
@@ -81,6 +81,15 @@ enum e_mlx_events {
 	ON_MOUSEUP = 5,
 	ON_MOUSEMOVE = 6,
 	ON_DESTROY = 17
+};
+
+enum e_mlx_event_masks {
+	NO_EVENT_MASK = 0,
+	KEY_PRESS_MASK = 1,
+	KEY_RELEASE_MASK = 2,
+	BUTTON_PRESS_MASK = 4,
+	BUTTON_RELEASE_MASK = 8,
+	POINTER_MOTION_MASK = 64
 };
 
 typedef enum e_cardinal {
