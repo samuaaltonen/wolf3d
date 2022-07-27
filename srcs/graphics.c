@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 15:36:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:39:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	y_step = (TEX_SIZE / (double)height);
 
 	tex_y = 0;
+	height += 2;
 	if (height > WIN_H)
 	{
 		tex_y = (height - WIN_H) / 2 * y_step;
 		height = WIN_H;
 	}
-	start_pixel = WIN_H / 2 - height / 2 - 1;
+	start_pixel = WIN_H / 2 - height / 2;
 	end_pixel = WIN_H / 2 + height / 2;
 	if (start_pixel < 0)
 		start_pixel = 0;
@@ -39,7 +40,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 		end_pixel = WIN_H - 1;
 	i = 0;
 	clamp_distance((float*)&rayhit.distance);
-	while (i < height + 1)
+	while (i < height)
 	{
 		tex_y += y_step;
 		if(1) //toggle for cardinal texturing
@@ -73,15 +74,16 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	clamp_distance(&distance);
 	while (++x < WIN_W)
 	{
-		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
 		floor_pos->x += step->x;
 		floor_pos->y += step->y;
+		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
 		texture_coord.x = (int)(TEX_SIZE * (floor_pos->x - coord.x)) & (TEX_SIZE - 1);
 		texture_coord.y = (int)(TEX_SIZE * (floor_pos->y - coord.y)) & (TEX_SIZE - 1);
 		if(!check_ray_pos(app, floor_pos))
 			continue;
 		put_pixel_to_image_depth(app->image, app->depthmap, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y), distance);
 		put_pixel_to_image_depth(app->image, app->depthmap, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y), distance);
+
 	}
 }
 
@@ -119,6 +121,8 @@ void	*render_background(void *data)
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
 	y = t->y_start - 1;
+	floor_pos.x = 0.f;
+	floor_pos.y = 0.f;
 	while (++y <= t->y_end)
 	{
 		floor_cast(app, y, &step, &floor_pos);
@@ -128,9 +132,11 @@ void	*render_background(void *data)
 }
 
 
-static double	get_radial_direction(t_vector2 vector)
+static double	get_radial_direction(t_vector2 *vector)
 {
-	double rad = atan2(vector.x, vector.y);
+	double	rad;
+
+	rad = atan2(vector->x, vector->y);
 		if(rad < 0)
 			rad = rad + 2 * M_PI;
 		rad = rad * (180 / M_PI);
@@ -168,7 +174,7 @@ void	*render_objects(void *data)
 		distance = ft_vector_length(dist);
 		if ((transform.y / distance < 0.75f))
 			continue;
-		rad = get_radial_direction(dist);
+		rad = get_radial_direction(&dist);
 		if (app->object_sprites[app->objects[i].sprite_id].mirrored)
 			app->objects[i].frame_id = ((int)(rad * 64 / 180) % 64);
 		else
