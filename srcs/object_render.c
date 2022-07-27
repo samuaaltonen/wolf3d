@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 15:47:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:19:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,19 @@ void	draw_object(t_app *app, int index, int screen_x, float depth)
 	texture_step.x = TEX_SIZE / (double)(app->objects[index].width);
 	texture_step.y = TEX_SIZE / (double)(app->objects[index].height);
 	texture_pixel.x = 0.f;
-	if(draw_start.x == 0 && draw_end.x == WIN_W - 1)
-		texture_pixel.x = (app->objects[index].width - WIN_W / 2) * texture_step.x;
-	if (draw_end.x - draw_start.x < app->objects[index].width - 1 && draw_end.x < WIN_W - 1)
+	
+	//ft_printf("%i\n", screen_x);
+ 	if (WIN_W < app->objects[index].width && draw_start.x == 0)
+		{
+			if(draw_end.x < WIN_W - 1)
+				texture_pixel.x = ( app->objects[index].width - (draw_end.x - draw_start.x)) * (1.f - (screen_x / (float)(draw_end.x - draw_start.x))) * texture_step.x;
+			else
+				texture_pixel.x = ( app->objects[index].width - WIN_W) * (1.f - (screen_x / (float)(WIN_W))) * texture_step.x;
+		} 
+	else if (draw_end.x - draw_start.x < app->objects[index].width - 1 && draw_end.x < WIN_W - 1)
+		{
 		texture_pixel.x = (draw_start.x - draw_end.x) * texture_step.x + 64.f;
+		}
 	while (++x < draw_end.x)
 	{
 		y = draw_start.y;
@@ -57,10 +66,10 @@ void	draw_object(t_app *app, int index, int screen_x, float depth)
 			texture_pixel.y = (draw_start.y - draw_end.y + app->objects[index].height) / 2 * texture_step.y;
 		while (++y < draw_end.y)
 		{
-		color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, (int)texture_pixel.x - ((app->objects[index].frame_id) * TEX_SIZE) - TEX_SIZE, texture_pixel.y);
-		if (color > 0)
-			put_pixel_to_image_depth(app->image, app->depthmap, x, y, color, depth);
-		texture_pixel.y += texture_step.y;
+			color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, (int)texture_pixel.x - ((app->objects[index].frame_id) * TEX_SIZE) - TEX_SIZE, texture_pixel.y);
+			if (color > 0)
+				put_pixel_to_image_depth(app->image, app->depthmap, x, y, color, depth);
+			texture_pixel.y += texture_step.y;
 		}
 		texture_pixel.x += texture_step.x;
 	}

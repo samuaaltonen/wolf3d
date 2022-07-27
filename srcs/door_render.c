@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 13:20:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/27 15:21:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	draw_door(t_app *app, int x, int h, t_rayhit rayhit, double offset)
 	{
 		tex_y += y_step;
 		if (start_pixel + i > 0)
-			put_pixel_to_image(app->image, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (DOOR_MAP_IDENTIFIER - 'A' - 1) * 64, (int)tex_y & (TEX_SIZE - 1)) | ((int)rayhit.distance << 24));
+			put_pixel_to_image_depth(app->image, app->depthmap, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (DOOR_MAP_IDENTIFIER - 'A' - 1) * 64, (int)tex_y & (TEX_SIZE - 1)) | ((int)rayhit.distance << 24), rayhit.distance);
 		i++;
 	}
 }

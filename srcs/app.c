@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 14:00:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/27 15:17:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	help_display(t_app *app)
 		"[arrow up]/[w]     Move forward", "[arrow down]/[s]   Move backward",
 		"[a]                Move left",    "[d]                Move right",
 		"[u]                Decrease FOV", "[i]                Increase FOV",
-		"[esc]              Exit", NULL,
+		"[f]                Open Doors",   "[esc]              Exit", NULL,
 	};
 
 	flush_image(app->image);
@@ -113,10 +113,23 @@ void	app_run(t_app *app)
 		(t_vector2){0, 0}};
 	load_object_textures(app);
 	init_camera_plane(app);
-	if (!app->image || !app->sprite)
+	if (!app->image || !app->depthmap || !app->sprite)
 		exit_error(NULL);
 	app_render(app);
 	mlx_loop(app->mlx);
+}
+
+// Updates the info string with given value backwards from given index
+static void update_info(t_app *app, int value, int char_index)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 3)
+	{
+		app->fps_info[char_index - i] = value % 10 + '0';
+		value = value / 10;
+	}
 }
 
 void	app_render(t_app *app)
@@ -134,18 +147,15 @@ void	app_render(t_app *app)
 	render_multithreading(app, render_objects);
 	if (app->conf->has_moving_doors)
 		render_moving_doors(app);
-	//read_depthmap(app->depthmap);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
-	//mlx_put_image_to_window(app->mlx, app->win, app->depthmap->img, 0, 0);
+	if (DEPTH)
+	{
+		read_depthmap(app->depthmap);
+		mlx_put_image_to_window(app->mlx, app->win, app->depthmap->img, 0, 0);
+	}
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
-	app->fps_info[28] = app->conf->fps / 100 % 10 + '0';
-	app->fps_info[29] = app->conf->fps / 10 % 10 + '0';
-	app->fps_info[30] = app->conf->fps % 10 + '0';
-	app->fps_info[16] = app->conf->coin_points / 100 % 10 + '0';
-	app->fps_info[17] = app->conf->coin_points / 10 % 10 + '0';
-	app->fps_info[18] = app->conf->coin_points % 10 + '0';
-	app->fps_info[20] = app->conf->coin_max / 100 % 10 + '0';
-	app->fps_info[21] = app->conf->coin_max / 10 % 10 + '0';
-	app->fps_info[22] = app->conf->coin_max % 10 + '0';
+	update_info(app, app->conf->coin_points, 18);
+	update_info(app, app->conf->coin_max, 22);
+	update_info(app, app->conf->fps, 30);
 	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, app->fps_info);
 }

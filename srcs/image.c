@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 13:53:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:20:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y
 	depth_pixel = depth_image->data + pixel_pos;
 	if(*(float*)depth_pixel == 0.f || *(float*)depth_pixel > distance)
 	{
-		color = add_shade(0.9f - distance / MAX_RAY_DISTANCE, color);
+		//color = add_shade(0.9f - distance / MAX_RAY_DISTANCE, color);
 		(void)color;
 		*(float *)depth_pixel = distance;
 		*(int *)pixel = color;
@@ -131,13 +131,13 @@ void read_depthmap(t_image *depth_image)
 	int i = -1;
 	int pixels;
 
+	pixel_pos = 0;
 	pixels = WIN_W * WIN_H;
-	while (++i < pixels)
+	while (++i < pixels - 1)
 	{
-		
-		pixel_pos = i * IMAGE_PIXEL_BYTES;
 		pixel = depth_image->data + pixel_pos;
-		*(int *)pixel = 254 / MAX_RAY_DISTANCE * (int)(*(float *)pixel + 1);
+		*(int *)pixel = (255 - ((int)(254 / MAX_RAY_DISTANCE * (*(float *)pixel)))) << 24;
+		pixel_pos += IMAGE_PIXEL_BYTES;
 	}
 }
 

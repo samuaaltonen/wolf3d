@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 16:22:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/27 15:12:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,21 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 /*
  * Calculate which part of the wall was hit for textureX
  */
-int	get_texture_hit_x(t_vector2 *pos, t_vector2 dda, t_vector2 ray)
+int	get_texture_hit_x(t_vector2 *pos, t_vector2 *dda, t_vector2 *ray)
 {
 	double wallx;
 
-	if(dda.y < 0)
-		wallx = pos->y + dda.x * ray.y;
+	if(dda->y < 0)
+		wallx = pos->y + dda->x * ray->y;
 	else
-		wallx = pos->x + dda.x * ray.x;
+		wallx = pos->x + dda->x * ray->x;
 	wallx -= floor(wallx);
 
 	int tex_x;
 	tex_x = (int)(wallx * (double)TEX_SIZE);
-	if(dda.y < 0 && ray.x > 0)
+	if(dda->y < 0 && ray->x > 0)
 		tex_x = TEX_SIZE - tex_x - 1;
-	if(dda.y > 0 && ray.y < 0)
+	if(dda->y > 0 && ray->y < 0)
 		tex_x = TEX_SIZE - tex_x - 1;
 	return (tex_x);
 }
@@ -137,11 +137,11 @@ int			raycast(t_app *app, int x, t_rayhit *rayhit)
 	delta_dist = (t_vector2){fabs(1.f / ray.x), fabs(1.f / ray.y)};
 	dda = ray_dda(app, &pos, &ray, &delta_dist);
 	if(dda.y == 0.f)
-		return (0);
+		return(0);
 	*rayhit = (t_rayhit){
 		get_cardinal(app, &pos, dda.y),
 		app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos, dda.y)] - 1,
-		get_texture_hit_x(&pos, dda, ray),
+		get_texture_hit_x(&pos, &dda, &ray),
 		dda.x,
 		pos
 	};

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 16:03:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:47:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
 # define MSG_FINISH "Congratulations, you won!"
-# define THREADS_DEFAULT 16
+# define THREADS_DEFAULT 1
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
@@ -46,10 +46,10 @@
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 40.f
+# define MAX_RAY_DISTANCE 100.f
 # define TEX_SIZE 64
 # define TEX_COUNT 10
-# define DEPTH 0
+# define DEPTH 1
 # define MOUSE_SENSITIVITY 25.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define COIN_SPIN_MAP_IDENTIFIER 'B'
@@ -245,12 +245,19 @@ typedef struct s_app
 	char			fps_info[31];
 }	t_app;
 
+/*
+	t_cardinal	direction;
+	char		type;
+	int			tex_x;
+	double		distance;
+	t_vector2	hit_pos;
+*/
 typedef struct s_rayhit
 {
 	t_cardinal	direction;
 	char		type;
 	int			tex_x;
-	double		distance;
+	float		distance;
 	t_vector2	hit_pos;
 }	t_rayhit;
 
