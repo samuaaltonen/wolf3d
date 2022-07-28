@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 16:05:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/28 17:50:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ void	player_move(t_app *app, t_movement movement, double speed)
 		if (movement == RIGHT)
 			new_pos = (t_vector2){app->player.position.x + perpendicular.x * speed, app->player.position.y + perpendicular.y * speed};
 	}
-	if (!is_collision(app, (t_vector2){new_pos.x - COLLISION_OFFSET, app->player.position.y})
-		&& !is_collision(app, (t_vector2){new_pos.x + COLLISION_OFFSET, app->player.position.y}))
+	if (!is_collision(app, (t_vector2){new_pos.x - COLLISION_OFFSET, app->player.position.y - COLLISION_OFFSET})
+		&& !is_collision(app, (t_vector2){new_pos.x - COLLISION_OFFSET, app->player.position.y + COLLISION_OFFSET})
+		&& !is_collision(app, (t_vector2){new_pos.x + COLLISION_OFFSET, app->player.position.y - COLLISION_OFFSET})
+		&& !is_collision(app, (t_vector2){new_pos.x + COLLISION_OFFSET, app->player.position.y + COLLISION_OFFSET}))
 		app->player.position.x = new_pos.x;
-	if (!is_collision(app, (t_vector2){app->player.position.x, new_pos.y - COLLISION_OFFSET})
-		&& !is_collision(app, (t_vector2){app->player.position.x, new_pos.y + COLLISION_OFFSET}))
+	if (!is_collision(app, (t_vector2){app->player.position.x - COLLISION_OFFSET, new_pos.y - COLLISION_OFFSET})
+		&& !is_collision(app, (t_vector2){app->player.position.x - COLLISION_OFFSET, new_pos.y + COLLISION_OFFSET})
+		&& !is_collision(app, (t_vector2){app->player.position.x + COLLISION_OFFSET, new_pos.y - COLLISION_OFFSET})
+		&& !is_collision(app, (t_vector2){app->player.position.x + COLLISION_OFFSET, new_pos.y + COLLISION_OFFSET}))
 		app->player.position.y = new_pos.y;
-
-
-	//app->player.position = new_pos;
-
 	coin_grab(app);
 }
