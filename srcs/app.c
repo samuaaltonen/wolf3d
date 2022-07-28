@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 15:17:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:50:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,18 @@
 */
 static void	update_fps_counter(t_app *app)
 {
-	double	time_since;
-	clock_t	time_now;
+	//double	time_since;
+	struct timespec time_now;
+	struct timespec time_since;
 
-	app->conf->fps_count++;
-	time_now = clock();
-	time_since = (time_now - app->conf->fps_clock) / (double) CLOCKS_PER_SEC;
-	if (time_since > FPS_UPDATE_FREQUENCY)
-	{
-		app->conf->fps = (int) (app->conf->fps_count / time_since);
-		app->conf->delta_time = time_since / (double) app->conf->fps_count;
-		app->conf->fps_clock = time_now;
-		app->conf->fps_count = 1;
-		app->conf->movement_speed = MOVEMENT_SPEED * app->conf->delta_time ;
-		app->conf->rotation_speed = ROTATION_SPEED * app->conf->delta_time ;
-	}
+	clock_gettime(CLOCK_REALTIME, &time_now);
+	time_since.tv_nsec = time_now.tv_nsec - app->conf->fps_clock.tv_nsec;
+	time_since.tv_sec =  time_now.tv_sec - app->conf->fps_clock.tv_sec;
+
+	app->conf->delta_time = (double) time_since.tv_sec + 1.0e-9 * time_since.tv_nsec;
+
+	app->conf->fps = (int)(1 / app->conf->delta_time);
+	app->conf->fps_clock = time_now;
 }
 
 /**

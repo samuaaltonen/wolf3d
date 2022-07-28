@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 17:47:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:30:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
 # define MSG_FINISH "Congratulations, you won!"
-# define THREADS_DEFAULT 1
+# define THREADS_DEFAULT 8
 # define THREADS_MAX 32
 # define MAP_FILE "./map_text.txt"
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
-# define POSITION_START_X 5.5f
-# define POSITION_START_Y 8.f
+# define POSITION_START_X 8.5f
+# define POSITION_START_Y 7.5f
 # define COLLISION_OFFSET 0.125f
-# define DIRECTION_START_X 0
-# define DIRECTION_START_Y -1.f
+# define DIRECTION_START_X 0.f
+# define DIRECTION_START_Y 1.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 100.f
+# define MAX_RAY_DISTANCE 20.f
 # define TEX_SIZE 64
 # define TEX_COUNT 10
 # define DEPTH 1
@@ -148,7 +148,7 @@ typedef struct s_conf
 	int		win_h;
 	int		toggle_help;
 	int		fps;
-	clock_t	fps_clock;
+	struct timespec fps_clock;
 	int		fps_count;
 	int		coin_points;
 	int		coin_max;
@@ -161,7 +161,7 @@ typedef struct s_conf
 	double	rotation_speed;
 	int		has_moving_doors;
 	int		render_moving_doors;
-	clock_t	finish_scene_begin;
+	double	finish_scene_begin;
 }	t_conf;
 
 typedef struct s_thread_data
@@ -221,8 +221,7 @@ typedef struct s_door
 {
 	t_vector2	position;
 	t_doorstate	state;
-	clock_t		animation_begin;
-	double		animation_step;
+	double		animation_begin;
 }	t_door;
 
 typedef struct s_app

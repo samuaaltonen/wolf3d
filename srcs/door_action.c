@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_action.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 16:49:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:29:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	door_action(t_app *app)
 			continue;
 		if (app->doors[i].state == CLOSED)
 			door_update(app, i, OPENING);
-		app->doors[i].animation_begin = clock();
-		app->doors[i].animation_step = 0.f;
+		app->doors[i].animation_begin = 0.f;
+
 	}
 }
 
@@ -56,30 +56,31 @@ void	door_action(t_app *app)
 */
 void	progress_doors(t_app *app)
 {
-	double	animation_increase;
 	int		i;
 
 	app->conf->has_moving_doors = 0;
-	animation_increase = app->conf->delta_time / DOOR_ANIMATION_DURATION;
 	i = -1;
 	while (++i < app->door_count)
 	{
 		if (app->doors[i].state == OPEN
-			&& app->doors[i].animation_begin < clock() - DOOR_CLOSING_THRESHOLD * CLOCKS_PER_SEC
+			&& app->doors[i].animation_begin >  DOOR_CLOSING_THRESHOLD
 			&& ((int) app->player.position.x != (int) app->doors[i].position.x
 			|| (int) app->player.position.y != (int) app->doors[i].position.y))
 		{
 			door_update(app, i, CLOSING);
-			app->doors[i].animation_begin = clock();
-			app->doors[i].animation_step = 0.f;
+			app->doors[i].animation_begin = 0.f;
 		}
+		if(app->doors[i].state == OPEN)
+			app->doors[i].animation_begin += app->conf->delta_time;
 		if (app->doors[i].state != OPENING && app->doors[i].state != CLOSING)
 			continue;
-		if (app->doors[i].state == OPENING && app->doors[i].animation_step >= 1.f)
+		if (app->doors[i].state == OPENING && DOOR_ANIMATION_DURATION < app->doors[i].animation_begin)
 			door_update(app, i, OPEN);
-		if (app->doors[i].state == CLOSING && app->doors[i].animation_step >= 1.f)
+		if (app->doors[i].state == CLOSING && DOOR_ANIMATION_DURATION < app->doors[i].animation_begin)
 			door_update(app, i, CLOSED);
-		app->doors[i].animation_step += animation_increase;
 		app->conf->has_moving_doors = 1;
+			app->doors[i].animation_begin += app->conf->delta_time;
+
 	}
+
 }

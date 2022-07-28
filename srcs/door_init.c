@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:11:42 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 13:45:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:04:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	init_doors(t_app *app)
 				app->doors[i] = (t_door){
 					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
 					CLOSED,
-					(clock_t) 0,
 					0.f
 				};
 				i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_loop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/22 11:41:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:31:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ static void	progress_animations(t_app *app)
 static void	handle_movement(t_app *app)
 {
 	if (app->conf->keystates & FORWARD_DOWN || app->conf->keystates & FORWARD_W_DOWN)
-		player_move(app, FORWARD, app->conf->movement_speed);
+		player_move(app, FORWARD, app->conf->movement_speed * app->conf->delta_time);
 	if (app->conf->keystates & BACKWARD_DOWN || app->conf->keystates & BACKWARD_S_DOWN)
-		player_move(app, BACKWARD, app->conf->movement_speed);
+		player_move(app, BACKWARD, app->conf->movement_speed * app->conf->delta_time);
 	if (app->conf->keystates & LEFT_DOWN)
-		player_move(app, LEFT, app->conf->movement_speed);
+		player_move(app, LEFT, app->conf->movement_speed * app->conf->delta_time);
 	if (app->conf->keystates & RIGHT_DOWN)
-		player_move(app, RIGHT, app->conf->movement_speed);
+		player_move(app, RIGHT, app->conf->movement_speed * app->conf->delta_time);
 	if (app->conf->keystates & ROTATE_LEFT_DOWN)
-		player_rotate(app, -app->conf->rotation_speed);
+		player_rotate(app, -app->conf->rotation_speed * app->conf->delta_time);
 	if (app->conf->keystates & ROTATE_RIGHT_DOWN)
-		player_rotate(app, app->conf->rotation_speed);
+		player_rotate(app, app->conf->rotation_speed * app->conf->delta_time);
 }
 
 /*

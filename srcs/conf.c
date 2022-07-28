@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 13:24:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/28 16:07:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	conf_init(t_app *app)
 	app->conf->win_w = WIN_W;
 	app->conf->win_h = WIN_H;
 	app->conf->fps_count = 1;
-	app->conf->fps_clock = clock();
+	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->thread_count = THREADS_DEFAULT;
 	app->conf->fov = FOV;
 	app->conf->mouse_position = (t_point){0, 0};

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 15:21:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:12:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static double get_door_animation_step(t_app *app, int x, int y)
 		if ((int) app->doors[i].position.x == x && (int) app->doors[i].position.y == y)
 		{
 			if (app->doors[i].state == CLOSING)
-				return (fabs(1.f - app->doors[i].animation_step));
+				return (fabs(1.f - app->doors[i].animation_begin / DOOR_ANIMATION_DURATION));
 			else
-				return (app->doors[i].animation_step);
+				return (app->doors[i].animation_begin / DOOR_ANIMATION_DURATION);
 		}
 	}
 	return (0.f);
