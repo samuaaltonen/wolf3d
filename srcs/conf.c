@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 16:05:23 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/28 13:24:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_thread_info(t_app *app)
 			width_per_thread * (i + 1) - 1,
 			height_per_thread * i + WIN_H * 0.5f + 1,
 			height_per_thread * (i + 1) + WIN_H * 0.5f,
-			i
+			i + 1
 		};
 		i++;
 	}
