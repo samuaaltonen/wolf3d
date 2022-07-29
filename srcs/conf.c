@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 16:07:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/29 16:21:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	conf_init(t_app *app)
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->thread_count = THREADS_DEFAULT;
 	app->conf->fov = FOV;
+	app->conf->skybox_offset = 360.f;
 	app->conf->mouse_position = (t_point){0, 0};
 	app->conf->keystates = 0;
 	app->conf->movement_speed = MOVEMENT_SPEED;

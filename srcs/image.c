@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 17:20:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:31:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,6 @@ t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
 	return (image);
 }
 
-static int	add_shade(double shade, int color)
-{
-        return ((((color & 0xFF000000))) |
-				((int)((color & 0xFF0000) * shade) & 0xFF0000) |
-            	((int)((color & 0x00FF00) * shade) & 0x00FF00) |
-                (int)(((color & 0x0000FF)) * shade));
-}
-
 /* 
  * Changes color of specific pixel in image.
  *
@@ -80,9 +72,6 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 	if (pixel_pos < 0 || x >= image->width || y >= image->height)
 		return ;
 	pixel = image->data + pixel_pos;
-	if(DEPTH)
-		color = ((color >> 8) & 0xFF0000) | (color & 0xFF000000); 
-	color = add_shade(1.f - ((color & 0xFF000000) >> 24) / 255.f , color);
 	*(int *)pixel = color;
 }
 
@@ -120,6 +109,7 @@ void	put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y
 		//color = add_shade(0.9f - distance / MAX_RAY_DISTANCE, color);
 		(void)color;
 		*(float *)depth_pixel = distance;
+		if(color > 0)
 		*(int *)pixel = color;
 	}
 }

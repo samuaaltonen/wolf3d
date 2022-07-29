@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 15:37:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:32:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	app_run(t_app *app)
 	app->depthmap = init_image(app->mlx, WIN_W, WIN_H);
 	app->sprite = init_xpm_image(app->mlx,
 		TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
+	app->bg = init_xpm_image(app->mlx, 512, 128, "./assets/bg.xpm");
 	app->player = (t_player){
 		(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
@@ -140,6 +141,7 @@ void	app_render(t_app *app)
 	flush_image(app->image);
 	flush_image(app->depthmap);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
+	render_multithreading(app, render_skybox);
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_view);
 	render_multithreading(app, render_objects);

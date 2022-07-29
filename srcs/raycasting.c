@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 15:12:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:20:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 			else
 				pos->x += 1.f;
 			if(!check_ray_pos(app, pos))
-				return((t_vector2){MAX_RAY_DISTANCE, 0.f});
+				return((t_vector2){side_dist.x - delta_dist->x, 0.f});
 			if (app->map[(int) pos->y][(int) pos->x][0] > 'A' && (app->conf->render_moving_doors || app->map[(int) pos->y][(int) pos->x][0] != DOOR_MAP_IDENTIFIER_MOVING))
 				return ((t_vector2){side_dist.x - delta_dist->x, -1.0f});
 			continue ;
@@ -77,7 +77,7 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 		else
 			pos->y += 1.f;
 		if(!check_ray_pos(app, pos))
-				return((t_vector2){MAX_RAY_DISTANCE, 0.f});
+				return((t_vector2){side_dist.y - delta_dist->y, 0.f});
 		if (app->map[(int) pos->y][(int) pos->x][0] > 'A' && (app->conf->render_moving_doors || app->map[(int) pos->y][(int) pos->x][0] != DOOR_MAP_IDENTIFIER_MOVING))
 			return ((t_vector2){side_dist.y - delta_dist->y, 1.0f});
 	}
@@ -137,13 +137,20 @@ int			raycast(t_app *app, int x, t_rayhit *rayhit)
 	delta_dist = (t_vector2){fabs(1.f / ray.x), fabs(1.f / ray.y)};
 	dda = ray_dda(app, &pos, &ray, &delta_dist);
 	if(dda.y == 0.f)
-		return(0);
-	*rayhit = (t_rayhit){
-		get_cardinal(app, &pos, dda.y),
-		app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos, dda.y)] - 1,
-		get_texture_hit_x(&pos, &dda, &ray),
-		dda.x,
-		pos
-	};
+		*rayhit = (t_rayhit){
+			0,
+			0,
+			0,
+			dda.x,
+			pos
+		};
+	else
+		*rayhit = (t_rayhit){
+			get_cardinal(app, &pos, dda.y),
+			app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos, dda.y)] - 1,
+			get_texture_hit_x(&pos, &dda, &ray),
+			dda.x,
+			pos
+		};
 	return (1);
 }

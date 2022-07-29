@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 15:31:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:32:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 # define WOLF3D_H
 # define WIN_NAME "Wolf 3D"
-# define WIN_W 1280
+# define WIN_W 1600
 # define WIN_H 1000
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
@@ -37,8 +37,8 @@
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 9
-# define POSITION_START_X 8.5f
-# define POSITION_START_Y 7.5f
+# define POSITION_START_X 8.f
+# define POSITION_START_Y 8.f
 # define COLLISION_OFFSET 0.25f
 # define DIRECTION_START_X 0.f
 # define DIRECTION_START_Y 1.f
@@ -48,7 +48,7 @@
 # define MOVEMENT_SPEED 3.2f
 # define MAX_RAY_DISTANCE 20.f
 # define TEX_SIZE 64
-# define TEX_COUNT 10
+# define TEX_COUNT 19
 # define DEPTH 1
 # define MOUSE_SENSITIVITY 10.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
@@ -148,11 +148,12 @@ typedef struct s_conf
 	int		win_h;
 	int		toggle_help;
 	int		fps;
-	struct timespec fps_clock;
+	struct timespec	fps_clock;
 	int		fps_count;
 	int		coin_points;
 	int		coin_max;
 	double	delta_time;
+	double		skybox_offset;
 	int		thread_count;
 	int		fov;
 	t_point	mouse_position;
@@ -236,6 +237,7 @@ typedef struct s_app
 	char			***map;
 	t_player		player;
 	t_image			*sprite;
+	t_image			*bg;
 	t_object		*objects;
 	t_door			*doors;
 	int				door_count;
@@ -311,6 +313,7 @@ void		*render_background(void *data);
 void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
 void		clamp_distance(float *distance);
+void		*render_skybox(void *data);
 
 
 /*

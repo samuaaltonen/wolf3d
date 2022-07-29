@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 15:19:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:32:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	while (i < height)
 	{
 		tex_y += y_step;
-		if(1) //toggle for cardinal texturing
+		if(rayhit.type) //toggle for cardinal texturing
 			put_pixel_to_image_depth(app->image, app->depthmap, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + (rayhit.type - 'A') * 64, (int)tex_y & (TEX_SIZE - 1)), rayhit.distance);
 		else
-			put_pixel_to_image_depth(app->image, app->depthmap, x, start_pixel + i, get_pixel_color(app->sprite, rayhit.tex_x + rayhit.direction * 64, (int)tex_y & (TEX_SIZE - 1)), rayhit.distance);
+			put_pixel_to_image_depth(app->image, app->depthmap, x, start_pixel + i, 0, rayhit.distance);
 
 		i++;
 	}
@@ -143,6 +143,41 @@ static double	get_radial_direction(t_vector2 *vector)
 		return (rad);
 }
 
+
+/*
+ * Renders the skybox.
+*/
+void	*render_skybox(void *data)
+{
+	t_thread_data	*t;
+	t_app			*app;
+	int				x;
+	int y;
+	int offset;
+	double ystep;
+	double texy;
+	double xstep;
+
+	t = (t_thread_data *)data;
+	app = (t_app *)t->app;
+	x = t->x_start - 1;
+	(void)offset;
+	texy = 0.f;
+	ystep = 128 / (double)WIN_H;
+	xstep = 512 / (double)WIN_W / 2;
+	while (++x <= t->x_end)
+	{
+		y = 0;
+		texy = 0.f;
+		offset = (int)((x + app->conf->skybox_offset / 720.f * WIN_W * 2) * xstep) % 512;
+		while (++y < WIN_H - 1)
+		{
+			put_pixel_to_image(app->image, x, y, get_pixel_color(app->bg, offset, texy));
+			texy += ystep;
+		}
+	}
+	pthread_exit(NULL);
+}
 /* 
  * Object multithreaded rendering
  */
@@ -206,8 +241,7 @@ void	*render_view(void *data)
 	x = t->x_start - 1;
 	while (++x <= t->x_end)
 	{
-		if(!raycast(app, x, &rayhit))
-			continue;
+		raycast(app, x, &rayhit);
 		draw_vertical_line(app, x, (int)(WIN_H / rayhit.distance), rayhit);
 		//app->distance_buffer[x] = rayhit.distance;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 17:50:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/29 16:30:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	player_rotate(t_app *app, double angle)
 	temp = app->player.camera_plane.x;
 	app->player.camera_plane.x = app->player.camera_plane.x * cos(angle) - app->player.camera_plane.y * sin(angle);
 	app->player.camera_plane.y = temp * sin(angle) + app->player.camera_plane.y * cos(angle);
+	app->conf->skybox_offset = fmod(app->conf->skybox_offset + 720.f, 720.f) + angle * 180 / M_PI;
 }
 
 /**
