@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 13:28:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/29 15:19:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,11 +182,11 @@ void	*render_objects(void *data)
 		if (app->objects[i].sprite_id < 2)
 			app->objects[i].frame_id = app->object_sprites[app->objects[i].sprite_id].animation_step;
 		//ft_printf("%i\n", ((app->objects[i].frame_id)));
-		clamp_distance((float*)&distance);
 		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
-		draw_object(app, i, screen_x, distance);
+		clamp_distance((float*)&transform.y);
+		draw_object(app, i, screen_x, transform.y);
 	}
 	pthread_exit(NULL);
 }
