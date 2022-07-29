@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 17:46:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/07/29 15:31:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # define TEX_SIZE 64
 # define TEX_COUNT 10
 # define DEPTH 1
-# define MOUSE_SENSITIVITY 25.f
+# define MOUSE_SENSITIVITY 10.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define COIN_SPIN_MAP_IDENTIFIER 'B'
 # define COIN_WHIRL_MAP_IDENTIFIER 'C'
