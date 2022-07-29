@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 17:32:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/29 18:27:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 # define WOLF3D_H
 # define WIN_NAME "Wolf 3D"
-# define WIN_W 1600
+# define WIN_W 1280
 # define WIN_H 1000
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."

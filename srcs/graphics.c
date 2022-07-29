@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 17:32:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/07/29 18:32:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	double	y_step;
 	double	tex_y;
 
+	height += 2;
 	y_step = (TEX_SIZE / (double)height);
 
 	tex_y = 0;
-	height += 2;
+
 	if (height > WIN_H)
 	{
 		tex_y = (height - WIN_H) / 2 * y_step;
@@ -74,16 +75,25 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	clamp_distance(&distance);
 	while (++x < WIN_W)
 	{
-		floor_pos->x += step->x;
-		floor_pos->y += step->y;
 		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
 		texture_coord.x = (int)(TEX_SIZE * (floor_pos->x - coord.x)) & (TEX_SIZE - 1);
 		texture_coord.y = (int)(TEX_SIZE * (floor_pos->y - coord.y)) & (TEX_SIZE - 1);
 		if(!check_ray_pos(app, floor_pos))
-			continue;
-		put_pixel_to_image_depth(app->image, app->depthmap, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y), distance);
-		put_pixel_to_image_depth(app->image, app->depthmap, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y), distance);
-
+		{
+					floor_pos->x += step->x;
+		floor_pos->y += step->y;
+					continue;
+		}
+		if(app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A' >= DOOR_MAP_IDENTIFIER)
+				put_pixel_to_image_depth(app->image, app->depthmap, x, y, 0, distance);
+		else
+			put_pixel_to_image_depth(app->image, app->depthmap, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y), distance);
+		if(app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A' >= DOOR_MAP_IDENTIFIER)
+			put_pixel_to_image_depth(app->image, app->depthmap, x, (abs)(y - WIN_H) - 1, 0, distance);
+		else
+			put_pixel_to_image_depth(app->image, app->depthmap, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y), distance);
+		floor_pos->x += step->x;
+		floor_pos->y += step->y;
 	}
 }
 
@@ -105,6 +115,7 @@ static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 	step->y = distance * (ray_right.y - ray_left.y) / (double)WIN_W;
 	floor_pos->x = app->player.position.x + distance * ray_left.x;
 	floor_pos->y = app->player.position.y + distance * ray_left.y;
+	//ft_printf("x%f y%f\n", floor_pos->x, floor_pos->y);
 }
 
 /*
