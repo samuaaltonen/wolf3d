@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 17:20:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:45:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 static t_cardinal	get_cardinal(t_app *app, t_vector2 *pos, double side)
 {
 	if (side < 0) {
-		if (app->player.position.x < pos->x)
+		if (app->player.pos.x < pos->x)
 			return (EAST);
 		return (WEST);
 	}
-	if (app->player.position.y < pos->y)
+	if (app->player.pos.y < pos->y)
 		return (SOUTH);
 	return (NORTH);
 }
@@ -36,13 +36,13 @@ static t_vector2	get_side_distance(t_app *app, t_vector2 *pos,
 	t_vector2	side_dist;
 
 	if (ray->x < 0)
-		side_dist.x = (app->player.position.x - floor(pos->x)) * delta_dist->x;
+		side_dist.x = (app->player.pos.x - floor(pos->x)) * delta_dist->x;
 	else
-		side_dist.x = (floor(pos->x) + 1.f - app->player.position.x) * delta_dist->x;
+		side_dist.x = (floor(pos->x) + 1.f - app->player.pos.x) * delta_dist->x;
 	if (ray->y < 0)
-		side_dist.y = (app->player.position.y - floor(pos->y)) * delta_dist->y;
+		side_dist.y = (app->player.pos.y - floor(pos->y)) * delta_dist->y;
 	else
-		side_dist.y = (floor(pos->y) + 1.f - app->player.position.y) * delta_dist->y;
+		side_dist.y = (floor(pos->y) + 1.f - app->player.pos.y) * delta_dist->y;
 	return (side_dist);
 }
 
@@ -131,9 +131,9 @@ int			raycast(t_app *app, int x, t_rayhit *rayhit)
 	t_vector2	dda;
 
 	camera_x = 2 * x / (double) WIN_W - 1.f;
-	ray.x = app->player.direction.x + app->player.camera_plane.x * camera_x;
-	ray.y = app->player.direction.y + app->player.camera_plane.y * camera_x;
-	pos = (t_vector2){app->player.position.x, app->player.position.y};
+	ray.x = app->player.dir.x + app->player.cam.x * camera_x;
+	ray.y = app->player.dir.y + app->player.cam.y * camera_x;
+	pos = (t_vector2){app->player.pos.x, app->player.pos.y};
 	delta_dist = (t_vector2){fabs(1.f / ray.x), fabs(1.f / ray.y)};
 	dda = ray_dda(app, &pos, &ray, &delta_dist);
 	if(dda.y == 0.f)

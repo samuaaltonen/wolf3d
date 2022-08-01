@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_action.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 15:29:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:45:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	door_action(t_app *app)
 		if (app->doors[i].state != CLOSED)
 			continue;
 		distance = ft_vector_length((t_vector2){
-			app->doors[i].position.x - app->player.position.x,
-			app->doors[i].position.y - app->player.position.y
+			app->doors[i].position.x - app->player.pos.x,
+			app->doors[i].position.y - app->player.pos.y
 		});
 		if (distance > DOOR_ACTION_DISTANCE_THRESHOLD)
 			continue;
@@ -64,8 +64,8 @@ void	progress_doors(t_app *app)
 	{
 		if (app->doors[i].state == OPEN
 			&& app->doors[i].animation_begin >  DOOR_CLOSING_THRESHOLD
-			&& ((int) app->player.position.x != (int) app->doors[i].position.x
-			|| (int) app->player.position.y != (int) app->doors[i].position.y))
+			&& ((int) app->player.pos.x != (int) app->doors[i].position.x
+			|| (int) app->player.pos.y != (int) app->doors[i].position.y))
 		{
 			door_update(app, i, CLOSING);
 			app->doors[i].animation_begin = 0.f;

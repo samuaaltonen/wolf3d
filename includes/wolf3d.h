@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 18:27:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:01:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define DIRECTION_START_Y 1.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
+# define RADIAN_IN_DEG 57.29578f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
 # define MAX_RAY_DISTANCE 20.f
@@ -195,9 +196,9 @@ typedef struct s_sprite_data
 
 typedef struct s_player
 {
-	t_vector2	position;
-	t_vector2	direction;
-	t_vector2	camera_plane;
+	t_vector2	pos;
+	t_vector2	dir;
+	t_vector2	cam;
 }	t_player;
 
 /*

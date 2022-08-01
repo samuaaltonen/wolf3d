@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 18:32:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:45:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,16 @@ static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 	double		player_height;
 	double		distance;
 
-	ray_left = (t_vector2){app->player.direction.x - app->player.camera_plane.x, app->player.direction.y - app->player.camera_plane.y};
-	ray_right = (t_vector2){app->player.direction.x + app->player.camera_plane.x, app->player.direction.y + app->player.camera_plane.y};
+	ray_left = (t_vector2){app->player.dir.x - app->player.cam.x, app->player.dir.y - app->player.cam.y};
+	ray_right = (t_vector2){app->player.dir.x + app->player.cam.x, app->player.dir.y + app->player.cam.y};
 	ray_pos = y - WIN_H * 0.5f;
 	player_height = 0.5f * WIN_H;
 
 	distance = player_height / ray_pos;
 	step->x = distance * (ray_right.x - ray_left.x) / (double)WIN_W;
 	step->y = distance * (ray_right.y - ray_left.y) / (double)WIN_W;
-	floor_pos->x = app->player.position.x + distance * ray_left.x;
-	floor_pos->y = app->player.position.y + distance * ray_left.y;
+	floor_pos->x = app->player.pos.x + distance * ray_left.x;
+	floor_pos->y = app->player.pos.y + distance * ray_left.y;
 	//ft_printf("x%f y%f\n", floor_pos->x, floor_pos->y);
 }
 
@@ -211,11 +211,11 @@ void	*render_objects(void *data)
 		i += app->conf->thread_count;
 		if (i < 0 || i >= app->object_count || app->objects[i].active == 0)
 			continue;
-		dist.x = (app->objects[i].position.x - app->player.position.x) * app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
-		dist.y = (app->objects[i].position.y - app->player.position.y) * app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
+		dist.x = (app->objects[i].position.x - app->player.pos.x) * app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
+		dist.y = (app->objects[i].position.y - app->player.pos.y) * app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
 		transform = ft_vector_multiply_matrix(dist, ft_matrix_inverse((t_matrix2){
-			app->player.camera_plane,
-			app->player.direction
+			app->player.cam,
+			app->player.dir
 		}));
 		distance = ft_vector_length(dist);
 		if ((transform.y / distance < 0.75f))

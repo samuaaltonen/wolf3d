@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 16:21:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:45:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	init_camera_plane(t_app *app)
 	double		camera_length;
 	double		direction_length;
 
-	direction_length = ft_vector_length(app->player.direction);
+	direction_length = ft_vector_length(app->player.dir);
 	camera_length = direction_length * tan(app->conf->fov
 			* DEG_IN_RADIAN / 2.0f);
 	camera_plane = ft_vector_resize(ft_vector_perpendicular(
-				app->player.direction), camera_length);
-	app->player.camera_plane = camera_plane;
+				app->player.dir), camera_length);
+	app->player.cam = camera_plane;
 }
 
 /**
