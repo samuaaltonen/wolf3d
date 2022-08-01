@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 14:45:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:31:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	init_objects(t_app *app)
 				continue ;
 			app->objects[app->object_count] = (t_object){
 				(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
-				app->map[y][x][3] - 'A' - 1, 0, 0, 0, 1};
+				app->map[y][x][3] - 'A' - 1, 0, 0, 0.f,
+				(t_vector2){0.f, 0.f}, 0, 1};
 			if (app->map[y][x][3] == COIN_SPIN_MAP_IDENTIFIER
 				|| app->map[y][x][3] == COIN_WHIRL_MAP_IDENTIFIER)
 				app->conf->coin_max++;

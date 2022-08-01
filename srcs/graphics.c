@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 12:45:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:18:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,8 @@ void	*render_objects(void *data)
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
 		clamp_distance((float*)&transform.y);
-		draw_object(app, i, screen_x, transform.y);
+		app->objects[i].distance = transform.y;
+		draw_object(app, &app->objects[i], screen_x);
 	}
 	pthread_exit(NULL);
 }

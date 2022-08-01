@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 14:35:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:30:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,8 @@ typedef struct s_player
 	int			sprite_id;
 	int			width;
 	int			height;
+	double		distance;
+	t_vector2	texture_offset;
 	int			frame_id;
 	int			active;
  */
@@ -214,6 +216,8 @@ typedef struct s_object
 	int			sprite_id;
 	int			width;
 	int			height;
+	double		distance;
+	t_vector2	texture_offset;
 	int			frame_id;
 	int			active;
 }	t_object;
@@ -325,10 +329,10 @@ int			check_map(t_app *app);
 /*
  * Objects
 */
-void		draw_object(t_app *app, int index, int screen_x, float depth);
 void		init_objects(t_app *app);
 void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
+void		draw_object(t_app *app, t_object *object, int screen_x);
 void		coin_grab(t_app *app);
 
 

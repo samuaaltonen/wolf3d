@@ -3,72 +3,106 @@
 /*                                                        :::      ::::::::   */
 /*   object_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 17:19:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:42:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-
-static void	limit_draw(t_point *start, t_point *end)
+/**
+ * Initializes draw area depending on object position/size and limits it to
+ * window dimensions.
+*/
+static void	init_draw_area(t_point *draw_start, t_point *draw_end,
+	t_object *object, int screen_x)
 {
-	if (start->x < 0)
-		start->x = 0;
-	if (start->y < 0)
-		start->y = 0;
-	if (end->x >= WIN_W)
-		end->x = WIN_W - 1;
-	if (end->y >= WIN_H)
-		end->y = WIN_H - 1;
+	draw_start->x = -object->width / 2 + screen_x;
+	draw_start->y = -object->height / 2 + WIN_H / 2;
+	draw_end->x = object->width / 2 + screen_x;
+	draw_end->y = object->height / 2 + WIN_H / 2;
+	if (draw_start->x < 0)
+		draw_start->x = 0;
+	if (draw_start->y < 0)
+		draw_start->y = 0;
+	if (draw_end->x >= WIN_W)
+		draw_end->x = WIN_W - 1;
+	if (draw_end->y >= WIN_H)
+		draw_end->y = WIN_H - 1;
 }
 
-void	draw_object(t_app *app, int index, int screen_x, float depth)
+/**
+ * Offsets object texture when necessary (i.e. when near window border or when
+ * object is larger than window).
+*/
+static void	check_texture_offset(t_point *draw_start, t_point *draw_end,
+	t_object *object, int screen_x)
 {
-	t_point	draw_start;
-	t_point	draw_end;
-	int		x;
-	int		y;
-	int		color;
+	t_vector2	offset;
+	t_vector2	step;
+
+	offset.x = 0.f;
+	offset.y = 0.f;
+	step.x = TEX_SIZE / (double)(object->width);
+	step.y = TEX_SIZE / (double)(object->height);
+	if (WIN_W < object->width && draw_start->x == 0)
+	{
+		if (draw_end->x < WIN_W - 1)
+			offset.x = (object->width - (draw_end->x - draw_start->x))
+				* (1.f - (screen_x / (double)(draw_end->x - draw_start->x)))
+				* step.x;
+		else
+			offset.x = (object->width - WIN_W)
+				* (1.f - (screen_x / (double)(WIN_W))) * step.x;
+	}
+	else if (draw_end->x - draw_start->x < object->width - 1
+		&& draw_end->x < WIN_W - 1)
+		offset.x = (draw_start->x - draw_end->x) * step.x + (double)TEX_SIZE;
+	if (draw_end->y - draw_start->y < object->height - 1)
+		offset.y = (draw_start->y - draw_end->y + object->height) / 2 * step.y;
+	object->texture_offset = offset;
+}
+
+static void	draw_object_pixel(t_app *app, t_object *object,
+	t_point *window_pixel, t_vector2 *texture_pixel)
+{
+	int	color;
+
+	color = get_pixel_color(app->object_sprites[object->sprite_id].image,
+			(int)texture_pixel->x - ((object->frame_id) * TEX_SIZE) - TEX_SIZE,
+			(int)texture_pixel->y);
+	if (color > 0)
+		put_pixel_to_image_depth(app->image, app->depthmap, window_pixel->x,
+			window_pixel->y, color, object->distance);
+}
+
+/**
+ * Draws an object to image at specific x position with specific size depending
+ * on the distance.
+*/
+void	draw_object(t_app *app, t_object *object, int screen_x)
+{
+	t_point		draw_start;
+	t_point		draw_end;
+	t_point		window_pixel;
 	t_vector2	texture_step;
 	t_vector2	texture_pixel;
 
-	draw_start.x = -app->objects[index].width / 2 + screen_x;
-	draw_start.y = -app->objects[index].height / 2 + WIN_H / 2;
-	draw_end.x = app->objects[index].width / 2 + screen_x;
-	draw_end.y = app->objects[index].height / 2 + WIN_H / 2;
-	limit_draw(&draw_start, &draw_end);
-	x = draw_start.x - 1;
-
-	texture_step.x = TEX_SIZE / (double)(app->objects[index].width);
-	texture_step.y = TEX_SIZE / (double)(app->objects[index].height);
-	texture_pixel.x = 0.f;
-	
-	//ft_printf("%i\n", screen_x);
- 	if (WIN_W < app->objects[index].width && draw_start.x == 0)
-		{
-			if(draw_end.x < WIN_W - 1)
-				texture_pixel.x = ( app->objects[index].width - (draw_end.x - draw_start.x)) * (1.f - (screen_x / (float)(draw_end.x - draw_start.x))) * texture_step.x;
-			else
-				texture_pixel.x = ( app->objects[index].width - WIN_W) * (1.f - (screen_x / (float)(WIN_W))) * texture_step.x;
-		} 
-	else if (draw_end.x - draw_start.x < app->objects[index].width - 1 && draw_end.x < WIN_W - 1)
-		{
-		texture_pixel.x = (draw_start.x - draw_end.x) * texture_step.x + 64.f;
-		}
-	while (++x < draw_end.x)
+	init_draw_area(&draw_start, &draw_end, object, screen_x);
+	texture_step.x = TEX_SIZE / (double)(object->width);
+	texture_step.y = TEX_SIZE / (double)(object->height);
+	check_texture_offset(&draw_start, &draw_end, object, screen_x);
+	window_pixel.x = draw_start.x - 1;
+	texture_pixel.x = object->texture_offset.x;
+	while (++window_pixel.x < draw_end.x)
 	{
-		y = draw_start.y;
-		texture_pixel.y = 0.f;
- 		if (draw_end.y - draw_start.y < app->objects[index].height - 1)
-			texture_pixel.y = (draw_start.y - draw_end.y + app->objects[index].height) / 2 * texture_step.y;
-		while (++y < draw_end.y)
+		window_pixel.y = draw_start.y;
+		texture_pixel.y = object->texture_offset.y;
+		while (++window_pixel.y < draw_end.y)
 		{
-			color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, (int)texture_pixel.x - ((app->objects[index].frame_id) * TEX_SIZE) - TEX_SIZE, texture_pixel.y);
-			if (color > 0)
-				put_pixel_to_image_depth(app->image, app->depthmap, x, y, color, depth);
+			draw_object_pixel(app, object, &window_pixel, &texture_pixel);
 			texture_pixel.y += texture_step.y;
 		}
 		texture_pixel.x += texture_step.x;
