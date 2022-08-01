@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 13:01:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:10:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@
 enum e_mlx_events {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
 	ON_MOUSEMOVE = 6,
 	ON_DESTROY = 17
 };

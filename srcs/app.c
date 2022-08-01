@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 17:32:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:10:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void	app_run(t_app *app)
 	mlx_hook(app->win, ON_KEYUP, KEY_RELEASE_MASK, events_keyup, app);
 	mlx_hook(app->win, ON_KEYDOWN, KEY_PRESS_MASK, events_keydown, app);
 	mlx_hook(app->win, ON_MOUSEMOVE, POINTER_MOTION_MASK, events_mouse_track, app);
-	mlx_hook(app->win, ON_MOUSEDOWN, BUTTON_PRESS_MASK, events_mouse_down, app);
-	mlx_hook(app->win, ON_MOUSEUP, BUTTON_RELEASE_MASK, events_mouse_up, app);
 	mlx_hook(app->win, ON_DESTROY, NO_EVENT_MASK, events_window_destroy, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);

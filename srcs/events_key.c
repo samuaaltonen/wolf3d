@@ -6,18 +6,17 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/20 16:40:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 14:19:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-/*
+/**
  * Handles events for key presses (keyup).
 */
 int	events_keyup(int keycode, t_app *app)
 {
-	//ft_printf("Keyup: %i\n", keycode);
 	if (keycode == KEY_ARROW_RIGHT)
 		app->conf->keystates ^= ROTATE_RIGHT_DOWN;
 	if (keycode == KEY_ARROW_LEFT)
@@ -43,12 +42,11 @@ int	events_keyup(int keycode, t_app *app)
 	return (0);
 }
 
-/*
+/**
  * Handles events for key presses (keydown).
 */
 int	events_keydown(int keycode, t_app *app)
 {
-	//ft_printf("Keydown: %i\n", keycode);
 	if (keycode == KEY_ARROW_RIGHT)
 		app->conf->keystates |= ROTATE_RIGHT_DOWN;
 	if (keycode == KEY_ARROW_LEFT)
