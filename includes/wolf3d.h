@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 13:10:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 14:35:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define COIN_SPIN_MAP_IDENTIFIER 'B'
 # define COIN_WHIRL_MAP_IDENTIFIER 'C'
+# define COIN_GRAB_DISTANCE_THRESHOLD 0.5f
 # define DOOR_MAP_IDENTIFIER 'T'
 # define DOOR_MAP_IDENTIFIER_MOVING 'Z'
 # define DOOR_ANIMATION_DURATION 0.125f

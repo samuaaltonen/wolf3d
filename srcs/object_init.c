@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/26 13:09:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 14:45:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Calculates object count in the map.
 */
-static int	get_object_count(t_app *app)
+static int	count_objects(t_app *app)
 {
 	int	x;
 	int	y;
@@ -43,52 +43,47 @@ void	init_objects(t_app *app)
 {
 	int	x;
 	int	y;
-	int	i;
 
-	app->objects = (t_object*)malloc(sizeof(t_object) * (get_object_count(app) + 1));
+	app->objects = (t_object *)malloc(sizeof(t_object) * (count_objects(app)));
 	if (!app->objects)
 		exit_error(MSG_ERROR_ALLOC);
 	y = -1;
-	i = 0;
+	app->object_count = 0;
 	while (++y < app->map_size.y)
 	{
 		x = -1;
 		while (++x < app->map_size.x)
 		{
-			if (app->map[y][x][0] == 'A' && app->map[y][x][3] > 'A')
-			{
-				app->objects[i] = (t_object){
-					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
-					app->map[y][x][3] - 'A' - 1, 0, 0, 0, 1
-				};
-				if (app->map[y][x][3] == COIN_SPIN_MAP_IDENTIFIER
-					|| app->map[y][x][3] == COIN_WHIRL_MAP_IDENTIFIER)
-					app->conf->coin_max++;
-				i++;
-			}
+			if (app->map[y][x][0] != 'A' || app->map[y][x][3] == 'A')
+				continue ;
+			app->objects[app->object_count] = (t_object){
+				(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
+				app->map[y][x][3] - 'A' - 1, 0, 0, 0, 1};
+			if (app->map[y][x][3] == COIN_SPIN_MAP_IDENTIFIER
+				|| app->map[y][x][3] == COIN_WHIRL_MAP_IDENTIFIER)
+				app->conf->coin_max++;
+			app->object_count++;
 		}
 	}
-	app->object_count = i;
 }
 
-/*
+/**
  * Loads object textures into memory.
 */
 void	load_object_textures(t_app *app)
 {
 	int							i;
 	static const t_sprite_data	sprite_infos[] = {
-		{TEXTURE_COIN_SPIN, NULL, 1.0f, 0, 64, 1},
-		{TEXTURE_COIN_WHIRL, NULL, 1.0f, 0, 64, 0},
-		{TEXTURE_PILLAR, NULL, 0.95f, 0, 64, 0},
-		{TEXTURE_CANNON, NULL, 1.0f, 0, 64, 0},
-		{NULL, NULL, 0, 0, 0, 0}
-	};
+	{TEXTURE_COIN_SPIN, NULL, 1.0f, 0, 64, 1},
+	{TEXTURE_COIN_WHIRL, NULL, 1.0f, 0, 64, 0},
+	{TEXTURE_PILLAR, NULL, 0.95f, 0, 64, 0},
+	{TEXTURE_CANNON, NULL, 1.0f, 0, 64, 0},
+	{NULL, NULL, 0, 0, 0, 0}};
 
 	i = 0;
 	while (i < MAP_MAX_OBJECT_IDS && sprite_infos[i].path)
 	{
-		app->object_sprites[i] = (t_sprite_data) {
+		app->object_sprites[i] = (t_sprite_data){
 			sprite_infos[i].path,
 			init_xpm_image(app->mlx, TEX_SIZE, TEX_SIZE, sprite_infos[i].path),
 			sprite_infos[i].offset_multiplier,
@@ -98,7 +93,8 @@ void	load_object_textures(t_app *app)
 		};
 		if (!(app->object_sprites[i].image))
 			exit_error(MSG_ERROR_TEXTURE_FILE_ACCESS);
-		app->object_sprites[i].total_steps = app->object_sprites[i].image->width / TEX_SIZE;
+		app->object_sprites[i].total_steps = app->object_sprites[i].image->width
+			/ TEX_SIZE;
 		i++;
 	}
 }
