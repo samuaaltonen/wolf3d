@@ -6,12 +6,15 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 18:02:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 18:05:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+/**
+ * Returns vertical offset for the door depending on its animation state.
+*/
 static double	get_door_offset(t_app *app, t_vector2 hit_pos, int start_pixel,
 	int end_pixel)
 {
