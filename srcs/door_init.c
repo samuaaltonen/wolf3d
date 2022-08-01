@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:11:42 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 15:04:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:36:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	get_door_count(t_app *app)
 		x = 0;
 		while (x < app->map_size.x)
 		{
-			if (app->map[y][x][0] == DOOR_MAP_IDENTIFIER)
+			if (app->map[y][x][0] == DOOR_MAP_ID)
 				count++;
 			x++;
 		}
@@ -47,7 +47,7 @@ void	init_doors(t_app *app)
 	int	y;
 	int	i;
 
-	app->doors = (t_door*)malloc(sizeof(t_door) * (get_door_count(app) + 1));
+	app->doors = (t_door *)malloc(sizeof(t_door) * (get_door_count(app) + 1));
 	if (!app->doors)
 		exit_error(MSG_ERROR_ALLOC);
 	y = -1;
@@ -57,13 +57,12 @@ void	init_doors(t_app *app)
 		x = -1;
 		while (++x < app->map_size.x)
 		{
-			if (app->map[y][x][0] == DOOR_MAP_IDENTIFIER)
+			if (app->map[y][x][0] == DOOR_MAP_ID)
 			{
 				app->doors[i] = (t_door){
 					(t_vector2){(double)x + 0.5f, (double)y + 0.5f},
 					CLOSED,
-					0.f
-				};
+					0.f};
 				i++;
 			}
 		}

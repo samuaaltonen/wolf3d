@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 13:07:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:36:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	is_collision(t_app *app, t_vector2 pos)
 	if (pos.x < 0 || pos.y < 0)
 		return (1);
 	if (app->map[(int)pos.y][(int)pos.x][0] > 'A'
-		&& app->map[(int)pos.y][(int)pos.x][0] != DOOR_MAP_IDENTIFIER_MOVING)
+		&& app->map[(int)pos.y][(int)pos.x][0] != DOOR_MAP_ID_MOVING)
 		return (1);
 	return (0);
 }

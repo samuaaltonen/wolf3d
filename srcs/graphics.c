@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 16:18:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 18:02:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	if (end_pixel >= WIN_H)
 		end_pixel = WIN_H - 1;
 	i = 0;
-	clamp_distance((float*)&rayhit.distance);
+	clamp_distance(&rayhit.distance);
 	while (i < height)
 	{
 		tex_y += y_step;
@@ -53,7 +53,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	}
 }
 
-void	clamp_distance(float *distance)
+void	clamp_distance(double *distance)
 {
 	if(*distance > MAX_RAY_DISTANCE)
 		*distance = MAX_RAY_DISTANCE;
@@ -68,7 +68,7 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	t_point		texture_coord;
 	t_point		coord;
 	int			x;
-	float		distance;
+	double		distance;
 
 	distance = 0.5 * WIN_H / (y - WIN_H / 2);
 	x = -1;
@@ -84,11 +84,11 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 		floor_pos->y += step->y;
 					continue;
 		}
-		if(app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A' >= DOOR_MAP_IDENTIFIER)
+		if(app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A' >= DOOR_MAP_ID)
 				put_pixel_to_image_depth(app->image, app->depthmap, x, y, 0, distance);
 		else
 			put_pixel_to_image_depth(app->image, app->depthmap, x, y, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][1] - 'A') * TEX_SIZE , texture_coord.y), distance);
-		if(app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A' >= DOOR_MAP_IDENTIFIER)
+		if(app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A' >= DOOR_MAP_ID)
 			put_pixel_to_image_depth(app->image, app->depthmap, x, (abs)(y - WIN_H) - 1, 0, distance);
 		else
 			put_pixel_to_image_depth(app->image, app->depthmap, x, (abs)(y - WIN_H) - 1, get_pixel_color(app->sprite, texture_coord.x + (app->map[(int)floor_pos->y][(int)floor_pos->x][2] - 'A') * TEX_SIZE, texture_coord.y), distance);
@@ -231,7 +231,7 @@ void	*render_objects(void *data)
 		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
-		clamp_distance((float*)&transform.y);
+		clamp_distance(&transform.y);
 		app->objects[i].distance = transform.y;
 		draw_object(app, &app->objects[i], screen_x);
 	}

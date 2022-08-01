@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 10:42:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 16:15:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:23:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+
+typedef enum e_bool {
+	FALSE = 0,
+	TRUE = 1
+}	t_bool;
 
 typedef unsigned long long	t_ull;
 typedef signed long long	t_sll;

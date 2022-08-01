@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 16:46:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 18:00:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@
 # define COIN_SPIN_MAP_IDENTIFIER 'B'
 # define COIN_WHIRL_MAP_IDENTIFIER 'C'
 # define COIN_GRAB_DISTANCE_THRESHOLD 0.5f
-# define DOOR_MAP_IDENTIFIER 'T'
-# define DOOR_MAP_IDENTIFIER_MOVING 'Z'
+# define DOOR_MAP_ID 'T'
+# define DOOR_MAP_ID_MOVING 'Z'
 # define DOOR_ANIMATION_DURATION 0.125f
 # define DOOR_CLOSING_THRESHOLD 5.f
 # define DOOR_ACTION_DISTANCE_THRESHOLD 2.f
@@ -259,7 +259,7 @@ typedef struct s_rayhit
 	t_cardinal	direction;
 	char		type;
 	int			tex_x;
-	float		distance;
+	double		distance;
 	t_vector2	hit_pos;
 }	t_rayhit;
 
@@ -313,7 +313,7 @@ void		*render_view(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
-void		clamp_distance(float *distance);
+void		clamp_distance(double *distance);
 void		*render_skybox(void *data);
 
 
