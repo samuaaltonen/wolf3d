@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 13:10:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:47:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ static void	help_display(t_app *app)
 
 	flush_image(app->image);
 	mlx_clear_window(app->mlx, app->win);
-	mlx_string_put(app->mlx, app->win, app->conf->win_w / 2 - 360,
-		app->conf->win_h / 2 - 230, 0xFFFFFF, "Controls:");
+	mlx_string_put(app->mlx, app->win, WIN_W / 2 - 360,
+		WIN_H / 2 - 230, 0xFFFFFF, "Controls:");
 	i = -1;
 	while (h[++i])
-		mlx_string_put(app->mlx, app->win, app->conf->win_w / 2 - 230,
-			app->conf->win_h / 2 - 230 + i * 30, 0xFF55FF, (char *) h[i]);
+		mlx_string_put(app->mlx, app->win, WIN_W / 2 - 230,
+			WIN_H / 2 - 230 + i * 30, 0xFF55FF, (char *) h[i]);
 }
 
 int	app_init(t_app **app)
@@ -86,8 +86,7 @@ int	app_init(t_app **app)
 void	app_run(t_app *app)
 {
 	app->mlx = mlx_init();
-	app->win = mlx_new_window(app->mlx, app->conf->win_w,
-			app->conf->win_h, app->conf->win_name);
+	app->win = mlx_new_window(app->mlx, WIN_W, WIN_H, WIN_NAME);
 	//app->fps_info = "Coins collected:    FPS:   ";
 	ft_strcpy(app->fps_info, "Coins collected:   /    FPS:   ");
 	mlx_do_key_autorepeatoff(app->mlx);

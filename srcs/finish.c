@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   finish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:58:54 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/28 15:10:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:47:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	finish_display(t_app *app)
 	g = (sin(0.0246f * ((int)(app->conf->finish_scene_begin * 1000) % 255)) + 1) * 127;
 	b = (sin(0.0246f * ((int)(app->conf->finish_scene_begin * 1000) % 255) + 4) + 1) * 127;
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
-	mlx_string_put(app->mlx, app->win, app->conf->win_w / 2 - 120,
-		app->conf->win_h / 2 - 10, ft_rgbtoint(r, g, b), MSG_FINISH);
+	mlx_string_put(app->mlx, app->win, WIN_W / 2 - 120, WIN_H / 2 - 10,
+		ft_rgbtoint(r, g, b), MSG_FINISH);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 16:30:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:46:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,6 @@ typedef struct s_image
 
 typedef struct s_conf
 {
-	char	*win_name;
-	int		win_w;
-	int		win_h;
 	int		toggle_help;
 	int		fps;
 	struct timespec	fps_clock;

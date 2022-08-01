@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 12:45:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:45:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_thread_info(t_app *app)
 {
 	int	i;
 	int	width_per_thread;
-	int height_per_thread;
+	int	height_per_thread;
 
 	i = 0;
 	width_per_thread = WIN_W / app->conf->thread_count;
@@ -71,10 +71,7 @@ int	conf_init(t_app *app)
 	app->conf = (t_conf *)malloc(sizeof(t_conf));
 	if (!(app->conf))
 		return (0);
-	app->conf->win_name = WIN_NAME;
 	app->conf->toggle_help = 0;
-	app->conf->win_w = WIN_W;
-	app->conf->win_h = WIN_H;
 	app->conf->fps_count = 1;
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->thread_count = THREADS_DEFAULT;
