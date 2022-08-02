@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 17:31:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:51:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,43 +75,108 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
-/* void	put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color)
-{
-	int		pixel_pos;
-	char	*pixel;
-	unsigned int	depth;
-
-	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x >= image->width || y >= image->height)
-		return ;
-	pixel = image->data + pixel_pos;
-	depth = *(int *)pixel >> 24;
-	if(DEPTH)
-		color = ((color >> 8) & 0xFF0000) | (color & 0xFF000000); 
-	color = add_shade(1.f - ((color & 0xFF000000) >> 24) / 255.f , color);
-	if(depth == 0 || !(depth <= (color >> 24)))
-		*(int *)pixel = color;
-} */
-
 void	put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y, int color, float distance)
 {
 	int		pixel_pos;
 	char	*pixel;
 	char	*depth_pixel;
+	unsigned int		depth;
 
 	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
 	if (pixel_pos < 0 || x >= image->width || y >= image->height)
 		return ;
 	pixel = image->data + pixel_pos;
 	depth_pixel = depth_image->data + pixel_pos;
-	if(*(float*)depth_pixel == 0.f || *(float*)depth_pixel > distance)
+	depth = (255 - ((unsigned int)(254 / MAX_RAY_DISTANCE * distance)));
+	*(unsigned int *)depth_pixel = depth << 24;
+	if(color > 0)
+		*(unsigned int *)pixel = color;
+}
+
+void	put_pixel_to_image_test(t_image *image, t_image *depth_image, int x, int y, int color, float distance)
+{
+	int		pixel_pos;
+	char	*pixel;
+	char	*depth_pixel;
+	unsigned int		depth;
+
+	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
+	if (pixel_pos < 0 || x >= image->width || y >= image->height)
+		return ;
+	pixel = image->data + pixel_pos;
+	depth_pixel = depth_image->data + pixel_pos;
+	(void)depth;
+	depth = (255 - ((unsigned int)(254 / MAX_RAY_DISTANCE * distance)));
+
+	if(*(unsigned int*)depth_pixel == 0 || *(unsigned int*)depth_pixel < depth << 24 )
 	{
-		//color = add_shade(0.9f - distance / MAX_RAY_DISTANCE, color);
-		(void)color;
-		*(float *)depth_pixel = distance;
+		*(unsigned int *)depth_pixel = depth << 24;
 		if(color > 0)
-		*(int *)pixel = color;
+		*(unsigned int *)pixel = color;
 	}
+}
+
+
+static void make_bloom(t_image *depthmap, t_point *coord)
+{
+	t_point cur;
+	int size;
+	int effect;
+	int pixel_pos;
+	unsigned char	*pixel;
+	unsigned char	*bluepixel;
+
+	size = 10;
+	effect = 1;
+	cur.x = (coord->x - size - 1);
+	cur.y = (coord->y - size - 1);
+	while(++cur.y <= coord->y + size)
+	{
+		if (cur.y < 0)
+			cur.y = 0;
+		if (cur.y == depthmap->height)
+			break;
+		cur.x = coord->x - size - 1;
+		while(++cur.x < coord->x + size)
+		{
+			if(cur.x < 0)
+				cur.x = 0;
+			if(cur.x >= depthmap->width)
+				break;
+			pixel_pos = (cur.y * depthmap->line_size) + (cur.x * IMAGE_PIXEL_BYTES) + 3;
+			pixel = (unsigned char*)(depthmap->data + pixel_pos);
+			bluepixel = (unsigned char*)(depthmap->data + pixel_pos - 3);
+			if((*( unsigned char *)bluepixel) + effect < 254)
+				*( unsigned char *)bluepixel = ((*(unsigned char *)bluepixel) + effect);
+			pixel_pos += IMAGE_PIXEL_BYTES;
+		}
+	}
+}
+
+
+void	*render_bloom(void *data)
+{
+	t_app			*app;
+	t_point			coord;
+	int				pixel_pos;
+
+	app = (t_app *)((t_thread_data *)data)->app;
+	coord.x = ((t_thread_data *)data)->x_start - 1;
+	while (coord.x <= ((t_thread_data *)data)->x_end)
+	{
+		coord.y = 0;
+		while (coord.y < WIN_H - 1)
+		{
+			pixel_pos = (coord.y * app->depthmap->line_size) + (coord.x * IMAGE_PIXEL_BYTES);
+			coord.y = coord.y + 1;
+			if ((*(int*)(app->depthmap->data + pixel_pos) & 0xFF000000) > 0xA0000000)
+				continue;
+			else  if (*(int*)(app->image->data + pixel_pos) & 0xFF000000) 
+				make_bloom(app->depthmap, &coord);
+		}
+		coord.x = coord.x + 1;
+	}
+	pthread_exit(NULL);
 }
 
 void read_depthmap(t_image *depth_image)
@@ -125,12 +190,41 @@ void read_depthmap(t_image *depth_image)
 	pixels = WIN_W * WIN_H;
 	while (++i < pixels - 1)
 	{
-		pixel = depth_image->data + pixel_pos;
+
+		pixel = depth_image->data + pixel_pos;;
 		*(int *)pixel = (255 - ((int)(254 / MAX_RAY_DISTANCE * (*(float *)pixel)))) << 24;
 		pixel_pos += IMAGE_PIXEL_BYTES;
 	}
 }
 
+void read_bloom(t_image *depth_image, t_image *image)
+{
+	int		pixel_pos;
+	char	*depth_pixel;
+	char	*pixel;
+	int i = -1;
+	int pixels;
+	int value;
+
+	pixel_pos = -IMAGE_PIXEL_BYTES;
+	pixels = WIN_W * WIN_H;
+	while (++i < pixels - 1)
+	{
+		pixel_pos += IMAGE_PIXEL_BYTES;
+		depth_pixel = depth_image->data + pixel_pos;
+		pixel = image->data + pixel_pos;
+		if(*(int *)pixel & 0xFF000000)
+		{
+			*(int *)depth_pixel = 0xFF000000;
+			continue;
+		}
+		value = ((*(int *)depth_pixel & 0xFF000000) >> 24) + ((*(int *)depth_pixel & 255));
+		if(value > 255)
+			*(int *)depth_pixel = 0xFF000000;
+		else
+			*(int *)depth_pixel = value << 24;
+	}
+}
 
 /*
  * Returns pixel color at given position.
@@ -141,7 +235,7 @@ int	get_pixel_color(t_image *image, int x, int y)
 	char	*pixel;
 
 	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x > image->width || y > image->height)
+	if (pixel_pos < 0 || x >= image->width || y >= image->height)
 		return (0);
 	pixel = image->data + pixel_pos;
 	return (*(int *)pixel);

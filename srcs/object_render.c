@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/27 17:19:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:46:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	draw_object(t_app *app, int index, int screen_x, float depth)
 		{
 			color = get_pixel_color(app->object_sprites[app->objects[index].sprite_id].image, (int)texture_pixel.x - ((app->objects[index].frame_id) * TEX_SIZE) - TEX_SIZE, texture_pixel.y);
 			if (color > 0)
-				put_pixel_to_image_depth(app->image, app->depthmap, x, y, color, depth);
+				put_pixel_to_image_test(app->image, app->depthmap, x, y, color, depth);
 			texture_pixel.y += texture_step.y;
 		}
 		texture_pixel.x += texture_step.x;

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 18:32:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:47:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	if (end_pixel >= WIN_H)
 		end_pixel = WIN_H - 1;
 	i = 0;
-	clamp_distance((float*)&rayhit.distance);
+	clamp_distance(&rayhit.distance);
 	while (i < height)
 	{
 		tex_y += y_step;
@@ -53,8 +53,9 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	}
 }
 
-void	clamp_distance(float *distance)
+void	clamp_distance(double *distance)
 {
+	
 	if(*distance > MAX_RAY_DISTANCE)
 		*distance = MAX_RAY_DISTANCE;
 		//*distance = 254 / MAX_RAY_DISTANCE * *distance + 1;
@@ -68,9 +69,9 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 	t_point		texture_coord;
 	t_point		coord;
 	int			x;
-	float		distance;
+	double		distance;
 
-	distance = 0.5 * WIN_H / (y - WIN_H / 2);
+	distance = 0.5f * WIN_H / (y - WIN_H / 2);
 	x = -1;
 	clamp_distance(&distance);
 	while (++x < WIN_W)
@@ -148,10 +149,10 @@ static double	get_radial_direction(t_vector2 *vector)
 	double	rad;
 
 	rad = atan2(vector->x, vector->y);
-		if(rad < 0)
-			rad = rad + 2 * M_PI;
-		rad = rad * (180 / M_PI);
-		return (rad);
+	if(rad < 0)
+		rad = rad + 2 * M_PI;
+	rad = rad * (180 / M_PI);
+	return (rad);
 }
 
 
@@ -160,31 +161,25 @@ static double	get_radial_direction(t_vector2 *vector)
 */
 void	*render_skybox(void *data)
 {
-	t_thread_data	*t;
 	t_app			*app;
-	int				x;
-	int y;
+	t_point			coord;
+	t_vector2		steps;
 	int offset;
-	double ystep;
 	double texy;
-	double xstep;
 
-	t = (t_thread_data *)data;
-	app = (t_app *)t->app;
-	x = t->x_start - 1;
-	(void)offset;
-	texy = 0.f;
-	ystep = 128 / (double)WIN_H;
-	xstep = 512 / (double)WIN_W / 2;
-	while (++x <= t->x_end)
+	app = (t_app *)((t_thread_data *)data)->app;
+	coord.x = ((t_thread_data *)data)->x_start - 1;
+	steps.y = 128 / (double)WIN_H;
+	steps.x = 512 / (double)WIN_W / 2;
+	while (++coord.x <= ((t_thread_data *)data)->x_end)
 	{
-		y = 0;
+		coord.y = 0;
 		texy = 0.f;
-		offset = (int)((x + app->conf->skybox_offset / 720.f * WIN_W * 2) * xstep) % 512;
-		while (++y < WIN_H - 1)
+		offset = (int)((coord.x + app->conf->skybox_offset / 720.f * WIN_W * 2) * steps.x) % 512;
+		while (++coord.y < WIN_H - 1)
 		{
-			put_pixel_to_image(app->image, x, y, get_pixel_color(app->bg, offset, texy));
-			texy += ystep;
+			put_pixel_to_image(app->image, coord.x, coord.y, get_pixel_color(app->bg, offset, texy) | 16777216);
+			texy += steps.y;
 		}
 	}
 	pthread_exit(NULL);
@@ -227,11 +222,10 @@ void	*render_objects(void *data)
 			app->objects[i].frame_id = ((int)(rad * 64 / 360) % 64);
 		if (app->objects[i].sprite_id < 2)
 			app->objects[i].frame_id = app->object_sprites[app->objects[i].sprite_id].animation_step;
-		//ft_printf("%i\n", ((app->objects[i].frame_id)));
 		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
-		clamp_distance((float*)&transform.y);
+		clamp_distance(&transform.y);
 		draw_object(app, i, screen_x, transform.y);
 	}
 	pthread_exit(NULL);

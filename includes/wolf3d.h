@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/29 18:27:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:48:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ typedef struct s_rayhit
 	t_cardinal	direction;
 	char		type;
 	int			tex_x;
-	float		distance;
+	double		distance;
 	t_vector2	hit_pos;
 }	t_rayhit;
 
@@ -286,8 +286,8 @@ void		app_render(t_app *app);
 */
 t_image		*init_image(void *mlx, int x, int y);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
-//void		put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color);
 void		put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y, int color, float distance);
+void		put_pixel_to_image_test(t_image *image, t_image *depth_image, int x, int y, int color, float distance);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
 t_image		*init_xpm_image(void *mlx, int width, int height, char *path);
@@ -312,9 +312,10 @@ void		*render_view(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
-void		clamp_distance(float *distance);
+void		clamp_distance(double *distance);
 void		*render_skybox(void *data);
-
+void		*render_bloom(void *data);
+void		read_bloom(t_image *depth_image, t_image *image);
 
 /*
  * Map
@@ -350,8 +351,5 @@ void		render_moving_doors(t_app *app);
  * Finish scene
 */
 void		finish_display(t_app *app);
-
-//debug
-void		read_depthmap(t_image *depth_image);
 
 #endif
