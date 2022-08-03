@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 11:54:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 12:48:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define COIN_SPIN_MAP_IDENTIFIER 'B'
 # define COIN_WHIRL_MAP_IDENTIFIER 'C'
 # define COIN_GRAB_DISTANCE_THRESHOLD 0.5f
+# define EMPTY_MAP_ID 'X'
 # define DOOR_MAP_ID 'T'
 # define DOOR_MAP_ID_MOVING 'Z'
 # define DOOR_ANIMATION_DURATION 0.125f

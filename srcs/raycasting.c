@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 17:36:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 13:10:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int			raycast(t_app *app, int x, t_rayhit *rayhit)
 	if(dda.y == 0.f)
 		*rayhit = (t_rayhit){
 			0,
-			0,
+			EMPTY_MAP_ID,
 			0,
 			dda.x,
 			pos
