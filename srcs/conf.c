@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 16:45:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:32:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	conf_init(t_app *app)
 	if (!(app->conf))
 		return (0);
 	app->conf->toggle_help = 0;
+	app->conf->toggle_bloom = 1;
 	app->conf->fps_count = 1;
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->thread_count = THREADS_DEFAULT;

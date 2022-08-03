@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/03 12:48:38 by saaltone         ###   ########.fr       */
-=======
-/*   Updated: 2022/08/03 14:02:23 by htahvana         ###   ########.fr       */
->>>>>>> move bloom functions to new file and norminette
+/*   Updated: 2022/08/03 14:33:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +51,6 @@
 # define BLOOM_SIZE 15
 # define TEX_SIZE 64
 # define TEX_COUNT 19
-# define DEPTH 1
 # define MOUSE_SENSITIVITY 10.f
 # define FPS_UPDATE_FREQUENCY 0.0625f
 # define COIN_SPIN_MAP_IDENTIFIER 'B'
@@ -152,6 +147,7 @@ typedef struct s_image
 typedef struct s_conf
 {
 	int		toggle_help;
+	int		toggle_bloom;
 	int		fps;
 	struct timespec	fps_clock;
 	int		fps_count;

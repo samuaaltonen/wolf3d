@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 11:54:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:32:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	app_render(t_app *app)
 	if (app->conf->has_moving_doors)
 		render_moving_doors(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
-	if (DEPTH)
+	if (app->conf->toggle_bloom)
 	{
 		render_multithreading(app, render_bloom);
 		render_multithreading(app, read_bloom);

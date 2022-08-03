@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 14:19:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:31:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	events_keyup(int keycode, t_app *app)
 		exit(EXIT_SUCCESS);
 	if (keycode == KEY_H)
 		app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
+	if (keycode == KEY_PGUP)
+		app->conf->toggle_bloom = ft_toggle(app->conf->toggle_bloom);
 	return (0);
 }
 
