@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/03 16:24:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:56:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,37 @@ void	*read_bloom(void *data)
 			*(char *)depth_pixel = value;
 		*(char *)(depth_pixel - 3) = 0;
 		pixel_pos += app->conf->thread_count * IMAGE_PIXEL_BYTES;
+	}
+	pthread_exit(NULL);
+}
+
+/*
+ * Renders the skybox.
+*/
+void	*render_skybox(void *data)
+{
+	t_app		*app;
+	t_point		coord;
+	t_vector2	steps;
+	int			offset;
+	double		texy;
+
+	app = (t_app *)((t_thread_data *)data)->app;
+	coord.x = ((t_thread_data *)data)->x_start - 1;
+	steps.y = 128 / (double)WIN_H;
+	steps.x = 512 / (double)WIN_W / 2;
+	while (++coord.x <= ((t_thread_data *)data)->x_end)
+	{
+		coord.y = 0;
+		texy = 0.f;
+		offset = (int)((coord.x + app->conf->skybox_offset / 720.f * WIN_W * 2)
+				* steps.x) % 512;
+		while (++coord.y < WIN_H - 1)
+		{
+			put_pixel_to_image(app->image, coord.x, coord.y,
+				get_pixel_color(app->bg, offset, texy) | 16777216);
+			texy += steps.y;
+		}
 	}
 	pthread_exit(NULL);
 }

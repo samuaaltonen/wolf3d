@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 15:46:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:52:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,54 @@ void	draw_object(t_app *app, t_object *object, int screen_x)
 		}
 		texture_pixel.x += texture_step.x;
 	}
+}
+
+/* 
+ * Object multithreaded rendering
+ */
+void	*render_objects(void *data)
+{
+	t_thread_data	*t;
+	t_app			*app;
+	int				i;
+	t_vector2		dist;
+	float			distance;
+	t_vector2		transform;
+	int				screen_x;
+	double			rad;
+
+	t = (t_thread_data *)data;
+	app = (t_app *)t->app;
+	i = -(t->id);
+	while (i < app->object_count)
+	{
+		i += app->conf->thread_count;
+		if (i < 0 || i >= app->object_count || app->objects[i].active == 0)
+			continue ;
+		dist.x = (app->objects[i].position.x - app->player.pos.x)
+			* app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
+		dist.y = (app->objects[i].position.y - app->player.pos.y)
+			* app->object_sprites[app->objects[i].sprite_id].offset_multiplier;
+		transform = ft_vector_multiply_matrix(dist, ft_matrix_inverse((t_matrix2){
+					app->player.cam,
+					app->player.dir
+				}));
+		distance = ft_vector_length(dist);
+		if ((transform.y / distance < 0.75f))
+			continue ;
+		rad = get_radial_direction(&dist);
+		if (app->object_sprites[app->objects[i].sprite_id].mirrored)
+			app->objects[i].frame_id = ((int)(rad * 64 / 180) % 64);
+		else
+			app->objects[i].frame_id = ((int)(rad * 64 / 360) % 64);
+		if (app->objects[i].sprite_id < 2)
+			app->objects[i].frame_id = app->object_sprites[app->objects[i].sprite_id].animation_step;
+		screen_x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
+		app->objects[i].width = abs((int)(WIN_H / transform.y));
+		app->objects[i].height = abs((int)(WIN_H / transform.y));
+		clamp_distance(&transform.y);
+		app->objects[i].distance = transform.y;
+		draw_object(app, &app->objects[i], screen_x);
+	}
+	pthread_exit(NULL);
 }
