@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   finish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:58:54 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 16:51:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:26:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+/*
+ * Covers the screen with congratulations for a moment after finding all coins.
+ */
 void	finish_display(t_app *app)
 {
 	int	r;

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 14:32:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:24:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_thread_info(t_app *app)
  * Calculates initial camera plane using FOV and player direction vector.
  * Camera plane is always perpendicular to the direction vector.
  * 
- * cameralenght = directionlenght * tan(FOV / 2)
+ * cameralength = directionlength * tan(FOV / 2)
 */
 void	init_camera_plane(t_app *app)
 {

@@ -6,12 +6,15 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/03 14:26:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:24:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+/*
+ * Adds blue channel value to depthmap surrounding given pixel
+ */
 static void	make_bloom(t_image *depthmap, t_point *coord)
 {
 	t_point			cur;
@@ -40,6 +43,9 @@ static void	make_bloom(t_image *depthmap, t_point *coord)
 	}
 }
 
+/*
+ * Finds pixels of skybox in image, calls the make_bloom the pixels
+ */
 void	*render_bloom(void *data)
 {
 	t_app			*app;
@@ -67,6 +73,9 @@ void	*render_bloom(void *data)
 	pthread_exit(NULL);
 }
 
+/*
+ * Adds the blue channel of the depthmap to the transparency channel
+ */
 void	*read_bloom(void *data)
 {
 	t_app	*app;
