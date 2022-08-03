@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 15:15:23 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:23:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	help_display(t_app *app)
 		"[arrow left]       Rotate left" , "[arrow right]      Rotate right",
 		"[arrow up]/[w]     Move forward", "[arrow down]/[s]   Move backward",
 		"[a]                Move left",    "[d]                Move right",
+		"[b]                Toggle bloom",
 		"[u]                Decrease FOV", "[i]                Increase FOV",
 		"[f]                Open Doors",   "[esc]              Exit", NULL,
 	};
