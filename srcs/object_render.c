@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 16:42:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 11:57:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	draw_object_pixel(t_app *app, t_object *object,
 			(int)texture_pixel->x - ((object->frame_id) * TEX_SIZE) - TEX_SIZE,
 			(int)texture_pixel->y);
 	if (color > 0)
-		put_pixel_to_image_depth(app->image, app->depthmap, window_pixel->x,
+		put_pixel_to_image_test(app->image, app->depthmap, window_pixel->x,
 			window_pixel->y, color, object->distance);
 }
 

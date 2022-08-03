@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 18:00:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 11:54:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define RADIAN_IN_DEG 57.29578f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 20.f
+# define MAX_RAY_DISTANCE 30.f
 # define TEX_SIZE 64
 # define TEX_COUNT 19
 # define DEPTH 1
@@ -287,8 +287,8 @@ void		app_render(t_app *app);
 */
 t_image		*init_image(void *mlx, int x, int y);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
-//void		put_pixel_to_image_depth(t_image *image, int x, int y, unsigned int color);
 void		put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y, int color, float distance);
+void		put_pixel_to_image_test(t_image *image, t_image *depth_image, int x, int y, int color, float distance);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
 t_image		*init_xpm_image(void *mlx, int width, int height, char *path);
@@ -315,7 +315,8 @@ void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
 void		clamp_distance(double *distance);
 void		*render_skybox(void *data);
-
+void		*render_bloom(void *data);
+void		*read_bloom(void *data);
 
 /*
  * Map
@@ -351,8 +352,5 @@ void		render_moving_doors(t_app *app);
  * Finish scene
 */
 void		finish_display(t_app *app);
-
-//debug
-void		read_depthmap(t_image *depth_image);
 
 #endif
