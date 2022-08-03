@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 14:19:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:32:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
 		return (NULL);
 	image->width = width;
 	image->height = height;
-	image->img = mlx_xpm_file_to_image(mlx, path, &(image->width), &(image->height));
-	if(image->img == NULL)
+	image->img = mlx_xpm_file_to_image(mlx, path, &(image->width),
+		&(image->height));
+	if (image->img == NULL)
 		exit_error("image failed to load\n");
 	image->data = mlx_get_data_addr(image->img, &(image->bpp),
 			&(image->line_size), &(image->endian));
@@ -75,44 +76,55 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
-void	put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y, int color, float distance)
+/*
+ * put pixel to image and depthmap
+ */
+void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
+	float distance)
 {
-	int		pixel_pos;
-	char	*pixel;
-	char	*depth_pixel;
-	unsigned int		depth;
+	int				pixel_pos;
+	char			*pixel;
+	char			*depth_pixel;
+	unsigned int	depth;
 
-	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x >= image->width || y >= image->height)
+	pixel_pos = (point.y * app->image->line_size)
+		+ (point.x * IMAGE_PIXEL_BYTES);
+	if (pixel_pos < 0 || point.x >=  app->image->width
+			|| point.y >= app->image->height)
 		return ;
-	pixel = image->data + pixel_pos;
-	depth_pixel = depth_image->data + pixel_pos;
+	pixel = app->image->data + pixel_pos;
+	depth_pixel = app->depthmap->data + pixel_pos;
 	depth = (255 - ((unsigned int)(254 / MAX_RAY_DISTANCE * distance)));
 	*(unsigned int *)depth_pixel = depth << 24;
-	if(color > 0)
+	if (color > 0)
 		*(unsigned int *)pixel = color;
 }
 
-void	put_pixel_to_image_test(t_image *image, t_image *depth_image, int x, int y, int color, float distance)
+/*
+ * tests if there is something over the pixel from depthmap before putting it.
+ */
+void	put_pixel_to_image_test(t_app *app, t_point point, int color,
+	float distance)
 {
-	int		pixel_pos;
-	char	*pixel;
-	char	*depth_pixel;
-	unsigned int		depth;
+	int				pixel_pos;
+	char			*pixel;
+	char			*depth_pixel;
+	unsigned int	depth;
 
-	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x >= image->width || y >= image->height)
+	pixel_pos = (point.y * app->image->line_size)
+		+ (point.x * IMAGE_PIXEL_BYTES);
+	if (pixel_pos < 0 || point.x >= app->image->width
+			|| point.y >= app->image->height)
 		return ;
-	pixel = image->data + pixel_pos;
-	depth_pixel = depth_image->data + pixel_pos;
-	(void)depth;
+	pixel = app->image->data + pixel_pos;
+	depth_pixel = app->depthmap->data + pixel_pos;
 	depth = (255 - ((unsigned int)(254 / MAX_RAY_DISTANCE * distance)));
-
-	if(*(unsigned int*)depth_pixel == 0 || *(unsigned int*)depth_pixel < depth << 24 )
+	if (*(unsigned int*)depth_pixel == 0
+		|| *(unsigned int*)depth_pixel < depth << 24 )
 	{
 		*(unsigned int *)depth_pixel = depth << 24;
-		if(color > 0)
-		*(unsigned int *)pixel = color;
+		if (color > 0)
+			*(unsigned int *)pixel = color;
 	}
 }
 

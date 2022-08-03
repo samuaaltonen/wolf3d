@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 15:23:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:54:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define RADIAN_IN_DEG 57.29578f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 30.f
+# define MAX_RAY_DISTANCE 20.f
 # define BLOOM_SIZE 15
 # define TEX_SIZE 64
 # define TEX_COUNT 20
@@ -292,8 +292,10 @@ void		app_render(t_app *app);
 */
 t_image		*init_image(void *mlx, int x, int y);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
-void		put_pixel_to_image_depth(t_image *image, t_image *depth_image, int x, int y, int color, float distance);
-void		put_pixel_to_image_test(t_image *image, t_image *depth_image, int x, int y, int color, float distance);
+void		put_pixel_to_image_depth(t_app *app, t_point point, int color,
+	float distance);
+void		put_pixel_to_image_test(t_app *app, t_point point, int color,
+	float distance);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
 t_image		*init_xpm_image(void *mlx, int width, int height, char *path);

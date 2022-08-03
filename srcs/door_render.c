@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 11:55:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:46:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ static void	draw_door_vertical_line(t_app *app, int x, int h, t_rayhit rayhit)
 	while (i < h)
 	{
 		if (start_pixel + i > 0)
-			put_pixel_to_image_test(app->image, app->depthmap, x,
-				start_pixel + i,
+			put_pixel_to_image_test(app, (t_point){x, start_pixel + i},
 				get_pixel_color(app->sprite, texture_x, (int)(y_step * i)),
 				rayhit.distance);
 		i++;
