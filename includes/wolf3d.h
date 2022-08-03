@@ -6,7 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/08/03 12:48:38 by saaltone         ###   ########.fr       */
+=======
+/*   Updated: 2022/08/03 14:02:23 by htahvana         ###   ########.fr       */
+>>>>>>> move bloom functions to new file and norminette
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +52,7 @@
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
 # define MAX_RAY_DISTANCE 30.f
+# define BLOOM_SIZE 15
 # define TEX_SIZE 64
 # define TEX_COUNT 19
 # define DEPTH 1
@@ -92,6 +97,8 @@ enum e_mlx_event_masks {
 	BUTTON_RELEASE_MASK = 8,
 	POINTER_MOTION_MASK = 64
 };
+
+typedef unsigned char t_uint8;
 
 typedef enum e_cardinal {
 	NORTH = 0,

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/07/26 13:06:29 by saaltone         ###   ########.fr        #
+#    Updated: 2022/08/03 14:24:36 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SOURCES_FILES=main.c error.c conf.c app.c events_key.c events_loop.c \
 				events_mouse.c events_window.c graphics.c raycasting.c \
 				image.c parser.c object_init.c object_render.c player.c \
 				door_init.c door_action.c door_render.c object_action.c \
-				finish.c
+				finish.c bloom.c
 SOURCES=$(SOURCES_FILES:%.c=srcs/%.c)
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=./includes
