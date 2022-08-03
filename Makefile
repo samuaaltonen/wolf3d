@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/08/03 14:24:36 by htahvana         ###   ########.fr        #
+#    Updated: 2022/08/03 14:44:28 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ LIBMLX_INCLUDES=./libmlx
 LIBMLX_LINUX=./libmlx_linux
 LIBMLX_LINUX_INCLUDES=./libmlx_linux
 SOURCES_FILES=main.c error.c conf.c app.c events_key.c events_loop.c \
-				events_mouse.c events_window.c graphics.c raycasting.c \
+				events_mouse.c events_window.c graphics.c \
 				image.c parser.c object_init.c object_render.c player.c \
 				door_init.c door_action.c door_render.c object_action.c \
-				finish.c bloom.c
+				finish.c helper.c wall_render.c bloom.c
 SOURCES=$(SOURCES_FILES:%.c=srcs/%.c)
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=./includes
