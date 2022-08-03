@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/02 15:48:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 11:48:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define DEG_IN_RADIAN 0.01745f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 20.f
+# define MAX_RAY_DISTANCE 30.f
 # define TEX_SIZE 64
 # define TEX_COUNT 19
 # define DEPTH 1
@@ -315,7 +315,7 @@ void		render_multithreading(t_app *app, void *(*renderer)(void *));
 void		clamp_distance(double *distance);
 void		*render_skybox(void *data);
 void		*render_bloom(void *data);
-void		read_bloom(t_image *depth_image, t_image *image);
+void		*read_bloom(void *data);
 
 /*
  * Map

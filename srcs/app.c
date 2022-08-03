@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/02 15:41:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 11:44:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,10 +151,9 @@ void	app_render(t_app *app)
 	if (DEPTH)
 	{
 		render_multithreading(app, render_bloom);
-		read_bloom(app->depthmap, app->image);
+		render_multithreading(app, read_bloom);
 	}
 	mlx_put_image_to_window(app->mlx, app->win, app->depthmap->img, 0, 0);
-
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	update_info(app, app->conf->coin_points, 18);
 	update_info(app, app->conf->coin_max, 22);

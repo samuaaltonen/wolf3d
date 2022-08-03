@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/02 15:51:38 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 11:38:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ static void make_bloom(t_image *depthmap, t_point *coord)
 	unsigned char	*pixel;
 	unsigned char	*bluepixel;
 
-	size = 10;
+	size = 15;
 	effect = 1;
 	cur.x = (coord->x - size - 1);
 	cur.y = (coord->y - size - 1);
@@ -161,58 +161,46 @@ void	*render_bloom(void *data)
 	int				pixel_pos;
 
 	app = (t_app *)((t_thread_data *)data)->app;
-	coord.x = ((t_thread_data *)data)->x_start - 1;
-	while (coord.x <= ((t_thread_data *)data)->x_end)
+	coord.x = ((t_thread_data *)data)->id;
+	while (coord.x <= WIN_W)
 	{
 		coord.y = 0;
 		while (coord.y < WIN_H - 1)
 		{
 			pixel_pos = (coord.y * app->depthmap->line_size) + (coord.x * IMAGE_PIXEL_BYTES);
-			coord.y = coord.y + 1;
+			coord.y = coord.y + 2;
 			if ((*(int*)(app->depthmap->data + pixel_pos) & 0xFF000000) > 0xA0000000)
 				continue;
-			else  if (*(int*)(app->image->data + pixel_pos) & 0xFF000000) 
+			else if (*(int*)(app->image->data + pixel_pos) & 0xFF000000) 
 				make_bloom(app->depthmap, &coord);
 		}
-		coord.x = coord.x + 1;
+		coord.x = coord.x + app->conf->thread_count + 2;
 	}
 	pthread_exit(NULL);
 }
 
-void read_depthmap(t_image *depth_image)
+void *read_bloom(void *data)
 {
-	int		pixel_pos;
-	char	*pixel;
-	int i = -1;
-	int pixels;
-
-	pixel_pos = 0;
-	pixels = WIN_W * WIN_H;
-	while (++i < pixels - 1)
-	{
-
-		pixel = depth_image->data + pixel_pos;;
-		*(int *)pixel = (255 - ((int)(254 / MAX_RAY_DISTANCE * (*(float *)pixel)))) << 24;
-		pixel_pos += IMAGE_PIXEL_BYTES;
-	}
-}
-
-void read_bloom(t_image *depth_image, t_image *image)
-{
+	t_app			*app;
 	int		pixel_pos;
 	char	*depth_pixel;
 	char	*pixel;
-	int i = -1;
+	int i;
 	int pixels;
 	int value;
 
-	pixel_pos = -IMAGE_PIXEL_BYTES;
+	app = (t_app *)((t_thread_data *)data)->app;
+	pixel_pos = -(IMAGE_PIXEL_BYTES * ((t_thread_data *)data)->id);
 	pixels = WIN_W * WIN_H;
-	while (++i < pixels - 1)
+	i = -((t_thread_data *)data)->id;
+	while (i < pixels)
 	{
-		pixel_pos += IMAGE_PIXEL_BYTES;
-		depth_pixel = depth_image->data + pixel_pos;
-		pixel = image->data + pixel_pos;
+		i += app->conf->thread_count;
+		if (i < 0 || i >= pixels)
+			continue;
+		pixel_pos += IMAGE_PIXEL_BYTES * app->conf->thread_count;
+		depth_pixel = app->depthmap->data + pixel_pos;
+		pixel = app->image->data + pixel_pos;
 		if(*(int *)pixel & 0xFF000000)
 		{
 			*(int *)depth_pixel = 0xFF000000;
@@ -224,6 +212,7 @@ void read_bloom(t_image *depth_image, t_image *image)
 		else
 			*(int *)depth_pixel = value << 24;
 	}
+	pthread_exit(NULL);
 }
 
 /*
