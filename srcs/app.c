@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 16:19:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:35:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,17 @@
 */
 static void	update_fps_counter(t_app *app)
 {
-	struct timespec time_now;
-	struct timespec time_since;
+	struct timespec	time_now;
+	struct timespec	time_since;
 
 	clock_gettime(CLOCK_REALTIME, &time_now);
 	time_since.tv_nsec = time_now.tv_nsec - app->conf->fps_clock.tv_nsec;
-	time_since.tv_sec =  time_now.tv_sec - app->conf->fps_clock.tv_sec;
+	time_since.tv_sec = time_now.tv_sec - app->conf->fps_clock.tv_sec;
 	app->conf->delta_time = (double)time_since.tv_sec
 		+ 1.0e-9 * time_since.tv_nsec;
 	app->conf->fps = (int)(1 / app->conf->delta_time);
 	app->conf->fps_clock = time_now;
 }
-
-
 
 int	app_init(t_app **app)
 {
@@ -75,7 +73,7 @@ void	app_run(t_app *app)
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
 	app->depthmap = init_image(app->mlx, WIN_W, WIN_H);
 	app->sprite = init_xpm_image(app->mlx,
-		TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
+			TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
 	app->bg = init_xpm_image(app->mlx, 512, 128, "./assets/bg.xpm");
 	app->player = (t_player){
 		(t_vector2){POSITION_START_X, POSITION_START_Y},

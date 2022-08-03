@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:32:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 14:41:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:34:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,27 @@ double	get_radial_direction(t_vector2 *vector)
 		rad = rad + 2 * M_PI;
 	rad = rad * (180 / M_PI);
 	return (rad);
+}
+
+/*
+ * Returns pixel color at given position.
+*/
+int	get_pixel_color(t_image *image, int x, int y)
+{
+	int		pixel_pos;
+	char	*pixel;
+
+	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
+	if (pixel_pos < 0 || x >= image->width || y >= image->height)
+		return (0);
+	pixel = image->data + pixel_pos;
+	return (*(int *)pixel);
+}
+
+/*
+ * Flushes image (sets all pixels to black)
+*/
+void	flush_image(t_image *image)
+{
+	ft_bzero(image->data, image->height * image->line_size);
 }
