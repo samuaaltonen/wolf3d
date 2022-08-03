@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 15:23:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:19:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,7 @@ static void	update_fps_counter(t_app *app)
 	app->conf->fps_clock = time_now;
 }
 
-/**
- * Displays help menu.
-*/
-static void	help_display(t_app *app)
-{
-	int					i;
-	static const char	*h[] = {
-		"[arrow left]       Rotate left" , "[arrow right]      Rotate right",
-		"[arrow up]/[w]     Move forward", "[arrow down]/[s]   Move backward",
-		"[a]                Move left",    "[d]                Move right",
-		"[b]                Toggle bloom",
-		"[u]                Decrease FOV", "[i]                Increase FOV",
-		"[f]                Open Doors",   "[esc]              Exit", NULL,
-	};
 
-	flush_image(app->image);
-	mlx_clear_window(app->mlx, app->win);
-	mlx_string_put(app->mlx, app->win, WIN_W / 2 - 360,
-		WIN_H / 2 - 230, 0xFFFFFF, "Controls:");
-	i = -1;
-	while (h[++i])
-		mlx_string_put(app->mlx, app->win, WIN_W / 2 - 230,
-			WIN_H / 2 - 230 + i * 30, 0xFF55FF, (char *) h[i]);
-}
 
 int	app_init(t_app **app)
 {
@@ -86,14 +63,13 @@ void	app_run(t_app *app)
 {
 	app->mlx = mlx_init();
 	app->win = mlx_new_window(app->mlx, WIN_W, WIN_H, WIN_NAME);
-	//app->fps_info = "Coins collected:    FPS:   ";
 	ft_strcpy(app->fps_info, "Coins collected:   /    FPS:   ");
 	mlx_do_key_autorepeatoff(app->mlx);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
 	mlx_hook(app->win, ON_KEYUP, KEY_RELEASE_MASK, events_keyup, app);
 	mlx_hook(app->win, ON_KEYDOWN, KEY_PRESS_MASK, events_keydown, app);
-	mlx_hook(app->win, ON_MOUSEMOVE, POINTER_MOTION_MASK, events_mouse_track, app);
+	mlx_hook(app->win, ON_MOUSEMOVE, 64, events_mouse_track, app);
 	mlx_hook(app->win, ON_DESTROY, NO_EVENT_MASK, events_window_destroy, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
@@ -107,21 +83,8 @@ void	app_run(t_app *app)
 		(t_vector2){0, 0}};
 	load_object_textures(app);
 	init_camera_plane(app);
-	if (!app->image || !app->depthmap || !app->sprite)
-		exit_error(NULL);
-}
-
-// Updates the info string with given value backwards from given index
-static void update_info(t_app *app, int value, int char_index)
-{
-	int	i;
-
-	i = -1;
-	while (++i < 3)
-	{
-		app->fps_info[char_index - i] = value % 10 + '0';
-		value = value / 10;
-	}
+	if (!app->image || !app->depthmap || !app->sprite || !check_textures(app))
+		exit_error(MSG_ERROR_TEXTURE_LOAD_FAILED);
 }
 
 void	app_render(t_app *app)
@@ -149,8 +112,6 @@ void	app_render(t_app *app)
 	}
 	mlx_put_image_to_window(app->mlx, app->win, app->depthmap->img, 0, 0);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
-	update_info(app, app->conf->coin_points, 18);
-	update_info(app, app->conf->coin_max, 22);
-	update_info(app, app->conf->fps, 30);
+	update_info(app);
 	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, app->fps_info);
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 15:54:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 16:18:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,8 @@ void		init_camera_plane(t_app *app);
 int			app_init(t_app **app);
 void		app_run(t_app *app);
 void		app_render(t_app *app);
+void		update_info(t_app *app);
+void		help_display(t_app *app);
 
 /*
  * Images
