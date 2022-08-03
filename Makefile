@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/08/03 14:44:28 by saaltone         ###   ########.fr        #
+#    Updated: 2022/08/03 14:46:54 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ linux:
 	-I $(LIBMLX_LINUX_INCLUDES) \
 	-L $(LIBFT) \
 	-L $(LIBMLX_LINUX) \
-	-lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -pthread
+	-lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz \
+	-pthread
 
 .PHONY: all clean fclean re comp
