@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 14:36:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:21:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 
 	height += 2;
 	y_step = (TEX_SIZE / (double)height);
-
 	tex_y = 0;
-
 	if (height > WIN_H)
 	{
 		tex_y = (height - WIN_H) / 2 * y_step;
@@ -103,13 +101,11 @@ static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 	ray_right = (t_vector2){app->player.dir.x + app->player.cam.x, app->player.dir.y + app->player.cam.y};
 	ray_pos = y - WIN_H * 0.5f;
 	player_height = 0.5f * WIN_H;
-
 	distance = player_height / ray_pos;
 	step->x = distance * (ray_right.x - ray_left.x) / (double)WIN_W;
 	step->y = distance * (ray_right.y - ray_left.y) / (double)WIN_W;
 	floor_pos->x = app->player.pos.x + distance * ray_left.x;
 	floor_pos->y = app->player.pos.y + distance * ray_left.y;
-	//ft_printf("x%f y%f\n", floor_pos->x, floor_pos->y);
 }
 
 /*
@@ -230,7 +226,6 @@ void	*render_view(void *data)
 	{
 		raycast(app, x, &rayhit);
 		draw_vertical_line(app, x, (int)(WIN_H / rayhit.distance), rayhit);
-		//app->distance_buffer[x] = rayhit.distance;
 	}
 	pthread_exit(NULL);
 }

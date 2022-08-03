@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 14:32:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:15:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,20 @@
 */
 static void	update_fps_counter(t_app *app)
 {
-	//double	time_since;
 	struct timespec time_now;
 	struct timespec time_since;
 
 	clock_gettime(CLOCK_REALTIME, &time_now);
 	time_since.tv_nsec = time_now.tv_nsec - app->conf->fps_clock.tv_nsec;
 	time_since.tv_sec =  time_now.tv_sec - app->conf->fps_clock.tv_sec;
-
-	app->conf->delta_time = (double) time_since.tv_sec + 1.0e-9 * time_since.tv_nsec;
-
+	app->conf->delta_time = (double)time_since.tv_sec
+		+ 1.0e-9 * time_since.tv_nsec;
 	app->conf->fps = (int)(1 / app->conf->delta_time);
 	app->conf->fps_clock = time_now;
 }
 
 /**
- * Displays help manu.
+ * Displays help menu.
 */
 static void	help_display(t_app *app)
 {
@@ -110,8 +108,6 @@ void	app_run(t_app *app)
 	init_camera_plane(app);
 	if (!app->image || !app->depthmap || !app->sprite)
 		exit_error(NULL);
-	app_render(app);
-	mlx_loop(app->mlx);
 }
 
 // Updates the info string with given value backwards from given index
