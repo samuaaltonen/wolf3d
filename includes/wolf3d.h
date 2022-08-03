@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 14:33:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:42:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # define POSITION_START_X 8.f
 # define POSITION_START_Y 8.f
 # define COLLISION_OFFSET 0.25f
-# define DIRECTION_START_X 0.f
-# define DIRECTION_START_Y 1.f
+# define DIRECTION_START_X -1.f
+# define DIRECTION_START_Y 0.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define RADIAN_IN_DEG 57.29578f
@@ -311,13 +311,10 @@ int			events_loop(t_app *app);
 /*
  * Graphics
 */
-int			raycast(t_app *app, int x, t_rayhit *rayhit);
-int			check_ray_pos(t_app *app, t_vector2 *ray);
 void		*render_view(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
-void		clamp_distance(double *distance);
 void		*render_skybox(void *data);
 void		*render_bloom(void *data);
 void		*read_bloom(void *data);
@@ -327,6 +324,11 @@ void		*read_bloom(void *data);
 */
 int			parse_map(t_app *app);
 int			check_map(t_app *app);
+
+/**
+ * Walls
+*/
+int			raycast(t_app *app, int x, t_rayhit *rayhit);
 
 /*
  * Objects
@@ -356,5 +358,12 @@ void		render_moving_doors(t_app *app);
  * Finish scene
 */
 void		finish_display(t_app *app);
+
+/**
+ * Helper functions
+*/
+double		get_radial_direction(t_vector2 *vector);
+void		clamp_distance(double *distance);
+t_cardinal	get_cardinal(t_app *app, t_vector2 *pos, double side);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 13:07:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:36:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,6 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 	}
 }
 
-void	clamp_distance(double *distance)
-{
-	
-	if(*distance > MAX_RAY_DISTANCE)
-		*distance = MAX_RAY_DISTANCE;
-		//*distance = 254 / MAX_RAY_DISTANCE * *distance + 1;
-}
-
 /*
  * Draws horizontal scanline for the floor
 */
@@ -79,11 +71,12 @@ static void	draw_horizontal_line(t_app *app, int y, t_vector2 *step, t_vector2 *
 		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
 		texture_coord.x = (int)(TEX_SIZE * (floor_pos->x - coord.x)) & (TEX_SIZE - 1);
 		texture_coord.y = (int)(TEX_SIZE * (floor_pos->y - coord.y)) & (TEX_SIZE - 1);
-		if(!check_ray_pos(app, floor_pos))
+		if(floor_pos->x >= app->map_size.x || floor_pos->y >= app->map_size.y
+			|| floor_pos->x < 0 || floor_pos->y < 0)
 		{
-					floor_pos->x += step->x;
-		floor_pos->y += step->y;
-					continue;
+			floor_pos->x += step->x;
+			floor_pos->y += step->y;
+			continue;
 		}
 		if(app->map[(int)floor_pos->y][(int)floor_pos->x][1] == EMPTY_MAP_ID)
 			put_pixel_to_image_depth(app->image, app->depthmap, x, y, 0, distance);
@@ -141,18 +134,6 @@ void	*render_background(void *data)
 		draw_horizontal_line(app, y, &step, &floor_pos);
 	}
 	pthread_exit(NULL);
-}
-
-
-static double	get_radial_direction(t_vector2 *vector)
-{
-	double	rad;
-
-	rad = atan2(vector->x, vector->y);
-	if(rad < 0)
-		rad = rad + 2 * M_PI;
-	rad = rad * (180 / M_PI);
-	return (rad);
 }
 
 
