@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 13:32:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:37:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static int	check_map_line(int fd, int *line_length)
 /**
  * Checks map dimensions and shape.
 */
-int	check_map(t_app *app)
+int	check_map(t_app *app, char *path)
 {
 	int		fd;
 	int		line_length;
@@ -108,7 +108,7 @@ int	check_map(t_app *app)
 
 	line_length = 0;
 	line_count = 0;
-	fd = open(MAP_FILE, O_RDONLY);
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
 	while (check_map_line(fd, &line_length) > 0)
@@ -117,23 +117,20 @@ int	check_map(t_app *app)
 	}
 	app->map_size.y = line_count;
 	app->map_size.x = (line_length + 1) / 5;
-	if (POSITION_START_X >= (double) app->map_size.x - 1.f
-		|| POSITION_START_Y >= (double) app->map_size.y - 1.f)
-		exit_error(MSG_ERROR_MAP_SIZE);
 	return (1);
 }
 
 /**
  * Parses the map file and saves it into 3d char array.
 */
-int	parse_map(t_app *app)
+int	parse_map(t_app *app, char *path)
 {
 	int		fd;
 	char	*buffer;
 	int		map_size;
 
 	map_size = app->map_size.y * app->map_size.x * 5;
-	fd = open(MAP_FILE, O_RDONLY);
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit_error(MSG_ERROR_MAP_FILE_ACCESS);
 	buffer = (char *)malloc(sizeof(char) * map_size + 1);

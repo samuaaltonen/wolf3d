@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 17:31:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:38:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static void	update_fps_counter(t_app *app)
 	app->conf->fps_clock = time_now;
 }
 
-int	app_init(t_app **app)
+int	app_init(t_app **app, char *path)
 {
 	int	x;
 	int	y;
 
 	*app = (t_app *)malloc(sizeof(t_app));
-	if (!(*app) || !check_map(*app))
+	if (!(*app) || !check_map(*app, path))
 		return (0);
 	(*app)->map = (char ***)malloc(sizeof(char *) * (*app)->map_size.y);
 	if (!((*app)->map))
@@ -76,7 +76,7 @@ void	app_run(t_app *app)
 			TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
 	app->bg = init_xpm_image(app->mlx, 512, 128, "./assets/bg.xpm");
 	app->player = (t_player){
-		(t_vector2){POSITION_START_X, POSITION_START_Y},
+		(t_vector2){app->map_size.x / 2.f, app->map_size.y / 2.f},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0, 0}};
 	load_object_textures(app);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 13:03:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:42:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 4
-# define POSITION_START_X 8.f
-# define POSITION_START_Y 8.f
+# define POSITION_START_X 0.5f
+# define POSITION_START_Y 0.5f
 # define COLLISION_OFFSET 0.25f
 # define DIRECTION_START_X -1.f
 # define DIRECTION_START_Y 0.f
@@ -339,7 +339,7 @@ void		init_camera_plane(t_app *app);
 /**
  * Application
 */
-int			app_init(t_app **app);
+int			app_init(t_app **app, char *path);
 void		app_run(t_app *app);
 void		app_render(t_app *app);
 void		update_info(t_app *app);
@@ -383,8 +383,8 @@ void		*read_bloom(void *data);
 /**
  * Checker
 */
-int			parse_map(t_app *app);
-int			check_map(t_app *app);
+int			parse_map(t_app *app, char *path);
+int			check_map(t_app *app, char *path);
 int			check_textures(t_app *app);
 
 /**

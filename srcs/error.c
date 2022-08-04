@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:18:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/07 16:28:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:30:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	exit_error(char *message)
 {
 	if (message)
-		ft_printf("{red}%s{reset}\n", message);
+		ft_putendl_fd(message, 1);
 	else
 		perror(MSG_ERROR);
 	exit(EXIT_FAILURE);
