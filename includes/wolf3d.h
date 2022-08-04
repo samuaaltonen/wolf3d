@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 13:42:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:15:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ enum e_mlx_event_masks {
 	KEY_RELEASE_MASK = 2,
 	BUTTON_PRESS_MASK = 4,
 	BUTTON_RELEASE_MASK = 8,
-	POINTER_MOTION_MASK = 64
+	MOTION_MASK = 64
 };
 
 /**
