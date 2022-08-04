@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 13:28:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:29:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,19 @@ int	main(int argc, char **argv)
 
 	fd = -1;
 	app = NULL;
-	if(argc == 2)
+	if (argc == 2)
 	{
 		path = ft_strnew(ft_strlen(argv[1]));
-		if(!path)
+		if (!path)
 			exit_error(NULL);
 		ft_strcpy(path, argv[1]);
 		fd = open(path, O_RDONLY);
-		if (fd < 0 || !app_init(&app, path) || !parse_map(app, path) ||!conf_init(app))
+		if (fd < 0 || !app_init(&app, path) || !parse_map(app, path)
+			||!conf_init(app))
 			exit_error(NULL);
 	}
-	else if (!app_init(&app, MAP_FILE) || !parse_map(app, MAP_FILE) || !conf_init(app))
+	else if (!app_init(&app, MAP_FILE) || !parse_map(app, MAP_FILE)
+		|| !conf_init(app))
 		exit_error(NULL);
 	app_run(app);
 	mlx_loop(app->mlx);

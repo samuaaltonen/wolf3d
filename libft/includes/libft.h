@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 10:42:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 17:35:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:28:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ typedef struct vector2 {
 }	t_vector2;
 
 typedef struct vector3 {
-	double x;
-	double y;
-	double z;
+	double	x;
+	double	y;
+	double	z;
 }	t_vector3;
 
 typedef struct matrix2 {
