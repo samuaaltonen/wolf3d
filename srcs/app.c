@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:15:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:44:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void	app_render(t_app *app)
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_view);
 	render_multithreading(app, render_objects);
-	if (app->conf->has_moving_doors)
-		render_moving_doors(app);
+/* 	if (app->conf->has_moving_doors)
+		render_moving_doors(app); */
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	if (app->conf->toggle_bloom)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 14:32:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:21:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,8 @@ static int	get_texture_hit_x(t_vector2 *pos, t_vector2 *dda, t_vector2 *ray)
 	else
 		wallx = pos->x + dda->x * ray->x;
 	wallx -= floor(wallx);
-	tex_x = (int)(wallx * (double) TEX_SIZE);
-	if (dda->y < 0 && ray->x > 0)
-		tex_x = TEX_SIZE - tex_x - 1;
-	if (dda->y > 0 && ray->y < 0)
+	tex_x = ((int)(wallx * (double) TEX_SIZE) & (TEX_SIZE - 1));
+	if ((dda->y < 0 && ray->x > 0) || (dda->y > 0 && ray->y < 0))
 		tex_x = TEX_SIZE - tex_x - 1;
 	return (tex_x);
 }

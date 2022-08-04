@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:33:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:56:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,14 @@ int	conf_init(t_app *app)
 	app->conf = (t_conf *)malloc(sizeof(t_conf));
 	if (!(app->conf))
 		return (0);
-	app->conf->toggle_help = 0;
+	ft_bzero(app->conf,sizeof(t_conf));
 	app->conf->toggle_bloom = 1;
 	app->conf->fps_count = 1;
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->fov = FOV;
 	app->conf->skybox_offset = 360.f;
-	app->conf->mouse_position = (t_point){0, 0};
-	app->conf->keystates = 0;
 	app->conf->movement_speed = MOVEMENT_SPEED;
 	app->conf->rotation_speed = ROTATION_SPEED;
-	app->conf->render_moving_doors = 0;
-	app->conf->has_moving_doors = 0;
-	app->conf->coin_points = 0;
-	app->conf->coin_max = 0;
-	app->conf->finish_scene_begin = 0;
 	init_thread_info(app);
 	init_objects(app);
 	init_doors(app);

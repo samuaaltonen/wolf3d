@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:33:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:56:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ typedef struct s_sprite_data
 	char			*path;
 	t_image			*image;
 	double			offset_multiplier;
-	int				animation_step;
+	double			animation_step;
 	int				total_steps;
 	int				mirrored;
 }	t_sprite_data;
