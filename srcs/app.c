@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:15:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:38:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,8 @@ void	app_run(t_app *app)
 	mlx_loop_hook(app->mlx, events_loop, app);
 	app->image = init_image(app->mlx, WIN_W, WIN_H);
 	app->depthmap = init_image(app->mlx, WIN_W, WIN_H);
-	app->sprite = init_xpm_image(app->mlx,
-			TEX_SIZE * TEX_COUNT, TEX_SIZE, TEXTURE_PANELS);
-	app->bg = init_xpm_image(app->mlx, 512, 128, "./assets/bg.xpm");
+	app->sprite = init_xpm_image(app->mlx, TEXTURE_PANELS);
+	app->bg = init_xpm_image(app->mlx, "./assets/bg.xpm");
 	app->player = (t_player){
 		(t_vector2){app->map_size.x / 2.f, app->map_size.y / 2.f},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},

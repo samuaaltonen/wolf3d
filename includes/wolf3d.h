@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:36:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:38:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,7 @@ void		help_display(t_app *app);
  * Images
 */
 t_image		*init_image(void *mlx, int x, int y);
+t_image		*init_xpm_image(void *mlx, char *path);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
 void		put_pixel_to_image_depth(t_app *app, t_point point, int color,
 				float distance);
@@ -352,7 +353,6 @@ void		put_pixel_to_image_test(t_app *app, t_point point, int color,
 				float distance);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
-t_image		*init_xpm_image(void *mlx, int width, int height, char *path);
 
 /**
  * Events

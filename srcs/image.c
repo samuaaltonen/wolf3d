@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 16:34:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:38:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,15 @@ t_image	*init_image(void *mlx, int width, int height)
 }
 
 /*
- * Initializes image.
+ * Initializes XPM image.
 */
-t_image	*init_xpm_image(void *mlx, int width, int height, char *path)
+t_image	*init_xpm_image(void *mlx, char *path)
 {
 	t_image	*image;
 
 	image = (t_image *)malloc(sizeof(t_image));
 	if (!image)
 		return (NULL);
-	image->width = width;
-	image->height = height;
 	image->img = mlx_xpm_file_to_image(mlx, path, &(image->width),
 			&(image->height));
 	if (image->img == NULL)
