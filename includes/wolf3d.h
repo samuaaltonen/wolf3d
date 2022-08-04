@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:33:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:36:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 4
-# define POSITION_START_X 0.5f
-# define POSITION_START_Y 0.5f
 # define COLLISION_OFFSET 0.25f
 # define DIRECTION_START_X -1.f
 # define DIRECTION_START_Y 0.f
