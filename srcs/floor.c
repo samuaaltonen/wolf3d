@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:59:10 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/03 17:38:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:38:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	floor_pixel(t_app *app, t_vector2 *floor_pos,
 {
 	if (app->map[(int)floor_pos->y][(int)floor_pos->x][1] == EMPTY_MAP_ID)
 		put_pixel_to_image_depth(app, (t_point){screen_pos.x, screen_pos.y},
-			0, screen_pos.y);
+			0, screen_pos.z);
 	else
 		put_pixel_to_image_depth(app, (t_point){screen_pos.x, screen_pos.y},
 			get_pixel_color(app->sprite, texture_coord->x
