@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 12:07:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:58:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ void	*render_objects(void *data)
 	t_vector2		transform;
 
 	app = (t_app *)((t_thread_data *)data)->app;
-	i = (((t_thread_data *)data)->id);
-	while (i < app->object_count && app->objects[i].active != 0)
+	i = (((t_thread_data *)data)->id) - 1;
+	while (i < app->object_count)
 	{
-		if (object_distance(app, &dist, &transform, i) < 0.75f)
+		if (app->objects[i].active == 0
+			|| object_distance(app, &dist, &transform, i) < 0.75f)
 		{
 			i += app->conf->thread_count;
 			continue ;
