@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bloom.c                                            :+:      :+:    :+:   */
+/*   sky_bloom.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/03 16:56:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:33:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	*render_bloom(void *data)
 			else if (*(int *)(app->image->data + pixel_pos) & 0xFF000000)
 				make_bloom(app->depthmap, &coord);
 		}
-		coord.x = coord.x + app->conf->thread_count + 2;
+		coord.x = coord.x + THREAD_COUNT + 2;
 	}
 	pthread_exit(NULL);
 }
@@ -91,7 +91,7 @@ void	*read_bloom(void *data)
 		if (*(int *)(app->image->data + pixel_pos) & 0xFF000000)
 		{
 			*(char *)depth_pixel = 0xFF;
-			pixel_pos += app->conf->thread_count * IMAGE_PIXEL_BYTES;
+			pixel_pos += THREAD_COUNT * IMAGE_PIXEL_BYTES;
 			continue ;
 		}
 		value = ((*(t_uint8 *)depth_pixel)) + ((*(t_uint8 *)(depth_pixel - 3)));
@@ -100,7 +100,7 @@ void	*read_bloom(void *data)
 		else
 			*(char *)depth_pixel = value;
 		*(char *)(depth_pixel - 3) = 0;
-		pixel_pos += app->conf->thread_count * IMAGE_PIXEL_BYTES;
+		pixel_pos += THREAD_COUNT * IMAGE_PIXEL_BYTES;
 	}
 	pthread_exit(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 13:58:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:33:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*render_objects(void *data)
 		if (app->objects[i].active == 0
 			|| object_distance(app, &dist, &transform, i) < 0.75f)
 		{
-			i += app->conf->thread_count;
+			i += THREAD_COUNT;
 			continue ;
 		}
 		app->objects[i].width = abs((int)(WIN_H / transform.y));
@@ -68,7 +68,7 @@ void	*render_objects(void *data)
 		get_frame(app, &dist, i);
 		draw_object(app, &app->objects[i], (int)((WIN_W / 2)
 				* (1.0f + (transform.x / transform.y))));
-		i += app->conf->thread_count;
+		i += THREAD_COUNT;
 	}
 	pthread_exit(NULL);
 }

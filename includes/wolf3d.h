@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:15:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:33:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
 # define MSG_FINISH "Congratulations, you won!"
-# define THREADS_DEFAULT 8
-# define THREADS_MAX 32
-# define MAP_FILE "./map_text.txt"
+# define THREAD_COUNT 8
+# define MAP_FILE "./map.txt"
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 4
@@ -187,7 +186,6 @@ typedef struct s_conf
 	int				coin_max;
 	double			delta_time;
 	double			skybox_offset;
-	int				thread_count;
 	int				fov;
 	t_point			mouse_position;
 	int				keystates;
@@ -310,7 +308,7 @@ typedef struct s_app
 	t_image			*depthmap;
 	void			*mlx;
 	void			*win;
-	t_thread_data	thread_info[THREADS_MAX];
+	t_thread_data	thread_info[THREAD_COUNT];
 	t_point			map_size;
 	char			***map;
 	t_player		player;

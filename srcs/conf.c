@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 16:24:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:33:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	init_thread_info(t_app *app)
 	int	height_per_thread;
 
 	i = 0;
-	width_per_thread = WIN_W / app->conf->thread_count;
-	height_per_thread = (WIN_H * 0.5f) / app->conf->thread_count;
-	while (i < app->conf->thread_count && i < THREADS_MAX)
+	width_per_thread = WIN_W / THREAD_COUNT;
+	height_per_thread = (WIN_H * 0.5f) / THREAD_COUNT;
+	while (i < THREAD_COUNT)
 	{
 		app->thread_info[i] = (t_thread_data){
 			app,
@@ -75,7 +75,6 @@ int	conf_init(t_app *app)
 	app->conf->toggle_bloom = 1;
 	app->conf->fps_count = 1;
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
-	app->conf->thread_count = THREADS_DEFAULT;
 	app->conf->fov = FOV;
 	app->conf->skybox_offset = 360.f;
 	app->conf->mouse_position = (t_point){0, 0};
