@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 11:39:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 12:44:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@
 # include "libft.h"
 # include "mlx.h"
 
+/**
+ * MLX event enumeration
+*/
 enum e_mlx_events {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
@@ -85,6 +88,9 @@ enum e_mlx_events {
 	ON_DESTROY = 17
 };
 
+/**
+ * MLX mask enumeration
+*/
 enum e_mlx_event_masks {
 	NO_EVENT_MASK = 0,
 	KEY_PRESS_MASK = 1,
@@ -94,8 +100,14 @@ enum e_mlx_event_masks {
 	POINTER_MOTION_MASK = 64
 };
 
+/**
+ * Unsigned char
+*/
 typedef unsigned char t_uint8;
 
+/**
+ * Cardinal direction enumeration.
+*/
 typedef enum e_cardinal {
 	NORTH = 0,
 	EAST = 1,
@@ -103,6 +115,9 @@ typedef enum e_cardinal {
 	WEST = 3
 }	t_cardinal;
 
+/**
+ * Movement direction enumeration.
+*/
 typedef enum e_movement {
 	FORWARD = 0,
 	BACKWARD = 1,
@@ -110,6 +125,10 @@ typedef enum e_movement {
 	RIGHT = 3
 }	t_movement;
 
+/**
+ * Keystate enumeration.
+ * Keystate enumerations use powers of 2 for bit stacking operations.
+*/
 enum e_keystate {
 	FORWARD_DOWN = 1,
 	FORWARD_W_DOWN = 2,
@@ -130,51 +149,51 @@ typedef enum e_doorstate {
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
+	int				x;
+	int				y;
 }	t_point;
 
 typedef struct s_image
 {
-	int		bpp;
-	int		line_size;
-	int		width;
-	int		height;
-	int		endian;
-	char	*img;
-	char	*data;
+	int				bpp;
+	int				line_size;
+	int				width;
+	int				height;
+	int				endian;
+	char			*img;
+	char			*data;
 }	t_image;
 
 typedef struct s_conf
 {
-	int		toggle_help;
-	int		toggle_bloom;
-	int		fps;
+	int				toggle_help;
+	int				toggle_bloom;
+	int				fps;
 	struct timespec	fps_clock;
-	int		fps_count;
-	int		coin_points;
-	int		coin_max;
-	double	delta_time;
-	double		skybox_offset;
-	int		thread_count;
-	int		fov;
-	t_point	mouse_position;
-	int		keystates;
-	double	movement_speed;
-	double	rotation_speed;
-	int		has_moving_doors;
-	int		render_moving_doors;
-	double	finish_scene_begin;
+	int				fps_count;
+	int				coin_points;
+	int				coin_max;
+	double			delta_time;
+	double			skybox_offset;
+	int				thread_count;
+	int				fov;
+	t_point			mouse_position;
+	int				keystates;
+	double			movement_speed;
+	double			rotation_speed;
+	int				has_moving_doors;
+	int				render_moving_doors;
+	double			finish_scene_begin;
 }	t_conf;
 
 typedef struct s_thread_data
 {
-	void	*app;
-	int		x_start;
-	int		x_end;
-	int		y_start;
-	int		y_end;
-	int		id;
+	void			*app;
+	int				x_start;
+	int				x_end;
+	int				y_start;
+	int				y_end;
+	int				id;
 }	t_thread_data;
 
 /*
@@ -187,19 +206,19 @@ typedef struct s_thread_data
  */
 typedef struct s_sprite_data
 {
-	char		*path;
-	t_image		*image;
-	double		offset_multiplier;
-	int			animation_step;
-	int			total_steps;
-	int			mirrored;
+	char			*path;
+	t_image			*image;
+	double			offset_multiplier;
+	int				animation_step;
+	int				total_steps;
+	int				mirrored;
 }	t_sprite_data;
 
 typedef struct s_player
 {
-	t_vector2	pos;
-	t_vector2	dir;
-	t_vector2	cam;
+	t_vector2		pos;
+	t_vector2		dir;
+	t_vector2		cam;
 }	t_player;
 
 /*
@@ -214,21 +233,21 @@ typedef struct s_player
  */
 typedef struct s_object
 {
-	t_vector2	position;
-	int			sprite_id;
-	int			width;
-	int			height;
-	double		distance;
-	t_vector2	texture_offset;
-	int			frame_id;
-	int			active;
+	t_vector2		position;
+	int				sprite_id;
+	int				width;
+	int				height;
+	double			distance;
+	t_vector2		texture_offset;
+	int				frame_id;
+	int				active;
 }	t_object;
 
 typedef struct s_door
 {
-	t_vector2	position;
-	t_doorstate	state;
-	double		animation_begin;
+	t_vector2		position;
+	t_doorstate		state;
+	double			animation_begin;
 }	t_door;
 
 typedef struct s_app
@@ -261,11 +280,11 @@ typedef struct s_app
 */
 typedef struct s_rayhit
 {
-	t_cardinal	direction;
-	char		type;
-	int			tex_x;
-	double		distance;
-	t_vector2	hit_pos;
+	t_cardinal		direction;
+	char			type;
+	int				tex_x;
+	double			distance;
+	t_vector2		hit_pos;
 }	t_rayhit;
 
 /*
