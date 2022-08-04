@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 12:44:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:03:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ enum e_mlx_event_masks {
 /**
  * Unsigned char
 */
-typedef unsigned char t_uint8;
+typedef unsigned char	t_uint8;
 
 /**
  * Cardinal direction enumeration.
@@ -140,6 +140,9 @@ enum e_keystate {
 	ROTATE_RIGHT_DOWN = 128
 };
 
+/**
+ * Door state enumeration.
+*/
 typedef enum e_doorstate {
 	CLOSED = 0,
 	OPEN = 1,
@@ -147,12 +150,18 @@ typedef enum e_doorstate {
 	OPENING = 3
 }	t_doorstate;
 
+/**
+ * Struct for integer coordinate point.
+*/
 typedef struct s_point
 {
 	int				x;
 	int				y;
 }	t_point;
 
+/**
+ * Struct for images.
+*/
 typedef struct s_image
 {
 	int				bpp;
@@ -164,6 +173,9 @@ typedef struct s_image
 	char			*data;
 }	t_image;
 
+/**
+ * Struct for configuration variables of the application.
+*/
 typedef struct s_conf
 {
 	int				toggle_help;
@@ -186,6 +198,9 @@ typedef struct s_conf
 	double			finish_scene_begin;
 }	t_conf;
 
+/**
+ * Struct for threads about their specific drawing areas.
+*/
 typedef struct s_thread_data
 {
 	void			*app;
@@ -196,14 +211,16 @@ typedef struct s_thread_data
 	int				id;
 }	t_thread_data;
 
-/*
-	char		*path;
-	t_image		*image;
-	double		offset_multiplier;
-	int			animation_step;
-	int			total_steps;
-	int			mirrored;
- */
+/**
+ * Struct for sprite data.
+ * 
+ * char			*path;
+ * t_image		*image;
+ * double		offset_multiplier;
+ * int			animation_step;
+ * int			total_steps;
+ * int			mirrored;
+*/
 typedef struct s_sprite_data
 {
 	char			*path;
@@ -214,6 +231,9 @@ typedef struct s_sprite_data
 	int				mirrored;
 }	t_sprite_data;
 
+/**
+ * Struct for player. Contains players position, direction and camera plane.
+*/
 typedef struct s_player
 {
 	t_vector2		pos;
@@ -221,16 +241,18 @@ typedef struct s_player
 	t_vector2		cam;
 }	t_player;
 
-/*
-	t_vector2	position;
-	int			sprite_id;
-	int			width;
-	int			height;
-	double		distance;
-	t_vector2	texture_offset;
-	int			frame_id;
-	int			active;
- */
+/**
+ * Struct for objects.
+ * 
+ * t_vector2	position;
+ * int			sprite_id;
+ * int			width;
+ * int			height;
+ * double		distance;
+ * t_vector2	texture_offset;
+ * int			frame_id;
+ * int			active;
+*/
 typedef struct s_object
 {
 	t_vector2		position;
@@ -243,6 +265,14 @@ typedef struct s_object
 	int				active;
 }	t_object;
 
+/**
+ * Struct for doors. Contains information about doors position, state
+ * and animation.
+ * 
+ * t_vector2		position;
+ * t_doorstate		state;
+ * double			animation_begin;
+*/
 typedef struct s_door
 {
 	t_vector2		position;
@@ -250,6 +280,29 @@ typedef struct s_door
 	double			animation_begin;
 }	t_door;
 
+/**
+ * Struct for rayhit. Contains information about cardinal direction of the wall
+ * that was hit, its type, x coordinate of the texture, distance of the camera
+ * plane and position of the hit.
+ * 
+ * t_cardinal	direction;
+ * char			type;
+ * int			tex_x;
+ * double		distance;
+ * t_vector2	hit_pos;
+*/
+typedef struct s_rayhit
+{
+	t_cardinal		direction;
+	char			type;
+	int				tex_x;
+	double			distance;
+	t_vector2		hit_pos;
+}	t_rayhit;
+
+/**
+ * Struct for the application.
+*/
 typedef struct s_app
 {
 	t_conf			*conf;
@@ -271,35 +324,19 @@ typedef struct s_app
 	char			fps_info[31];
 }	t_app;
 
-/*
-	t_cardinal	direction;
-	char		type;
-	int			tex_x;
-	double		distance;
-	t_vector2	hit_pos;
-*/
-typedef struct s_rayhit
-{
-	t_cardinal		direction;
-	char			type;
-	int				tex_x;
-	double			distance;
-	t_vector2		hit_pos;
-}	t_rayhit;
-
-/*
+/**
  * Messages
 */
 void		exit_error(char *message);
 
-/*
+/**
  * Configuration
 */
 int			conf_init(t_app *app);
 void		init_thread_info(t_app *app);
 void		init_camera_plane(t_app *app);
 
-/*
+/**
  * Application
 */
 int			app_init(t_app **app);
@@ -308,20 +345,20 @@ void		app_render(t_app *app);
 void		update_info(t_app *app);
 void		help_display(t_app *app);
 
-/*
+/**
  * Images
 */
 t_image		*init_image(void *mlx, int x, int y);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
 void		put_pixel_to_image_depth(t_app *app, t_point point, int color,
-	float distance);
+				float distance);
 void		put_pixel_to_image_test(t_app *app, t_point point, int color,
-	float distance);
+				float distance);
 void		flush_image(t_image *image);
 int			get_pixel_color(t_image *image, int x, int y);
 t_image		*init_xpm_image(void *mlx, int width, int height, char *path);
 
-/*
+/**
  * Events
 */
 int			events_keyup(int keycode, t_app *app);
@@ -332,7 +369,7 @@ int			events_mouse_track(int x, int y, t_app *app);
 int			events_window_destroy(void);
 int			events_loop(t_app *app);
 
-/*
+/**
  * Graphics
 */
 void		*render_view(void *data);
@@ -343,7 +380,7 @@ void		*render_skybox(void *data);
 void		*render_bloom(void *data);
 void		*read_bloom(void *data);
 
-/*
+/**
  * Checker
 */
 int			parse_map(t_app *app);
@@ -363,7 +400,6 @@ void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
 void		draw_object(t_app *app, t_object *object, int screen_x);
 void		coin_grab(t_app *app);
-
 
 /**
  * Player
