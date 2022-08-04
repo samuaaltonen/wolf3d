@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 15:56:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 16:03:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	conf_init(t_app *app)
 	app->conf = (t_conf *)malloc(sizeof(t_conf));
 	if (!(app->conf))
 		return (0);
-	ft_bzero(app->conf,sizeof(t_conf));
+	ft_bzero(app->conf, sizeof(t_conf));
 	app->conf->toggle_bloom = 1;
 	app->conf->fps_count = 1;
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);

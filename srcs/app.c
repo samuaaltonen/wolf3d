@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:44:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 16:01:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	app_run(t_app *app)
 
 void	app_render(t_app *app)
 {
-	if (app->conf->toggle_help)
-		return (help_display(app));
 	if (app->conf->coin_max > 0
 		&& app->conf->coin_points >= app->conf->coin_max)
 		return (finish_display(app));
@@ -100,8 +98,8 @@ void	app_render(t_app *app)
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_view);
 	render_multithreading(app, render_objects);
-/* 	if (app->conf->has_moving_doors)
-		render_moving_doors(app); */
+	if (app->conf->has_moving_doors)
+		render_moving_doors(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
 	if (app->conf->toggle_bloom)
 	{
@@ -112,4 +110,6 @@ void	app_render(t_app *app)
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	update_info(app);
 	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, app->fps_info);
+	if (app->conf->toggle_help)
+		help_display(app);
 }

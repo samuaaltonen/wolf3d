@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 15:28:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 16:02:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	draw_door_vertical_line(t_app *app, int x, int h, t_rayhit rayhit)
 
 	y_step = (TEX_SIZE / (double)h);
 	texture_x = (rayhit.tex_x + (DOOR_MAP_ID - 'A' - 1)
-		* TEX_SIZE) & (TEX_SIZE - 1);
+			* TEX_SIZE) & (TEX_SIZE - 1);
 	start_pixel = WIN_H / 2 - h / 2;
 	end_pixel = WIN_H / 2 + h / 2;
 	start_pixel += get_door_offset(app, rayhit.hit_pos, start_pixel, end_pixel);
@@ -64,7 +64,7 @@ static void	draw_door_vertical_line(t_app *app, int x, int h, t_rayhit rayhit)
 		if (start_pixel + i > 0)
 			put_pixel_to_image_test(app, (t_point){x, start_pixel + i},
 				get_pixel_color(app->sprite, texture_x,
-				(int)(y_step * i) & (TEX_SIZE - 1)), rayhit.distance);
+					(int)(y_step * i) & (TEX_SIZE - 1)), rayhit.distance);
 		i++;
 	}
 }

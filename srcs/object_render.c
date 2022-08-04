@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 15:56:32 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/04 16:02:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	get_frame(t_app *app, t_vector2 *dist, int i)
 		app->objects[i].frame_id = ((int)(rad * 64 / 360) % 64);
 	if (app->objects[i].sprite_id < 2)
 		app->objects[i].frame_id
-			= (int)app->object_sprites[app->objects[i].sprite_id].animation_step;
+			= (int)app->object_sprites[app->objects[i].sprite_id] \
+			.animation_step;
 }
 
 static double	object_distance(t_app *app, t_vector2 *dist,
