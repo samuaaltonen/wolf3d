@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/08/04 11:52:13 by htahvana         ###   ########.fr        #
+#    Updated: 2022/08/05 11:21:59 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=wolf3d
-COMP_FLAGS=-Wall -Wextra -Werror -O3 -g
+COMP_FLAGS=-Wall -Wextra -Werror -O3 -g -fsanitize=address
 LIBFT=./libft
 LIBFT_INCLUDES=./libft/includes
 LIBMLX=./libmlx
@@ -71,4 +71,4 @@ linux:
 	-lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz \
 	-pthread
 
-.PHONY: all clean fclean re comp
+.PHONY: all clean fclean re comp linux
