@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 11:20:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:03:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,21 @@ void	app_run(t_app *app)
 		exit_error(MSG_ERROR_TEXTURE_LOAD_FAILED);
 }
 
+static void	multithreading(t_app *app)
+{
+	render_multithreading(app, render_skybox);
+	render_multithreading(app, render_background);
+	render_multithreading(app, render_view);
+	render_multithreading(app, render_objects);
+	if (app->conf->has_moving_doors)
+		render_moving_doors(app);
+	if (app->conf->toggle_bloom)
+	{
+		render_multithreading(app, render_bloom);
+		render_multithreading(app, read_bloom);
+	}
+}
+
 void	app_render(t_app *app)
 {
 	if (app->conf->coin_max > 0
@@ -92,20 +107,10 @@ void	app_render(t_app *app)
 	update_fps_counter(app);
 	flush_image(app->image);
 	flush_image(app->depthmap);
+	multithreading(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
-	render_multithreading(app, render_skybox);
-	render_multithreading(app, render_background);
-	render_multithreading(app, render_view);
-	render_multithreading(app, render_objects);
-	if (app->conf->has_moving_doors)
-		render_moving_doors(app);
-	mlx_put_image_to_window(app->mlx, app->win, app->image->img, 0, 0);
-	if (app->conf->toggle_bloom)
-	{
-		render_multithreading(app, render_bloom);
-		render_multithreading(app, read_bloom);
-	}
-	mlx_put_image_to_window(app->mlx, app->win, app->depthmap->img, 0, 0);
+	if (!USING_LINUX)
+		mlx_put_image_to_window(app->mlx, app->win, app->depthmap->img, 0, 0);
 	mlx_string_put(app->mlx, app->win, 0, 0, 0xFFFFFF, "[h] Options");
 	update_info(app);
 	mlx_string_put(app->mlx, app->win, 0, 20, 0xFFFFFF, app->fps_info);

@@ -6,15 +6,17 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 11:20:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:03:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # ifdef linux
 #  include "keybinds_linux.h"
+#  define USING_LINUX 1
 # else
 #  include "keybinds_mac.h"
+#  define USING_LINUX 0
 # endif
 # define WOLF3D_H
 # define WIN_NAME "Wolf 3D"
