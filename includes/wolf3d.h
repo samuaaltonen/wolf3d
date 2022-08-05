@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 12:13:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/05 14:13:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define RADIAN_IN_DEG 57.29578f
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 20.f
+# define MAX_RAY_DISTANCE 25.f
 # define BLOOM_SIZE 15
 # define TEX_SIZE 64
 # define TEX_COUNT 20
@@ -57,7 +57,7 @@
 # define COIN_WHIRL_MAP_IDENTIFIER 'C'
 # define COIN_GRAB_DISTANCE_THRESHOLD 0.5f
 # define EMPTY_MAP_ID 'X'
-# define DOOR_MAP_ID 'T'
+# define DOOR_MAP_ID 'S'
 # define DOOR_MAP_ID_MOVING 'Z'
 # define DOOR_ANIMATION_DURATION 0.125f
 # define DOOR_CLOSING_THRESHOLD 5.f

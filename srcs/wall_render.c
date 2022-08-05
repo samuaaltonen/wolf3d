@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 15:21:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/05 14:58:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,7 @@ int	raycast(t_app *app, int x, t_rayhit *rayhit)
 	else
 		*rayhit = (t_rayhit){
 			get_cardinal(app, &pos, dda.y),
-			app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos,
-				dda.y)] - 1,
+			app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos, dda.y)],
 			get_texture_hit_x(&pos, &dda, &ray),
 			dda.x,
 			pos

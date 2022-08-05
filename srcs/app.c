@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 12:03:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/05 14:41:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	app_run(t_app *app)
 	app->sprite = init_xpm_image(app->mlx, TEXTURE_PANELS);
 	app->bg = init_xpm_image(app->mlx, "./assets/bg.xpm");
 	app->player = (t_player){
-		(t_vector2){app->map_size.x / 2.f, app->map_size.y / 2.f},
+		(t_vector2){floor(app->map_size.x / 2.f) + 0.5f,
+		floor(app->map_size.y / 2.f) + 0.5f},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0, 0}};
 	load_object_textures(app);
