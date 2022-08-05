@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sky_bloom.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/04 14:33:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:56:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	make_bloom(t_image *depthmap, t_point *coord)
 {
 	t_point			cur;
 	int				pixel_pos;
-	unsigned char	*pixel;
 	unsigned char	*bluepixel;
 
 	cur.y = (coord->y - BLOOM_SIZE - 1);
@@ -34,7 +33,6 @@ static void	make_bloom(t_image *depthmap, t_point *coord)
 				continue ;
 			pixel_pos = (cur.y * depthmap->line_size)
 				+ (cur.x * IMAGE_PIXEL_BYTES) + 3;
-			pixel = (unsigned char *)(depthmap->data + pixel_pos);
 			bluepixel = (unsigned char *)(depthmap->data + pixel_pos - 3);
 			if ((*(char *)bluepixel) + 1 < 254)
 				*(char *)bluepixel = ((*(char *)bluepixel) + 1);
@@ -129,7 +127,7 @@ void	*render_skybox(void *data)
 		while (++coord.y < WIN_H - 1)
 		{
 			put_pixel_to_image(app->image, coord.x, coord.y,
-				get_pixel_color(app->bg, offset, texy) | 16777216);
+				get_pixel_color(app->bg, offset, texy) | 0x01000000);
 			texy += steps.y;
 		}
 	}

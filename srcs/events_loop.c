@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_loop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 14:19:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:54:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	progress_animations(t_app *app)
 	i = 0;
 	while (i < MAP_MAX_OBJECT_IDS && app->object_sprites[i].image)
 	{
-		app->object_sprites[i].animation_step++;
-		if (app->object_sprites[i].animation_step
+		app->object_sprites[i].animation_step += 60.f * app->conf->delta_time;
+		if ((int)app->object_sprites[i].animation_step
 			>= app->object_sprites[i].total_steps)
-			app->object_sprites[i].animation_step = 0;
+			app->object_sprites[i].animation_step = 0.f;
 		i++;
 	}
 }

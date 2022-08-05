@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:38:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/05 11:20:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ void	load_object_textures(t_app *app)
 {
 	int							i;
 	static const t_sprite_data	sprite_infos[] = {
-	{TEXTURE_COIN_SPIN, NULL, 1.0f, 0, 64, 1},
-	{TEXTURE_COIN_WHIRL, NULL, 1.0f, 0, 64, 0},
-	{TEXTURE_PILLAR, NULL, 0.95f, 0, 64, 0},
-	{TEXTURE_CANNON, NULL, 1.0f, 0, 64, 0},
+	{TEXTURE_COIN_SPIN, NULL, 1.0f, 0.f, 64, 1},
+	{TEXTURE_COIN_WHIRL, NULL, 1.0f, 0.f, 64, 0},
+	{TEXTURE_PILLAR, NULL, 0.95f, 0.f, 64, 0},
+	{TEXTURE_CANNON, NULL, 1.0f, 0.f, 64, 0},
 	{NULL, NULL, 0, 0, 0, 0}};
 
 	i = 0;
@@ -100,7 +100,7 @@ void	load_object_textures(t_app *app)
 			sprite_infos[i].path,
 			init_xpm_image(app->mlx, sprite_infos[i].path),
 			sprite_infos[i].offset_multiplier,
-			sprite_infos[i].animation_step,
+			0.f,
 			0,
 			sprite_infos[i].mirrored
 		};
