@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 12:03:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:13:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ enum e_mlx_event_masks {
 };
 
 /**
- * Unsigned char
+ * Integer type definitions
 */
 typedef unsigned char	t_uint8;
 
@@ -341,7 +341,6 @@ int			app_init(t_app **app, char *path);
 void		app_run(t_app *app);
 void		app_render(t_app *app);
 void		update_info(t_app *app);
-void		help_display(t_app *app);
 
 /**
  * Images
@@ -351,10 +350,9 @@ t_image		*init_xpm_image(void *mlx, char *path);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
 void		put_pixel_to_image_depth(t_app *app, t_point point, int color,
 				float distance);
-void		put_pixel_to_image_test(t_app *app, t_point point, int color,
+void		put_pixel_to_image_check(t_app *app, t_point point, int color,
 				float distance);
 void		flush_image(t_image *image);
-int			get_pixel_color(t_image *image, int x, int y);
 
 /**
  * Events
@@ -373,10 +371,10 @@ int			events_loop(t_app *app);
 void		*render_view(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
-void		render_multithreading(t_app *app, void *(*renderer)(void *));
 void		*render_skybox(void *data);
 void		*render_bloom(void *data);
 void		*read_bloom(void *data);
+void		render_multithreading(t_app *app, void *(*renderer)(void *));
 
 /**
  * Checker
@@ -414,9 +412,10 @@ void		progress_doors(t_app *app);
 void		render_moving_doors(t_app *app);
 
 /**
- * Finish scene
+ * UI views
 */
 void		finish_display(t_app *app);
+void		help_display(t_app *app);
 
 /**
  * Helper functions
@@ -424,5 +423,6 @@ void		finish_display(t_app *app);
 double		get_radial_direction(t_vector2 *vector);
 void		clamp_distance(double *distance);
 t_cardinal	get_cardinal(t_app *app, t_vector2 *pos, double side);
+int			get_pixel_color(t_image *image, int x, int y);
 
 #endif

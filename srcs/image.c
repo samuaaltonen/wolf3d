@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 14:38:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:12:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
 /*
  * Tests if there is something over the pixel from depthmap before putting it.
  */
-void	put_pixel_to_image_test(t_app *app, t_point point, int color,
+void	put_pixel_to_image_check(t_app *app, t_point point, int color,
 	float distance)
 {
 	int				pixel_pos;

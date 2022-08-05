@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 11:51:00 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/04 12:05:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:12:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	draw_object_pixel(t_app *app, t_object *object,
 			(int)texture_pixel->x - ((object->frame_id) * TEX_SIZE) - TEX_SIZE,
 			(int)texture_pixel->y);
 	if (color > 0)
-		put_pixel_to_image_test(app, (t_point){window_pixel->x,
+		put_pixel_to_image_check(app, (t_point){window_pixel->x,
 			window_pixel->y}, color, object->distance);
 }
 
