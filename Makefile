@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/08/05 12:16:29 by saaltone         ###   ########.fr        #
+#    Updated: 2022/08/08 16:28:10 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,8 @@ comp:
 	-lft -lmlx -framework OpenGL -framework AppKit
 
 linux:
+	make -C $(LIBFT)
+	make -C $(LIBMLX_LINUX)
 	gcc $(COMP_FLAGS) $(SOURCES) -o $(NAME) \
 	-I $(INCLUDES) \
 	-I $(LIBFT_INCLUDES) \
