@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:03:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:07:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,9 @@ static int	get_texture_hit_x(t_vector2 *pos, t_vector2 *dda, t_vector2 *ray)
 }
 
 /**
- * Casts a ray with given x coordinate (window coordinate). Returns 1 on wall
- * hit.
+ * Casts a ray with given x coordinate (window coordinate).
 */
-int	raycast(t_app *app, int x, t_rayhit *rayhit)
+void	raycast(t_app *app, int x, t_rayhit *rayhit)
 {
 	double		camera_x;
 	t_vector2	ray;
@@ -136,5 +135,4 @@ int	raycast(t_app *app, int x, t_rayhit *rayhit)
 			dda.x,
 			pos
 		};
-	return (1);
 }

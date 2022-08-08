@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 16:57:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:07:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,7 +388,7 @@ int			check_textures(t_app *app);
 /**
  * Walls
 */
-int			raycast(t_app *app, int x, t_rayhit *rayhit);
+void		raycast(t_app *app, int x, t_rayhit *rayhit);
 
 /*
  * Objects

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 12:12:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:08:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ void	render_moving_doors(t_app *app)
 	x = -1;
 	while (++x < WIN_W)
 	{
-		if (!raycast(app, x, &rayhit))
-			continue ;
+		raycast(app, x, &rayhit);
 		if ((int) rayhit.hit_pos.x > app->map_size.x - 1
 			|| (int) rayhit.hit_pos.y > app->map_size.y - 1)
 			continue ;
