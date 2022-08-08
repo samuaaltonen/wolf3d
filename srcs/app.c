@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 16:12:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:21:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	multithreading(t_app *app)
 
 /**
  * Initializes application struct.
-*/ 
+*/
 int	app_init(t_app **app, char *path)
 {
 	int	x;
