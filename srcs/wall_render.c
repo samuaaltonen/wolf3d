@@ -3,138 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   wall_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 14:58:20 by htahvana         ###   ########.fr       */
+/*   Created: 2022/08/08 17:01:42 by saaltone          #+#    #+#             */
+/*   Updated: 2022/08/08 17:03:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
 /**
- * Calculates distance to next side depending on ray direction.
+ * Sets starting pixel, wall height and texture step limited to window
+ * dimensions.
 */
-static t_vector2	get_side_distance(t_app *app, t_vector2 *pos,
-	t_vector2 *ray, t_vector2 *delta_dist)
+static void	wall_limits(int *start_pixel, int *height,
+	double *y_step, double *tex_y)
 {
-	t_vector2	side_dist;
-
-	if (ray->x < 0)
-		side_dist.x = (app->player.pos.x - floor(pos->x)) * delta_dist->x;
-	else
-		side_dist.x = (floor(pos->x) + 1.f - app->player.pos.x) * delta_dist->x;
-	if (ray->y < 0)
-		side_dist.y = (app->player.pos.y - floor(pos->y)) * delta_dist->y;
-	else
-		side_dist.y = (floor(pos->y) + 1.f - app->player.pos.y) * delta_dist->y;
-	return (side_dist);
+	*height += 2;
+	*y_step = (TEX_SIZE / (double)*height);
+	*tex_y = 0;
+	if (*height > WIN_H)
+	{
+		*tex_y = (*height - WIN_H) / 2 * *y_step;
+		*height = WIN_H;
+	}
+	*start_pixel = WIN_H / 2 - *height / 2;
+	if (*start_pixel < 0)
+		*start_pixel = 0;
 }
 
 /**
- * Checks if position hits any wall within map or goes outside of map.
+ * Draws vertical line to image based on wall distance (closer = higher).
 */
-static t_bool	is_wallhit(t_app *app, t_vector2 *pos, double *side)
+static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 {
-	if (pos->x >= app->map_size.x
-		|| pos->y >= app->map_size.y
-		|| pos->x < 0
-		|| pos->y < 0)
-	{
-		*side = 0.f;
-		return (TRUE);
-	}
-	if (app->map[(int) pos->y][(int) pos->x][0] > 'A'
-		&& (app->conf->render_moving_doors
-			|| app->map[(int) pos->y][(int) pos->x][0] != DOOR_MAP_ID_MOVING))
-	{
-		*side = 1.f;
-		return (TRUE);
-	}
-	return (FALSE);
-}
+	int		start_pixel;
+	int		i;
+	double	y_step;
+	double	tex_y;
 
-/**
- * Calculates wall distance using DDA method (Digital differential analyzer).
- * Returns a vector containing distance and also side of wall that was hit
- * (negative for x side, positive for y side, 0 for transparent).
-*/
-static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
-	t_vector2 *ray, t_vector2 *delta_dist)
-{
-	t_vector2	side_dist;
-	double		side;
-
-	side_dist = get_side_distance(app, pos, ray, delta_dist);
-	while (1)
+	wall_limits(&start_pixel, &height, &y_step, &tex_y);
+	i = 0;
+	clamp_distance(&rayhit.distance);
+	while (i < height)
 	{
-		if (side_dist.x < side_dist.y)
-		{
-			side_dist.x += delta_dist->x;
-			if (ray->x < 0)
-				pos->x += -1.f;
-			else
-				pos->x += 1.f;
-			if (is_wallhit(app, pos, &side))
-				return ((t_vector2){side_dist.x - delta_dist->x, -side});
-			continue ;
-		}
-		side_dist.y += delta_dist->y;
-		if (ray->y < 0)
-			pos->y += -1.f;
+		tex_y += y_step;
+		if (rayhit.type == EMPTY_MAP_ID)
+			put_pixel_to_image_depth(app, (t_point){x, start_pixel + i},
+				0, rayhit.distance);
 		else
-			pos->y += 1.f;
-		if (is_wallhit(app, pos, &side))
-			return ((t_vector2){side_dist.y - delta_dist->y, side});
+			put_pixel_to_image_depth(app, (t_point){x, start_pixel + i},
+				get_pixel_color(app->sprite, rayhit.tex_x + (rayhit.type - 'A')
+					* 64, (int)tex_y & (TEX_SIZE - 1)), rayhit.distance);
+		i++;
 	}
 }
 
 /**
- * Calculate which part of the wall was hit for textureX
- */
-static int	get_texture_hit_x(t_vector2 *pos, t_vector2 *dda, t_vector2 *ray)
-{
-	double	wallx;
-	int		tex_x;
-
-	if (dda->y < 0)
-		wallx = pos->y + dda->x * ray->y;
-	else
-		wallx = pos->x + dda->x * ray->x;
-	wallx -= floor(wallx);
-	tex_x = ((int)(wallx * (double) TEX_SIZE) & (TEX_SIZE - 1));
-	if ((dda->y < 0 && ray->x > 0) || (dda->y > 0 && ray->y < 0))
-		tex_x = TEX_SIZE - tex_x - 1;
-	return (tex_x);
-}
-
-/**
- * Casts a ray with given x coordinate (window coordinate). Returns 1 on wall
- * hit.
+ * Renders walls.
 */
-int	raycast(t_app *app, int x, t_rayhit *rayhit)
+void	*render_walls(void *data)
 {
-	double		camera_x;
-	t_vector2	ray;
-	t_vector2	pos;
-	t_vector2	delta_dist;
-	t_vector2	dda;
+	t_thread_data	*t;
+	t_app			*app;
+	int				x;
+	t_rayhit		rayhit;
 
-	camera_x = 2 * x / (double) WIN_W - 1.f;
-	ray.x = app->player.dir.x + app->player.cam.x * camera_x;
-	ray.y = app->player.dir.y + app->player.cam.y * camera_x;
-	pos = (t_vector2){app->player.pos.x, app->player.pos.y};
-	delta_dist = (t_vector2){fabs(1.f / ray.x), fabs(1.f / ray.y)};
-	dda = ray_dda(app, &pos, &ray, &delta_dist);
-	if (dda.y == 0.f || dda.y == -0.f)
-		*rayhit = (t_rayhit){0, EMPTY_MAP_ID, 0, dda.x, pos};
-	else
-		*rayhit = (t_rayhit){
-			get_cardinal(app, &pos, dda.y),
-			app->map[(int) pos.y][(int) pos.x][get_cardinal(app, &pos, dda.y)],
-			get_texture_hit_x(&pos, &dda, &ray),
-			dda.x,
-			pos
-		};
-	return (1);
+	t = (t_thread_data *)data;
+	app = (t_app *)t->app;
+	x = t->x_start - 1;
+	while (++x <= t->x_end)
+	{
+		raycast(app, x, &rayhit);
+		draw_vertical_line(app, x, (int)(WIN_H / rayhit.distance), rayhit);
+	}
+	pthread_exit(NULL);
 }

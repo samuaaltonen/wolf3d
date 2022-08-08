@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 16:05:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:57:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_MAP_INVALID "Map file is invalid."
 # define MSG_ERROR_MAP_SIZE "Map size is too small."
+# define MSG_ERROR_TOO_MANY_ARGUMENTS "Usage: ./wolf3d [map file]"
 # define MSG_FINISH "Congratulations, you won!"
 # define THREAD_COUNT 8
-# define MAP_FILE "./map.txt"
+# define MAP_FILE_DEFAULT "./map.txt"
 # define MAP_BYTES 4
 # define IMAGE_PIXEL_BYTES 4
 # define MAP_MAX_OBJECT_IDS 4
@@ -369,7 +370,7 @@ int			events_loop(t_app *app);
 /**
  * Graphics
 */
-void		*render_view(void *data);
+void		*render_walls(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
 void		*render_skybox(void *data);
