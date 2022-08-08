@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:07:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:02:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@
 
 /**
  * MLX event enumeration
-*/
+ */
 enum e_mlx_events {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
@@ -91,7 +91,7 @@ enum e_mlx_events {
 
 /**
  * MLX mask enumeration
-*/
+ */
 enum e_mlx_event_masks {
 	NO_EVENT_MASK = 0,
 	KEY_PRESS_MASK = 1,
@@ -103,12 +103,12 @@ enum e_mlx_event_masks {
 
 /**
  * Integer type definitions
-*/
+ */
 typedef unsigned char	t_uint8;
 
 /**
  * Cardinal direction enumeration.
-*/
+ */
 typedef enum e_cardinal {
 	NORTH = 0,
 	EAST = 1,
@@ -118,7 +118,7 @@ typedef enum e_cardinal {
 
 /**
  * Movement direction enumeration.
-*/
+ */
 typedef enum e_movement {
 	FORWARD = 0,
 	BACKWARD = 1,
@@ -129,7 +129,7 @@ typedef enum e_movement {
 /**
  * Keystate enumeration.
  * Keystate enumerations use powers of 2 for bit stacking operations.
-*/
+ */
 enum e_keystate {
 	FORWARD_DOWN = 1,
 	FORWARD_W_DOWN = 2,
@@ -143,7 +143,7 @@ enum e_keystate {
 
 /**
  * Door state enumeration.
-*/
+ */
 typedef enum e_doorstate {
 	CLOSED = 0,
 	OPEN = 1,
@@ -153,7 +153,7 @@ typedef enum e_doorstate {
 
 /**
  * Struct for integer coordinate point.
-*/
+ */
 typedef struct s_point
 {
 	int				x;
@@ -162,7 +162,7 @@ typedef struct s_point
 
 /**
  * Struct for images.
-*/
+ */
 typedef struct s_image
 {
 	int				bpp;
@@ -176,7 +176,7 @@ typedef struct s_image
 
 /**
  * Struct for configuration variables of the application.
-*/
+ */
 typedef struct s_conf
 {
 	int				toggle_help;
@@ -200,7 +200,7 @@ typedef struct s_conf
 
 /**
  * Struct for threads about their specific drawing areas.
-*/
+ */
 typedef struct s_thread_data
 {
 	void			*app;
@@ -220,7 +220,7 @@ typedef struct s_thread_data
  * int			animation_step;
  * int			total_steps;
  * int			mirrored;
-*/
+ */
 typedef struct s_sprite_data
 {
 	char			*path;
@@ -233,7 +233,7 @@ typedef struct s_sprite_data
 
 /**
  * Struct for player. Contains players position, direction and camera plane.
-*/
+ */
 typedef struct s_player
 {
 	t_vector2		pos;
@@ -252,7 +252,7 @@ typedef struct s_player
  * t_vector2	texture_offset;
  * int			frame_id;
  * int			active;
-*/
+ */
 typedef struct s_object
 {
 	t_vector2		position;
@@ -272,7 +272,7 @@ typedef struct s_object
  * t_vector2		position;
  * t_doorstate		state;
  * double			animation_begin;
-*/
+ */
 typedef struct s_door
 {
 	t_vector2		position;
@@ -290,7 +290,7 @@ typedef struct s_door
  * int			tex_x;
  * double		distance;
  * t_vector2	hit_pos;
-*/
+ */
 typedef struct s_rayhit
 {
 	t_cardinal		direction;
@@ -302,7 +302,7 @@ typedef struct s_rayhit
 
 /**
  * Struct for the application.
-*/
+ */
 typedef struct s_app
 {
 	t_conf			*conf;
@@ -326,19 +326,19 @@ typedef struct s_app
 
 /**
  * Messages
-*/
+ */
 void		exit_error(char *message);
 
 /**
  * Configuration
-*/
+ */
 int			conf_init(t_app *app);
 void		init_thread_info(t_app *app);
 void		init_camera_plane(t_app *app);
 
 /**
  * Application
-*/
+ */
 int			app_init(t_app **app, char *path);
 void		app_prepare(t_app *app);
 void		app_render(t_app *app);
@@ -346,7 +346,7 @@ void		update_info(t_app *app);
 
 /**
  * Images
-*/
+ */
 t_image		*init_image(void *mlx, int x, int y);
 t_image		*init_xpm_image(void *mlx, char *path);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
@@ -358,7 +358,7 @@ void		flush_image(t_image *image);
 
 /**
  * Events
-*/
+ */
 int			events_keyup(int keycode, t_app *app);
 int			events_keydown(int keycode, t_app *app);
 int			events_mouse_down(int mousecode, int x, int y, t_app *app);
@@ -369,7 +369,7 @@ int			events_loop(t_app *app);
 
 /**
  * Graphics
-*/
+ */
 void		*render_walls(void *data);
 void		*render_background(void *data);
 void		*render_objects(void *data);
@@ -380,19 +380,19 @@ void		render_multithreading(t_app *app, void *(*renderer)(void *));
 
 /**
  * Checker
-*/
+ */
 int			parse_map(t_app *app, char *path);
 int			check_map(t_app *app, char *path);
 int			check_textures(t_app *app);
 
 /**
  * Walls
-*/
+ */
 void		raycast(t_app *app, int x, t_rayhit *rayhit);
 
 /*
  * Objects
-*/
+ */
 void		init_objects(t_app *app);
 void		load_object_textures(t_app *app);
 void		cast_objects(t_app *app);
@@ -401,13 +401,13 @@ void		coin_grab(t_app *app);
 
 /**
  * Player
-*/
+ */
 void		player_rotate(t_app *app, double angle);
 void		player_move(t_app *app, t_movement movement, double speed);
 
 /**
  * Doors
-*/
+ */
 void		init_doors(t_app *app);
 void		door_action(t_app *app);
 void		progress_doors(t_app *app);
@@ -415,13 +415,13 @@ void		render_moving_doors(t_app *app);
 
 /**
  * UI views
-*/
+ */
 void		finish_display(t_app *app);
 void		help_display(t_app *app);
 
 /**
  * Helper functions
-*/
+ */
 double		get_radial_direction(t_vector2 *vector);
 void		clamp_distance(double *distance);
 t_cardinal	get_cardinal(t_app *app, t_vector2 *pos, double side);

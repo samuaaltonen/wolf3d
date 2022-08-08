@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:32:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 16:34:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:20:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Returns cardinal direction 
-*/
+ */
 t_cardinal	get_cardinal(t_app *app, t_vector2 *pos, double side)
 {
 	if (side < 0)
@@ -30,7 +30,7 @@ t_cardinal	get_cardinal(t_app *app, t_vector2 *pos, double side)
 
 /**
  * Clamps distance to maximum distance.
-*/
+ */
 void	clamp_distance(double *distance)
 {
 	if (*distance > MAX_RAY_DISTANCE)
@@ -39,7 +39,7 @@ void	clamp_distance(double *distance)
 
 /**
  * Returns radial direction of a vector.
-*/
+ */
 double	get_radial_direction(t_vector2 *vector)
 {
 	double	rad;
@@ -51,9 +51,9 @@ double	get_radial_direction(t_vector2 *vector)
 	return (rad);
 }
 
-/*
+/**
  * Returns pixel color at given position.
-*/
+ */
 int	get_pixel_color(t_image *image, int x, int y)
 {
 	int		pixel_pos;
@@ -66,9 +66,9 @@ int	get_pixel_color(t_image *image, int x, int y)
 	return (*(int *)pixel);
 }
 
-/*
+/**
  * Flushes image (sets all pixels to black)
-*/
+ */
 void	flush_image(t_image *image)
 {
 	ft_bzero(image->data, image->height * image->line_size);

@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   floor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:59:10 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/04 15:23:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:51:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+/**
+ * Increases floor step if new position is within map boundaries.
+ */
 static int	advance_step(t_app *app, t_vector2 *floor_pos, t_vector2 *step)
 {
 	if (floor_pos->x >= app->map_size.x || floor_pos->y >= app->map_size.y
@@ -24,6 +27,9 @@ static int	advance_step(t_app *app, t_vector2 *floor_pos, t_vector2 *step)
 	return (FALSE);
 }
 
+/**
+ * Draws floor pixel.
+ */
 static void	floor_pixel(t_app *app, t_vector2 *floor_pos,
 	t_point *texture_coord, t_vector3 screen_pos)
 {
@@ -47,9 +53,9 @@ static void	floor_pixel(t_app *app, t_vector2 *floor_pos,
 				* TEX_SIZE, texture_coord->y), screen_pos.z);
 }
 
-/*
+/**
  * Draws horizontal scanline for the floor
-*/
+ */
 static void	draw_floor(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 {
 	t_point		texture_coord;
@@ -76,6 +82,9 @@ static void	draw_floor(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 	}
 }
 
+/**
+ * Casts floor from player view.
+ */
 static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 {
 	t_vector2	ray_left;
@@ -97,9 +106,9 @@ static void	floor_cast(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 	floor_pos->y = app->player.pos.y + distance * ray_left.y;
 }
 
-/*
+/**
  * Simply render all the ground and floor
-*/
+ */
 void	*render_background(void *data)
 {
 	t_thread_data	*t;

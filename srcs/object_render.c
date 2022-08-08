@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   object_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 16:02:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:55:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static void	get_frame(t_app *app, t_vector2 *dist, int i)
+/**
+ * Sets objects frame id depending on radial direction or animation step.
+ */
+static void	object_frame(t_app *app, t_vector2 *dist, int i)
 {
 	double	rad;
 
@@ -27,6 +30,10 @@ static void	get_frame(t_app *app, t_vector2 *dist, int i)
 			.animation_step;
 }
 
+/**
+ * Calculates objects distance to player and creates transformation of the
+ * distance vector with camera space matrix.
+ */
 static double	object_distance(t_app *app, t_vector2 *dist,
 	t_vector2 *transform, int i)
 {
@@ -42,7 +49,7 @@ static double	object_distance(t_app *app, t_vector2 *dist,
 	return (transform->y / ft_vector_length(*dist));
 }
 
-/* 
+/**
  * Object multithreaded rendering
  */
 void	*render_objects(void *data)
@@ -66,7 +73,7 @@ void	*render_objects(void *data)
 		app->objects[i].height = abs((int)(WIN_H / transform.y));
 		clamp_distance(&transform.y);
 		app->objects[i].distance = transform.y;
-		get_frame(app, &dist, i);
+		object_frame(app, &dist, i);
 		draw_object(app, &app->objects[i], (int)((WIN_W / 2)
 				* (1.0f + (transform.x / transform.y))));
 		i += THREAD_COUNT;

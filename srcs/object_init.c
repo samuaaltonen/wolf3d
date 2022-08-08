@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 15:13:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 11:20:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:23:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Calculates object count in the map.
-*/
+ */
 static int	count_objects(t_app *app)
 {
 	int	x;
@@ -37,7 +37,7 @@ static int	count_objects(t_app *app)
 
 /**
  * Checks if tile is a valid object tile.
-*/
+ */
 static t_bool	is_object_tile(t_app *app, int x, int y)
 {
 	if (app->map[y][x][0] != 'A'
@@ -50,7 +50,7 @@ static t_bool	is_object_tile(t_app *app, int x, int y)
 /**
  * Reads all objects from the map and initilizes an array containing positions
  * of the objects and their textures.
-*/
+ */
 void	init_objects(t_app *app)
 {
 	int	x;
@@ -82,7 +82,7 @@ void	init_objects(t_app *app)
 
 /**
  * Loads object textures into memory.
-*/
+ */
 void	load_object_textures(t_app *app)
 {
 	int							i;

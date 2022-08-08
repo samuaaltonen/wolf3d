@@ -6,13 +6,13 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:02:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:11:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-/*
+/**
  * Renders the current view of the player with multithreading.
 */
 void	render_multithreading(t_app *app, void *(*renderer)(void *))

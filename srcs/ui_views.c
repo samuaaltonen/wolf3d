@@ -6,13 +6,13 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:58:54 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 12:15:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:59:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-/*
+/**
  * Covers the screen with congratulations for a moment after finding all coins.
  */
 void	finish_display(t_app *app)
@@ -35,7 +35,7 @@ void	finish_display(t_app *app)
 		ft_rgbtoint(r, g, b), MSG_FINISH);
 }
 
-/*
+/**
  * Displays help menu.
  */
 void	help_display(t_app *app)
@@ -58,7 +58,9 @@ void	help_display(t_app *app)
 			WIN_H / 2 - 230 + i * 30, 0xFF55FF, (char *) h[i]);
 }
 
-// Updates the info string with given value backwards from given index
+/**
+ * Updates the info string with given value backwards from given index
+ */
 static void	update_value(t_app *app, int value, int char_index)
 {
 	int	i;
@@ -71,7 +73,9 @@ static void	update_value(t_app *app, int value, int char_index)
 	}
 }
 
-// Updates all the values
+/**
+ * Updates all the values.
+ */
 void	update_info(t_app *app)
 {
 	update_value(app, app->conf->coin_points, 18);

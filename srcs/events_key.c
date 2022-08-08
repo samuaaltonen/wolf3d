@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/03 15:19:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:21:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Handles events for key presses (keyup).
-*/
+ */
 int	events_keyup(int keycode, t_app *app)
 {
 	if (keycode == KEY_ARROW_RIGHT)
@@ -46,7 +46,7 @@ int	events_keyup(int keycode, t_app *app)
 
 /**
  * Handles events for key presses (keydown).
-*/
+ */
 int	events_keydown(int keycode, t_app *app)
 {
 	if (keycode == KEY_ARROW_RIGHT)

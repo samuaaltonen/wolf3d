@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_loop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 15:54:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:47:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Progresses all object animations by increasing their animation step.
-*/
+ */
 static void	progress_animations(t_app *app)
 {
 	int	i;
@@ -32,7 +32,7 @@ static void	progress_animations(t_app *app)
 
 /**
  * Handles player movement and direction depending on keystate.
-*/
+ */
 static void	handle_movement(t_app *app)
 {
 	if (app->conf->keystates & FORWARD_DOWN
@@ -55,9 +55,9 @@ static void	handle_movement(t_app *app)
 		player_rotate(app, app->conf->rotation_speed * app->conf->delta_time);
 }
 
-/*
+/**
  * Handles continuous events.
-*/
+ */
 int	events_loop(t_app *app)
 {
 	progress_animations(app);

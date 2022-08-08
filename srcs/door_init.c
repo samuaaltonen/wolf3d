@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:11:42 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 17:36:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:21:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	get_door_count(t_app *app)
 /**
  * Reads all doors from the map and initilizes an array containing positions
  * of the doors and initial states.
-*/
+ */
 void	init_doors(t_app *app)
 {
 	int	x;

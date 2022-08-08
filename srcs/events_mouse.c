@@ -6,15 +6,15 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 13:13:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:21:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-/*
+/**
  * Tracks mouse position and changes player direction accordingly.
-*/
+ */
 int	events_mouse_track(int x, int y, t_app *app)
 {
 	t_point	delta;

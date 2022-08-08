@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:08:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:21:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Returns vertical offset for the door depending on its animation state.
-*/
+ */
 static double	get_door_offset(t_app *app, t_vector2 hit_pos, int start_pixel,
 	int end_pixel)
 {
@@ -37,9 +37,9 @@ static double	get_door_offset(t_app *app, t_vector2 hit_pos, int start_pixel,
 	return (step * (double)(end_pixel - start_pixel));
 }
 
-/*
+/**
  * Draws vertical line to image based on door distance (closer = higher)
-*/
+ */
 static void	draw_door_vertical_line(t_app *app, int x, int h, t_rayhit rayhit)
 {
 	int		start_pixel;
@@ -71,7 +71,7 @@ static void	draw_door_vertical_line(t_app *app, int x, int h, t_rayhit rayhit)
 
 /**
  * Draws all moving doors using raycasting.
-*/
+ */
 void	render_moving_doors(t_app *app)
 {
 	int			x;

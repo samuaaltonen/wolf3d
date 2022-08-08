@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 11:51:00 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/05 12:12:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:52:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Initializes draw area depending on object position/size and limits it to
  * window dimensions.
-*/
+ */
 static void	init_draw_area(t_point *draw_start, t_point *draw_end,
 	t_object *object, int screen_x)
 {
@@ -36,7 +36,7 @@ static void	init_draw_area(t_point *draw_start, t_point *draw_end,
 /**
  * Offsets object texture when necessary (i.e. when near window border or when
  * object is larger than window).
-*/
+ */
 static void	check_texture_offset(t_point *draw_start, t_point *draw_end,
 	t_object *object, int screen_x)
 {
@@ -65,6 +65,9 @@ static void	check_texture_offset(t_point *draw_start, t_point *draw_end,
 	object->texture_offset = offset;
 }
 
+/**
+ * Draws objects pixel.
+ */
 static void	draw_object_pixel(t_app *app, t_object *object,
 	t_point *window_pixel, t_vector2 *texture_pixel)
 {
@@ -81,7 +84,7 @@ static void	draw_object_pixel(t_app *app, t_object *object,
 /**
  * Draws an object to image at specific x position with specific size depending
  * on the distance.
-*/
+ */
 void	draw_object(t_app *app, t_object *object, int screen_x)
 {
 	t_point		draw_start;

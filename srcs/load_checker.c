@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   load_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:36:48 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/03 16:30:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:22:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-/*
+/**
  * Checks if the textures are the correct size
  */
 int	check_textures(t_app *app)

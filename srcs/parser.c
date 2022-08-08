@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:03:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 13:37:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:24:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Checks if characters used in map are valid.
-*/
+ */
 static int	map_is_valid(char *data, t_app *app)
 {
 	int	i;
@@ -45,7 +45,7 @@ static int	map_is_valid(char *data, t_app *app)
 
 /**
  * Reads through buffer and saves map characters to map array.
-*/
+ */
 static void	save_map(t_app *app, char *buffer)
 {
 	int	x;
@@ -76,7 +76,7 @@ static void	save_map(t_app *app, char *buffer)
 /**
  * Checks one line from map file. Exits with error if the line is different
  * in length or if there is a problem with reading.
-*/
+ */
 static int	check_map_line(int fd, int *line_length)
 {
 	int		read;
@@ -99,7 +99,7 @@ static int	check_map_line(int fd, int *line_length)
 
 /**
  * Checks map dimensions and shape.
-*/
+ */
 int	check_map(t_app *app, char *path)
 {
 	int		fd;
@@ -122,7 +122,7 @@ int	check_map(t_app *app, char *path)
 
 /**
  * Parses the map file and saves it into 3d char array.
-*/
+ */
 int	parse_map(t_app *app, char *path)
 {
 	int		fd;

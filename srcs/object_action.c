@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 11:34:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/01 14:35:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:23:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Checks if any coin is in the same position as the player and marks is as
  * picked up.
-*/
+ */
 void	coin_grab(t_app *app)
 {
 	int	i;

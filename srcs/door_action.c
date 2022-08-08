@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 13:45:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 17:36:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:21:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Updates map depending on door state. If door is open or moving, "hides" it 
  * from wall rendering.
-*/
+ */
 static void	door_update(t_app *app, int index, t_doorstate state,
 	t_bool reset_animation)
 {
@@ -34,7 +34,7 @@ static void	door_update(t_app *app, int index, t_doorstate state,
 
 /**
  * Handles door action and opens or closes it depending on the door state.
-*/
+ */
 void	door_action(t_app *app)
 {
 	int		i;
@@ -57,7 +57,7 @@ void	door_action(t_app *app)
 
 /**
  * Monitors door states and progresses their animation steps when necessary.
-*/
+ */
 void	progress_doors(t_app *app)
 {
 	int	i;

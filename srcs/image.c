@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 15:33:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:22:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Initializes image.
-*/
+ */
 t_image	*init_image(void *mlx, int width, int height)
 {
 	t_image	*image;
@@ -36,7 +36,7 @@ t_image	*init_image(void *mlx, int width, int height)
 
 /**
  * Initializes XPM image.
-*/
+ */
 t_image	*init_xpm_image(void *mlx, char *path)
 {
 	t_image	*image;
@@ -57,7 +57,7 @@ t_image	*init_xpm_image(void *mlx, char *path)
 
 /**
  * Changes color of a specific pixel in image.
-*/
+ */
 void	put_pixel_to_image(t_image *image, int x, int y, int color)
 {
 	int		pixel_pos;

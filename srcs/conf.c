@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/04 16:03:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:21:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Inits thread information structs. They contain info about what part of the
  * window each thread calculates.
-*/
+ */
 void	init_thread_info(t_app *app)
 {
 	int	i;
@@ -46,7 +46,7 @@ void	init_thread_info(t_app *app)
  * Camera plane is always perpendicular to the direction vector.
  * 
  * cameralength = directionlength * tan(FOV / 2)
-*/
+ */
 void	init_camera_plane(t_app *app)
 {
 	t_vector2	camera_plane;
@@ -63,7 +63,7 @@ void	init_camera_plane(t_app *app)
 
 /**
  * Initializes configuration struct.
-*/
+ */
 int	conf_init(t_app *app)
 {
 	if (!app)

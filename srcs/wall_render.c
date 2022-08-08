@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:01:42 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:03:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:26:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Sets starting pixel, wall height and texture step limited to window
  * dimensions.
-*/
+ */
 static void	wall_limits(int *start_pixel, int *height,
 	double *y_step, double *tex_y)
 {
@@ -34,7 +34,7 @@ static void	wall_limits(int *start_pixel, int *height,
 
 /**
  * Draws vertical line to image based on wall distance (closer = higher).
-*/
+ */
 static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 {
 	int		start_pixel;
@@ -61,7 +61,7 @@ static void	draw_vertical_line(t_app *app, int x, int height, t_rayhit rayhit)
 
 /**
  * Renders walls.
-*/
+ */
 void	*render_walls(void *data)
 {
 	t_thread_data	*t;

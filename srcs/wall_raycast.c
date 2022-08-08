@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:14:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:07:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:00:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Calculates distance to next side of grid block depending on ray direction.
-*/
+ */
 static t_vector2	get_side_distance(t_app *app, t_vector2 *pos,
 	t_vector2 *ray, t_vector2 *delta_dist)
 {
@@ -33,7 +33,7 @@ static t_vector2	get_side_distance(t_app *app, t_vector2 *pos,
 
 /**
  * Checks if position hits any wall within map or goes outside of map.
-*/
+ */
 static t_bool	is_wallhit(t_app *app, t_vector2 *pos, double *side)
 {
 	if (pos->x >= app->map_size.x
@@ -57,8 +57,8 @@ static t_bool	is_wallhit(t_app *app, t_vector2 *pos, double *side)
 /**
  * Calculates wall distance using DDA method (Digital differential analyzer).
  * Returns a vector containing distance and also side of wall that was hit
- * (negative for x side, positive for y side, 0 for transparent).
-*/
+ * (negative for x side, positive for y side, 0 for transparent/out of bounds).
+ */
 static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 	t_vector2 *ray, t_vector2 *delta_dist)
 {
@@ -90,7 +90,7 @@ static t_vector2	ray_dda(t_app *app, t_vector2 *pos,
 }
 
 /**
- * Calculate which part of the wall was hit for textureX
+ * Calculate which part of the wall was hit.
  */
 static int	get_texture_hit_x(t_vector2 *pos, t_vector2 *dda, t_vector2 *ray)
 {
@@ -110,7 +110,7 @@ static int	get_texture_hit_x(t_vector2 *pos, t_vector2 *dda, t_vector2 *ray)
 
 /**
  * Casts a ray with given x coordinate (window coordinate).
-*/
+ */
 void	raycast(t_app *app, int x, t_rayhit *rayhit)
 {
 	double		camera_x;

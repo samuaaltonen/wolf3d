@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/01 17:36:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:24:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Checks wall collisions for given position.
-*/
+ */
 static int	is_collision(t_app *app, t_vector2 pos)
 {
 	if (pos.x >= app->map_size.x || pos.y >= app->map_size.y)
@@ -29,7 +29,7 @@ static int	is_collision(t_app *app, t_vector2 pos)
 
 /**
  * Updates player's position if possible.
-*/
+ */
 static void	update_position(t_app *app, t_vector2 new)
 {
 	if (!is_collision(app, (t_vector2){new.x - COLLISION_OFFSET,
@@ -54,7 +54,7 @@ static void	update_position(t_app *app, t_vector2 new)
 
 /**
  * Rotates player direction by given angle.
-*/
+ */
 void	player_rotate(t_app *app, double angle)
 {
 	t_matrix2	rotation;
@@ -71,7 +71,7 @@ void	player_rotate(t_app *app, double angle)
 
 /**
  * Moves player to given direction if there is no collision.
-*/
+ */
 void	player_move(t_app *app, t_movement movement, double speed)
 {
 	t_vector2	perpendicular;

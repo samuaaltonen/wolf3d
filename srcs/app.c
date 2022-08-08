@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 16:58:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:26:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Calculates frame delta time and sets FPS accordingly.
-*/
+ */
 static void	update_fps_counter(t_app *app)
 {
 	struct timespec	time_now;
@@ -30,9 +30,9 @@ static void	update_fps_counter(t_app *app)
 }
 
 /**
- * Contains function calls to multithreaded renderers for skybox, background,
+ * Group of function calls to multithreaded renderers for skybox, background,
  * walls, objects and bloom.
-*/
+ */
 static void	multithreading(t_app *app)
 {
 	render_multithreading(app, render_skybox);
@@ -50,7 +50,7 @@ static void	multithreading(t_app *app)
 
 /**
  * Initializes application struct.
-*/
+ */
 int	app_init(t_app **app, char *path)
 {
 	int	x;
@@ -83,7 +83,7 @@ int	app_init(t_app **app, char *path)
  * Prepares the application to be rendered:
  * Initializes MLX, creates window, loads assets, adds event hooks and sets
  * initial player position / direction.
-*/
+ */
 void	app_prepare(t_app *app)
 {
 	app->mlx = mlx_init();
@@ -116,7 +116,7 @@ void	app_prepare(t_app *app)
 /**
  * Rendering function to be called in loop hook. Calls individual renderers and
  * draws resulting image(s) to the window.
-*/
+ */
 void	app_render(t_app *app)
 {
 	if (app->conf->coin_max > 0
