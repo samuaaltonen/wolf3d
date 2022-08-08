@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 12:15:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:15:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	else if (!app_init(&app, MAP_FILE) || !parse_map(app, MAP_FILE)
 		|| !conf_init(app))
 		exit_error(NULL);
-	app_run(app);
+	app_prepare(app);
 	mlx_loop(app->mlx);
 	return (0);
 }

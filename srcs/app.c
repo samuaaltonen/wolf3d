@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 14:41:07 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:12:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-/*
- * Calculates FPS and scales movement speeds according to frame time. 
+/**
+ * Calculates frame delta time and sets FPS accordingly.
 */
 static void	update_fps_counter(t_app *app)
 {
@@ -29,6 +29,28 @@ static void	update_fps_counter(t_app *app)
 	app->conf->fps_clock = time_now;
 }
 
+/**
+ * Contains function calls to multithreaded renderers for skybox, background,
+ * walls, objects and bloom.
+*/
+static void	multithreading(t_app *app)
+{
+	render_multithreading(app, render_skybox);
+	render_multithreading(app, render_background);
+	render_multithreading(app, render_view);
+	render_multithreading(app, render_objects);
+	if (app->conf->has_moving_doors)
+		render_moving_doors(app);
+	if (app->conf->toggle_bloom)
+	{
+		render_multithreading(app, render_bloom);
+		render_multithreading(app, read_bloom);
+	}
+}
+
+/**
+ * Initializes application struct.
+*/ 
 int	app_init(t_app **app, char *path)
 {
 	int	x;
@@ -57,49 +79,44 @@ int	app_init(t_app **app, char *path)
 	return (1);
 }
 
-void	app_run(t_app *app)
+/**
+ * Prepares the application to be rendered:
+ * Initializes MLX, creates window, loads assets, adds event hooks and sets
+ * initial player position / direction.
+*/
+void	app_prepare(t_app *app)
 {
 	app->mlx = mlx_init();
+	if (!app->mlx)
+		exit_error(MSG_ERROR_MLX_INIT);
+	app->image = init_image(app->mlx, WIN_W, WIN_H);
+	app->depthmap = init_image(app->mlx, WIN_W, WIN_H);
+	app->sprite = init_xpm_image(app->mlx, TEXTURE_PANELS);
+	app->bg = init_xpm_image(app->mlx, "./assets/bg.xpm");
+	load_object_textures(app);
+	if (!app->image || !app->depthmap || !app->sprite || !check_textures(app))
+		exit_error(MSG_ERROR_TEXTURE_LOAD_FAILED);
 	app->win = mlx_new_window(app->mlx, WIN_W, WIN_H, WIN_NAME);
-	ft_strcpy(app->fps_info, "Coins collected:   /    FPS:   ");
-	mlx_do_key_autorepeatoff(app->mlx);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
+	ft_strcpy(app->fps_info, "Coins collected:   /    FPS:   ");
+	mlx_do_key_autorepeatoff(app->mlx);
 	mlx_hook(app->win, ON_KEYUP, KEY_RELEASE_MASK, events_keyup, app);
 	mlx_hook(app->win, ON_KEYDOWN, KEY_PRESS_MASK, events_keydown, app);
 	mlx_hook(app->win, ON_MOUSEMOVE, MOTION_MASK, events_mouse_track, app);
 	mlx_hook(app->win, ON_DESTROY, NO_EVENT_MASK, events_window_destroy, app);
 	mlx_loop_hook(app->mlx, events_loop, app);
-	app->image = init_image(app->mlx, WIN_W, WIN_H);
-	app->depthmap = init_image(app->mlx, WIN_W, WIN_H);
-	app->sprite = init_xpm_image(app->mlx, TEXTURE_PANELS);
-	app->bg = init_xpm_image(app->mlx, "./assets/bg.xpm");
-	app->player = (t_player){
-		(t_vector2){floor(app->map_size.x / 2.f) + 0.5f,
+	app->player = (t_player){(t_vector2){floor(app->map_size.x / 2.f) + 0.5f,
 		floor(app->map_size.y / 2.f) + 0.5f},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0, 0}};
-	load_object_textures(app);
 	init_camera_plane(app);
-	if (!app->image || !app->depthmap || !app->sprite || !check_textures(app))
-		exit_error(MSG_ERROR_TEXTURE_LOAD_FAILED);
 }
 
-static void	multithreading(t_app *app)
-{
-	render_multithreading(app, render_skybox);
-	render_multithreading(app, render_background);
-	render_multithreading(app, render_view);
-	render_multithreading(app, render_objects);
-	if (app->conf->has_moving_doors)
-		render_moving_doors(app);
-	if (app->conf->toggle_bloom)
-	{
-		render_multithreading(app, render_bloom);
-		render_multithreading(app, read_bloom);
-	}
-}
-
+/**
+ * Rendering function to be called in loop hook. Calls individual renderers and
+ * draws resulting image(s) to the window.
+*/
 void	app_render(t_app *app)
 {
 	if (app->conf->coin_max > 0

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 14:13:39 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:05:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
 # define MSG_ERROR_ALLOC "Could not allocate memory."
+# define MSG_ERROR_MLX_INIT "MLX initialization failed."
 # define MSG_ERROR_IMAGE_INIT "Image initialization failed."
 # define MSG_ERROR_THREADS "Could not create a thread."
 # define MSG_ERROR_THREADS_JOIN "Could not join threads."
@@ -338,7 +339,7 @@ void		init_camera_plane(t_app *app);
  * Application
 */
 int			app_init(t_app **app, char *path);
-void		app_run(t_app *app);
+void		app_prepare(t_app *app);
 void		app_render(t_app *app);
 void		update_info(t_app *app);
 
