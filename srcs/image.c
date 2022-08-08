@@ -6,13 +6,13 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/05 12:12:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/08 15:33:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-/*
+/**
  * Initializes image.
 */
 t_image	*init_image(void *mlx, int width, int height)
@@ -25,12 +25,16 @@ t_image	*init_image(void *mlx, int width, int height)
 	image->width = width;
 	image->height = height;
 	image->img = mlx_new_image(mlx, image->width, image->height);
+	if (!image->img)
+		exit_error(MSG_ERROR_IMAGE_INIT);
 	image->data = mlx_get_data_addr(image->img, &(image->bpp),
 			&(image->line_size), &(image->endian));
+	if (!image->data)
+		exit_error(MSG_ERROR_IMAGE_INIT);
 	return (image);
 }
 
-/*
+/**
  * Initializes XPM image.
 */
 t_image	*init_xpm_image(void *mlx, char *path)
@@ -42,25 +46,17 @@ t_image	*init_xpm_image(void *mlx, char *path)
 		return (NULL);
 	image->img = mlx_xpm_file_to_image(mlx, path, &(image->width),
 			&(image->height));
-	if (image->img == NULL)
-		exit_error("image failed to load\n");
+	if (!image->img)
+		exit_error(MSG_ERROR_IMAGE_INIT);
 	image->data = mlx_get_data_addr(image->img, &(image->bpp),
 			&(image->line_size), &(image->endian));
+	if (!image->data)
+		exit_error(MSG_ERROR_IMAGE_INIT);
 	return (image);
 }
 
-/* 
- * Changes color of specific pixel in image.
- *
- * line_size = one line/row size in BYTES in image
- * For example: 1920 window width, and 4 bytes per pixel (32 bits, this info is 
- * 				stored in bpp = bits per pixel), line_size would be 7680)
- * 
- * Change pixel by given x,y coordinates: 	
- * 		Count the correct position in image string by
- * 			 y * line_size * 4 + x * 4 (or bpp / 8)
- * 
- * To change color, we need to cast pixel pointer to int pointer type
+/**
+ * Changes color of a specific pixel in image.
 */
 void	put_pixel_to_image(t_image *image, int x, int y, int color)
 {
@@ -74,8 +70,8 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
-/*
- * Put pixel to image and depthmap
+/**
+ * Puts pixel to image and depthmap
  */
 void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
 	float distance)
@@ -98,7 +94,7 @@ void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
 		*(unsigned int *)pixel = color;
 }
 
-/*
+/**
  * Tests if there is something over the pixel from depthmap before putting it.
  */
 void	put_pixel_to_image_check(t_app *app, t_point point, int color,
