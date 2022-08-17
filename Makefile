@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:22:44 by saaltone          #+#    #+#              #
-#    Updated: 2022/08/08 18:28:18 by saaltone         ###   ########.fr        #
+#    Updated: 2022/08/17 11:37:16 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SOURCES_FILES=main.c error.c conf.c app.c events_key.c events_loop.c \
 				image.c parser.c object_init.c object_render.c object_draw.c \
 				door_init.c door_action.c door_render.c object_action.c \
 				ui_views.c helper.c wall_raycast.c wall_render.c sky_bloom.c \
-				load_checker.c floor.c player.c 
+				load_checker.c floor.c player.c
 SOURCES=$(SOURCES_FILES:%.c=srcs/%.c)
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=./includes

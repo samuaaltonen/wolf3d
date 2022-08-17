@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 18:02:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/08/17 11:37:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,8 +361,6 @@ void		flush_image(t_image *image);
  */
 int			events_keyup(int keycode, t_app *app);
 int			events_keydown(int keycode, t_app *app);
-int			events_mouse_down(int mousecode, int x, int y, t_app *app);
-int			events_mouse_up(int mousecode, int x, int y, t_app *app);
 int			events_mouse_track(int x, int y, t_app *app);
 int			events_window_destroy(void);
 int			events_loop(t_app *app);
