@@ -23,6 +23,7 @@ FILES = main.c error.c conf.c app.c events_key.c events_loop.c \
 
 LIBFT = ./libft/libft.a
 MINILIBX = ./libmlx/libmlx.a
+MINILIBXLINUX = ./libmlx_linux/libmlx.a
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
@@ -30,22 +31,24 @@ SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
 OBJ_DIR = ./objs
 OBJS = $(patsubst %, $(OBJ_DIR)/%, $(FILES:.c=.o))
 
-HEADERS = -I ./includes -I ./libft/includes
+HEADERS = -I ./includes -I ./libft/includes -I ./libmlx
 
 FLAGS = -Wall -Wextra -Werror -O3
 
-LIBLINKS = -I ./libft/includes -L ./libft -lft
+LIBFTLINKS = -I ./libft/includes -L ./libft -lft
 
 MACLINKS = $(HEADERS) \
-	-I ./libmlx -L ./libmlx \
+	-L ./libmlx \
 	-lmlx -framework OpenGL -framework Appkit
 
-LLINKS = $(HEADERS) -Lmlx_linux -lmlx_Linux -lX11 -lXext -lm -lz -lpthread
+LINUXLINKS = $(HEADERS) \
+	-L ./libmlx_linux \
+	-Lmlx_linux -lmlx_Linux -lX11 -lXext -lm -lz -lpthread
 
 all: $(NAME)
 
 $(NAME): $(MINILIBX) $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(LIBLINKS) $(MACLINKS)
+	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(LIBFTLINKS) $(MACLINKS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(FLAGS) $(HEADERS) -c $< -o $@
@@ -55,9 +58,6 @@ $(OBJ_DIR):
 
 $(LIBFT):
 	make -C ./libft
-
-echo:
-	echo $(OBJS)
 
 .PHONY: all clean fclean linux
 
@@ -75,8 +75,10 @@ re: fclean all
 $(MINILIBX):
 	make -C ./libmlx
 
+$(MINILIBXLINUX):
+	make -C ./libmlx_linux
+
 mac: fclean $(NAME)
 
-linux:
-	make reclean -C ./libft
-	$(CC) $(SRCS) -o $(NAME) $(FLAGS) $(LIBLINKS) $(LLINKS)
+linux: $(MINILIBXLINUX) $(LIBFT) $(OBJS)
+	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(LIBFTLINKS) $(LINUXLINKS)
