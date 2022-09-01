@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/08/24 16:35:40 by htahvana         ###   ########.fr        #
+#    Updated: 2022/09/01 11:34:56 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ $(OBJ_DIR):
 $(LIBFT):
 	make -C ./libft
 
-.PHONY: all clean fclean linux
+.PHONY: all clean fclean re linux
 
 clean:
 	make clean -C ./libft
@@ -77,8 +77,6 @@ $(MINILIBX):
 
 $(MINILIBXLINUX):
 	make -C ./libmlx_linux
-
-mac: fclean $(NAME)
 
 linux: $(MINILIBXLINUX) $(LIBFT) $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(LIBFTLINKS) $(LINUXLINKS)
